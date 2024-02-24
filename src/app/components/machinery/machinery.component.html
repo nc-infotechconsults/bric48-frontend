@@ -1,0 +1,15 @@
+<div class="container">
+    <div class="card" *ngFor="let machinery of machineries">
+      <div class="card-header">
+        Machinery Info
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Macchinario: {{ machinery?.id }}</h5>
+        <p class="card-text"><strong>Mserial:</strong> {{ machinery?.mserial }}</p>
+        <p class="card-text"><strong>Name:</strong> {{ machinery?.name }}</p>
+        <p class="card-text"><strong>ID Room:</strong> {{ machinery?.idRoom }}</p>
+        <p class="card-text"><strong>Nearby Workers:</strong> {{ machinery?.nearbyWorkers }}</p>
+      </div>
+    </div>
+</div>
+  
