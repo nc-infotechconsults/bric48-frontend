@@ -7,12 +7,16 @@ import { MachineryComponent } from './components/machinery/machinery.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './components/login/login.component';
 import { FormsModule } from '@angular/forms';
+import { BranchComponent } from './components/branch/branch.component';
+import { RoomComponent } from './components/room/room.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MachineryComponent,
-    LoginComponent
+    LoginComponent,
+    BranchComponent,
+    RoomComponent
   ],
   imports: [
     HttpClientModule,

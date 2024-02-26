@@ -1,0 +1,13 @@
+<div class="container">
+    <div class="card" *ngFor="let room of rooms">
+      <div class="card-header">
+        Room Info
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Room: {{ room?.id }}</h5>
+        <p class="card-text"><strong>Name:</strong> {{ room?.name }}</p>
+        <p class="card-text"><strong>ID Branch:</strong> {{ room?.idBranch }}</p>
+        <button class="btn btn-primary" (click)="goToMachineriesPage(room?.id)">Go to machineries</button>
+      </div>
+    </div>
+</div>

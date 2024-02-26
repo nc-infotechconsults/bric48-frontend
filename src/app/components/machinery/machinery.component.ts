@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { MachineryService } from '../../services/machinery.service';
 import { Machinery } from '../../models/machinery';
 import { NearbyHeadphones } from '../../models/nearby-headphones';
-import { count } from 'rxjs';
 
 @Component({
   selector: 'app-machinery',
@@ -14,15 +13,17 @@ export class MachineryComponent {
   machineries: Machinery[] | null = [];
   nearbyHeadphones: NearbyHeadphones[] | null = [];
 
+  idRoom: any = localStorage.getItem('idRoom')
+
   intervalId: any;
 
   constructor(private machineryService:MachineryService) {
   }
 
-
+  //On init
   async ngOnInit() {
 
-    this.machineries = await this.machineryService.getAll();
+    this.machineries = await this.machineryService.getMachineryByIdRoom(this.idRoom);
 
     if (this.machineries !== null) {
       for (const machinery of this.machineries) {
@@ -33,14 +34,17 @@ export class MachineryComponent {
     this.startPolling()
   }
 
+  //On destroy
   ngOnDestroy() {
     this.stopPolling();
+    //localStorage.removeItem('idRoom')
   }
+
 
   startPolling() {
     this.intervalId = setInterval(async () => {
 
-    this.machineries = await this.machineryService.getAll();
+      this.machineries = await this.machineryService.getMachineryByIdRoom(this.idRoom);
 
     if (this.machineries !== null) {
       for (const machinery of this.machineries) {
