@@ -21,7 +21,7 @@ export class BranchComponent {
 
   goToRoomsPage(idBranch: any) {
     localStorage.setItem('idBranch', idBranch)
-    this.router.navigate(['room']);
+    this.router.navigate(['home/room']);
   }
 
 }

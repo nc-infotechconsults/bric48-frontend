@@ -9,6 +9,7 @@ import { LoginComponent } from './components/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { BranchComponent } from './components/branch/branch.component';
 import { RoomComponent } from './components/room/room.component';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { RoomComponent } from './components/room/room.component';
     MachineryComponent,
     LoginComponent,
     BranchComponent,
-    RoomComponent
+    RoomComponent,
+    HomeComponent
   ],
   imports: [
     HttpClientModule,

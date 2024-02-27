@@ -1,0 +1,31 @@
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { Admin } from '../../models/admin';
+import { AdminService } from '../../services/admin.service';
+
+@Component({
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrl: './home.component.scss'
+})
+export class HomeComponent {
+
+  admin:Admin | null = {} as Admin | null;
+
+  role: string = "ADMIN";
+
+  constructor(private adminService:AdminService, private router: Router) { }
+
+  isHomePage(): boolean {
+    return this.router.url === '/home/branch';
+  }
+
+  goToHomePage(): void {
+    this.router.navigate(['/home/branch']);
+  }
+
+  async ngOnInit(){
+    this.admin = await this.adminService.getAdminByEmail(localStorage.getItem('email'));
+  }
+
+}

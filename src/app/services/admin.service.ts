@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import axios from 'axios';
+import { Admin } from '../models/admin';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,9 @@ export class AdminService {
       // Verifica se la richiesta è andata bene
       if (response.status === 200) {
         const jsonObject = JSON.parse(responseString);
+
         localStorage.setItem('token', JSON.stringify(jsonObject))
+        localStorage.setItem('email', email)
 
         return 0; // Restituisce 0 se la richiesta è andata bene
       } else {
@@ -30,6 +33,25 @@ export class AdminService {
       }
     } catch (error) {
       return 1; // Restituisce 1 se si è verificato un errore durante la richiesta
+    }
+  }
+
+  // Get admin by email
+  async getAdminByEmail(email: string | null)  : Promise<Admin|null> {
+    const apiUrl = 'http://localhost:8080/admin/find/'+email
+
+    try {
+      var token = JSON.parse(localStorage.getItem('token')!)
+      const response = await axios.get(apiUrl, {
+        headers: {
+          'Authorization': `Bearer `+token.jwt,
+        },
+      });
+      const admin: Admin = response.data;
+      return admin;
+
+    } catch (error) {
+      return null;
     }
   }
   

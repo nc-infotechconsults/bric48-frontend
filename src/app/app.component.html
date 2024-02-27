@@ -4,67 +4,22 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
+
 <body>
   <div id="navbar" class="navbar-light justify-content-between fixed-top">
     <img src="/assets/idalab_logo.png" class="d-inline-block align-top logo" alt="Logo">
     <div class="text-center mx-auto">
-      <a class="navbar-brand" [routerLink]="['/branch']" [ngClass]="{'disabled': isHomePage()}">
+      <a class="navbar-brand">
         <h3 class="mx-3"><strong>DPI-U AI - BRIC48</strong></h3>
       </a>
     </div>
-    <div class="d-flex">
-      <button type="button" class="btn btn-outline-primary btn-square mx-1">
-        <img src="/assets/btn_account.png" style="object-fit: contain" width="24" height="24" alt="Icona 1">
-      </button>
-      <button type="button" class="btn btn-outline-primary btn-square mx-1">
-        <img src="/assets/btn_settings.png" style="object-fit: contain" width="24" height="24" alt="Icona 2">
-      </button>
-      <button type="button" class="btn btn-outline-primary btn-square mx-1">
-        <img src="/assets/btn_machinery_list.png" style="object-fit: contain" width="24" height="24" alt="Icona 3">
-      </button>
-      <button type="button" class="btn btn-outline-primary btn-square mx-1">
-        <img src="/assets/btn_logout.png" style="object-fit: contain" width="24" height="24" alt="Icona 4">
-      </button>
-    </div>
   </div>
 
-  <div id="sidebar" class="navbar-light"> 
-    <div class="sidebar  flex-column align-items-center fixed-left">
-
-      <br>
-
-      <div><label>Name</label></div>
-      <div><label>Surname</label></div>
-      <div><label>Role</label></div>
-
-      <br>
   
-      <div><button type="button" class="btn btn-primary button">Bottone 1</button></div>
-      <br>
-      <div><button type="button" class="btn btn-primary">Bottone 2</button></div>
-      <br>
-      <div><button type="button" class="btn btn-primary">Bottone 3</button></div>
-      <br>
-      <div><button type="button" class="btn btn-primary">Bottone 4</button></div>
-      <br>
-      <div><button type="button" class="btn btn-primary">Bottone 5</button></div>
-      <br>
-      <div><button type="button" class="btn btn-primary">Bottone 6</button></div>
-      <br>
-      <div><button type="button" class="btn btn-primary">Bottone 7</button></div>
-      <br>
-      <div><button type="button" class="btn btn-primary">Bottone 8</button></div>
-      <br>
-      <div><button type="button" class="btn btn-primary">Bottone 9</button></div>
-  
-    </div>
-  </div>
-
   <div id="main">
     <router-outlet></router-outlet>
   </div>  
 
 </body>
-
 
 </html>

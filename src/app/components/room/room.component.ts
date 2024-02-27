@@ -23,7 +23,7 @@ export class RoomComponent {
 
   goToMachineriesPage(idRoom: any) {
     localStorage.setItem('idRoom', idRoom)
-    this.router.navigate(['machinery']);
+    this.router.navigate(['home/machinery']);
   }
 
   ngOnDestroy(){

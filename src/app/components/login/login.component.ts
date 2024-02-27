@@ -29,7 +29,7 @@ export class LoginComponent {
     this.statusCode = await this.adminService.loginAdmin(this.admin.email, this.admin.password);
 
     if (this.statusCode == 0){
-      this.router.navigate(['/branch'])
+      this.router.navigate(['/home/branch'])
     }
 
     this.btnDisabled = false;
