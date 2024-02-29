@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { BranchComponent } from './components/branch/branch.component';
 import { RoomComponent } from './components/room/room.component';
 import { HomeComponent } from './components/home/home.component';
+import { MachineryDetailsComponent } from './components/machinery-details/machinery-details.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { HomeComponent } from './components/home/home.component';
     LoginComponent,
     BranchComponent,
     RoomComponent,
-    HomeComponent
+    HomeComponent,
+    MachineryDetailsComponent
   ],
   imports: [
     HttpClientModule,

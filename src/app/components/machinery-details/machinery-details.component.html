@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<body>
+    <h1 class="machinery">{{ machinery?.name }} {{ machinery?.mserial }}</h1>
+    <br>
+    <div class="container" style="border: 2px solid gray;">
+        <br>
+        <h2 class="title">NEARBY WORKERS</h2>
+        <br>
+        <button class="pulsante-invia">SEND MESSAGE TO ALL</button>
+        <br>
+        <div class="lista-lavoratori" *ngFor="let worker of workers">
+        <div class="lavoratore">
+            <span class="nome-lavoratore">{{ worker.name }} {{ worker.surname }}</span>
+            <button class="pulsante-invia">Send Message</button>
+        </div>
+        </div>
+        <br>
+    </div>
+</body>
+
+</html>

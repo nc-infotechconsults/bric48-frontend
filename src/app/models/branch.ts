@@ -3,4 +3,5 @@ export interface Branch {
     name: string
     address: string
     idAdmin: string
+    workers_count: number | undefined
 }

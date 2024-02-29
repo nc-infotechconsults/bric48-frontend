@@ -10,6 +10,7 @@
         <p class="card-text"><strong>Topic:</strong> {{ machinery?.topic }}</p>
         <p class="card-text"><strong>ID Room:</strong> {{ machinery?.idRoom }}</p>
         <p class="card-text"><strong>Nearby Workers:</strong> {{ machinery?.nearbyWorkers }}</p>
+        <button class="btn btn-primary" (click)="goToMachineryDetails(machinery?.mserial)">See details</button>
       </div>
     </div>
 </div>

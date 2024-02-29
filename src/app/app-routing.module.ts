@@ -5,6 +5,7 @@ import { MachineryComponent } from './components/machinery/machinery.component';
 import { BranchComponent } from './components/branch/branch.component';
 import { RoomComponent } from './components/room/room.component';
 import { HomeComponent } from './components/home/home.component';
+import { MachineryDetailsComponent } from './components/machinery-details/machinery-details.component';
 
 const routes: Routes = [
   {
@@ -17,7 +18,8 @@ const routes: Routes = [
     children: [
       {path:'branch', component: BranchComponent},
       {path:'room', component: RoomComponent},
-      {path:'machinery', component: MachineryComponent}
+      {path:'machinery', component: MachineryComponent},
+      {path:'details', component: MachineryDetailsComponent}
       /*{path: 'charts', component : ChartsComponent, children: [ {path: 'saw', component:SawChartComponent}, {path: 'lathe', component:LatheChartComponent}]},
       {path: 'info', component : InfoSearchBarComponent, children: [{path: '', component:AllInfoComponent}, {path: 'saw', component:InfoSawComponent}, {path: 'lathe', component:InfoLatheComponent}]},
       {path:'alarms', component: AlarmsSearchBarComponent},*/

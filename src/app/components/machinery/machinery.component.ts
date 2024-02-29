@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { MachineryService } from '../../services/machinery.service';
 import { Machinery } from '../../models/machinery';
 import { NearbyHeadphones } from '../../models/nearby-headphones';
+import { Router } from '@angular/router';
+import { NearbyHeadphonesService } from '../../services/nearby-headphones.service';
 
 @Component({
   selector: 'app-machinery',
@@ -17,7 +19,7 @@ export class MachineryComponent {
 
   intervalId: any;
 
-  constructor(private machineryService:MachineryService) {
+  constructor(private machineryService:MachineryService, private nearbyHeadphonesService:NearbyHeadphonesService, private router: Router) {
   }
 
   //On init
@@ -27,7 +29,7 @@ export class MachineryComponent {
 
     if (this.machineries !== null) {
       for (const machinery of this.machineries) {
-        this.nearbyHeadphones = await this.machineryService.getNearbyHeadphonesByMserial(machinery.mserial)
+        this.nearbyHeadphones = await this.nearbyHeadphonesService.getNearbyHeadphonesByMserial(machinery.mserial)
       }
     }  
 
@@ -37,7 +39,6 @@ export class MachineryComponent {
   //On destroy
   ngOnDestroy() {
     this.stopPolling();
-    //localStorage.removeItem('idRoom')
   }
 
 
@@ -48,7 +49,7 @@ export class MachineryComponent {
 
     if (this.machineries !== null) {
       for (const machinery of this.machineries) {
-        this.nearbyHeadphones = await this.machineryService.getNearbyHeadphonesByMserial(machinery.mserial)
+        this.nearbyHeadphones = await this.nearbyHeadphonesService.getNearbyHeadphonesByMserial(machinery.mserial)
         machinery.nearbyWorkers = this.nearbyHeadphones?.length
       }
     }  
@@ -60,6 +61,11 @@ export class MachineryComponent {
     clearInterval(this.intervalId);
   }
 
+
+  goToMachineryDetails(mserial: any) {
+    localStorage.setItem('mserial', mserial)
+    this.router.navigate(['home/details']);
+  }
 
 
 }

@@ -49,9 +49,9 @@ export class MachineryService {
     }
   }
 
-  // Get nearby headphones by mserial
-  async getNearbyHeadphonesByMserial(mserial: string)  : Promise<NearbyHeadphones[]|null> {
-    const apiUrl = 'http://localhost:8080/nearbyHeadphones/find/'+mserial
+  // Get machinery by mserial
+  async getMachineryByMserial(mserial: string)  : Promise<Machinery|null> {
+    const apiUrl = 'http://localhost:8080/machinery/find/machinery/'+mserial
 
     try {
       var token = JSON.parse(localStorage.getItem('token')!)
@@ -60,12 +60,13 @@ export class MachineryService {
           'Authorization': `Bearer `+token.jwt,
         },
       });
-      const nearbyHeadphones: NearbyHeadphones[] = response.data;
-      return nearbyHeadphones;
+      const machinery: Machinery = response.data;
+      return machinery;
 
     } catch (error) {
       return null;
     }
   }
+
 
 }

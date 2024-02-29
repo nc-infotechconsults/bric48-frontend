@@ -1,6 +1,8 @@
 export interface NearbyHeadphones {
     id: string
     serial: string
-    mserial: number
+    mserial: string
+    idRoom: string
+    idBranch: string
 }
 
