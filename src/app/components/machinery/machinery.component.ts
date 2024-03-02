@@ -15,7 +15,9 @@ export class MachineryComponent {
   machineries: Machinery[] | null = [];
   nearbyHeadphones: NearbyHeadphones[] | null = [];
 
-  idRoom: any = localStorage.getItem('idRoom')
+  nearbyWorkers_temp: number | null = 0;
+
+  idRoom: any = localStorage.getItem('idRoom');
 
   intervalId: any;
 
@@ -30,6 +32,7 @@ export class MachineryComponent {
     if (this.machineries !== null) {
       for (const machinery of this.machineries) {
         this.nearbyHeadphones = await this.nearbyHeadphonesService.getNearbyHeadphonesByMserial(machinery.mserial)
+        machinery.nearbyWorkers = this.nearbyHeadphones?.length
       }
     }  
 

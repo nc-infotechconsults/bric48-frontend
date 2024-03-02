@@ -18,7 +18,9 @@ export class MachineryDetailsComponent {
 
   nearbyHeadphones : NearbyHeadphones[] | null = [];
   machineryAlarms : MachineryData[] | null = [];
+  machineryAlarms_temp : MachineryData[] | null = [];
   workers : Worker[] | null = [];
+  workers_temp : Worker[] | null = [];
   machinery : Machinery | null = {} as Machinery;
 
   w : any;
@@ -38,9 +40,6 @@ export class MachineryDetailsComponent {
 
     this.machinery = await this.machineryService.getMachineryByMserial(this.mserial);
 
-    this.machineryAlarms = await this.machineryDataService.getMachineryDataByTypeAndMserial("alarm", this.mserial);
-
-
     this.nearbyHeadphones = await this.nearbyHeadphonesService.getNearbyHeadphonesByMserial(this.mserial);
 
     if (this.nearbyHeadphones !== null) {
@@ -48,7 +47,9 @@ export class MachineryDetailsComponent {
         this.w = await this.workerService.getWorkerBySerial(nearbyH.serial)
         this.workers?.push(this.w)
       }
-    }  
+    } 
+
+    this.machineryAlarms = await this.machineryDataService.getMachineryDataByTypeAndMserial("alarm", this.mserial);
 
     this.startPolling()
   }
@@ -62,17 +63,25 @@ export class MachineryDetailsComponent {
   startPolling() {
     this.intervalId = setInterval(async () => {
 
-      this.workers = []
+      this.workers_temp = []
       this.nearbyHeadphones = await this.nearbyHeadphonesService.getNearbyHeadphonesByMserial(this.mserial);
 
       if (this.nearbyHeadphones !== null) {
         for (const nearbyH of this.nearbyHeadphones) {
           this.w = await this.workerService.getWorkerBySerial(nearbyH.serial)
-          this.workers?.push(this.w)
+          this.workers_temp?.push(this.w)
         }
       }
 
-      this.machineryAlarms = await this.machineryDataService.getMachineryDataByTypeAndMserial("alarm", this.mserial);
+      if(!this.isEqual(this.workers_temp, this.workers)){
+        this.workers = this.workers_temp
+      }
+
+      this.machineryAlarms_temp = await this.machineryDataService.getMachineryDataByTypeAndMserial("alarm", this.mserial);
+
+      if(!this.isEqual(this.machineryAlarms_temp, this.machineryAlarms)){
+        this.machineryAlarms = this.machineryAlarms_temp
+      }
 
     }, 1000); // Esegui ogni secondo
   }
@@ -80,5 +89,18 @@ export class MachineryDetailsComponent {
   stopPolling() {
     clearInterval(this.intervalId);
   }
+
+  // Funzione per confrontare due array di oggetti
+  isEqual(a: object[] | any , b: object[] | any): boolean {
+    if (a?.length !== b?.length) {
+        return false;
+    }
+    for (let i = 0; i < a.length; i++) {
+        if (JSON.stringify(a[i]) !== JSON.stringify(b[i])) {
+            return false;
+        }
+    }
+    return true;
+}
 
 }
