@@ -22,7 +22,7 @@ export class MachineryDataService {
         },
       });
       const machineryData: MachineryData[] = response.data;
-      return machineryData;
+      return machineryData.reverse();
 
     } catch (error) {
       return null;

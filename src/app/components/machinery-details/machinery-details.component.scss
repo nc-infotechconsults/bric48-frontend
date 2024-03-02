@@ -12,15 +12,7 @@ body {
     height: 20%;
 }
 
-.container-out {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-}
-
-.machinery {
+.machinery-title {
     font-size: 30px;
     font-weight: bold;
     text-align: center;
@@ -32,27 +24,28 @@ body {
     text-align: center;
 }
 
-.lista {
-    width: 80%;
-    margin: 0 auto;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-.lavoratore {
+
+.worker {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px;
     border-bottom: 1px solid #ddd;
 }
-.nome-lavoratore {
+
+.alarm {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+
+.info-worker {
     font-size: 16px;
 }
-.pulsante-invia {
-    background-color: #0073b7;
-    color: white;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+
+.info-alarm {
+    font-size: 18px;
 }

@@ -2,27 +2,31 @@
 <html lang="it">
 
 <body>
-    <h1 class="machinery">{{ machinery?.name }} {{ machinery?.mserial }}</h1>
+    <h1 class="machinery-title">{{ machinery?.name }} {{ machinery?.mserial }}</h1>
     <br>
     <br>
 
-    <div class="container" style="border-radius: 10px; border: 2px solid gray; height: 40vh; overflow-y: auto;">
-        <br>
-        <h2 class="title">NEARBY WORKERS</h2>
-        <br>
-        <button class="btn btn-primary">SEND MESSAGE TO ALL</button>
-        <br>
-        <div *ngFor="let worker of workers">
-            <div class="lavoratore">
-                <span class="nome-lavoratore">{{ worker.name }} {{ worker.surname }}</span>
-                <button class="btn btn-primary">Send Message</button>
-                <br>
+    <div style="display: flex; justify-content: space-between;">
+
+        <div class="container" style="border-radius: 10px; border: 2px solid gray; height: 40vh; overflow-y: auto;">
+            <br>
+            <h2 class="title">NEARBY WORKERS</h2>
+            <br>
+            <button class="btn btn-primary">SEND MESSAGE TO ALL</button>
+            <br>
+            <div *ngFor="let worker of workers">
+                <div class="worker">
+                    <span class="info-worker">{{ worker.name }} {{ worker.surname }}  [{{ worker.role }}]</span>
+                    <button class="btn btn-primary">Send Message</button>
+                    <br>
+                </div>
             </div>
         </div>
+
+        <img src="/assets/grafico.png" alt="Grafico" style="border-radius: 10px; border: 2px solid gray; height: 40vh; width: 60vw;">
+
     </div>
     
-
-    <br>
     <br>
     <br>
 
@@ -30,8 +34,8 @@
         <br>
         <h2 class="title">ALARMS</h2>
         <div *ngFor="let alarm of machineryAlarms">
-            <div class="lavoratore">
-                <label class="nome-lavoratore"><strong>Value</strong>: {{ alarm.value }}, <strong>Description</strong>: {{ alarm.description }}, <strong>Timestamp</strong>: {{ alarm.timestamp }}</label>
+            <div class="alarm">
+                <label class="info-alarm"><strong>Value</strong>: {{ alarm.value }}, <strong>Description</strong>: {{ alarm.description }}, <strong>Timestamp</strong>: {{ alarm.timestamp }}</label>
             </div>
         </div>
     </div>

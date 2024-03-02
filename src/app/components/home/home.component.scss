@@ -14,6 +14,8 @@
     background-repeat: no-repeat; /* Control image repetition */
     background-size: cover; /* Resize image to fit the navbar */
     background-position: center; /* Position image in the center */
+
+    border: 2px solid gray;
 }
 
 /* Sidebar */
@@ -32,6 +34,10 @@
     background-repeat: no-repeat; /* Control image repetition */
     background-size: cover; /* Resize image to fit the navbar */
     background-position: center; /* Position image in the center */
+
+    border-bottom: 2px solid gray;
+    border-right: 2px solid gray;
+    border-left: 2px solid gray;
   }
 
 /* Contenuto principale */
