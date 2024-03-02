@@ -28,7 +28,9 @@ export class RoomComponent {
     if (this.rooms) {
       for (const room of this.rooms) {
         this.nearbyHeadphones = await this.nearbyHeadphonesService.getNearbyHeadphonesByIdRoom(room.id);
-        room.workers_count = this.nearbyHeadphones?.length;
+        // Ottieni i valori distinti del campo 'serial'
+        const distinctSerials = Array.from(new Set(this.nearbyHeadphones?.map(obj => obj.serial)));
+        room.workers_count = distinctSerials.length;
       }
     }
 
@@ -43,7 +45,9 @@ export class RoomComponent {
       if (this.rooms) {
         for (const room of this.rooms) {
           this.nearbyHeadphones = await this.nearbyHeadphonesService.getNearbyHeadphonesByIdRoom(room.id);
-          room.workers_count = this.nearbyHeadphones?.length;
+          // Ottieni i valori distinti del campo 'serial'
+          const distinctSerials = Array.from(new Set(this.nearbyHeadphones?.map(obj => obj.serial)));
+          room.workers_count = distinctSerials.length;
         }
       }
 

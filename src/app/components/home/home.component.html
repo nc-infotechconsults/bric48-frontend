@@ -6,27 +6,33 @@
 
 
 <body>
+
   <div id="navbar" class="navbar-light justify-content-between fixed-top">
+
     <img src="/assets/idalab_logo.png" class="d-inline-block align-top logo" alt="Logo">
+
     <div class="text-center mx-auto">
       <a class="navbar-brand" [routerLink]="['/home/branch']" [ngClass]="{'disabled': isHomePage()}">
         <h3 class="mx-3"><strong>DPI-U AI - BRIC48</strong></h3>
       </a>
     </div>
+
     <div class="d-flex">
-      <button type="button" class="btn btn-outline-primary btn-square mx-1">
-        <img src="/assets/btn_account.png" style="object-fit: contain" width="24" height="24" alt="Icona 1">
+      <button type="button" class="btn btn-outline-primary mx-2" style="width: 4vw; height: 6vh;">
+        <img src="/assets/btn_account.png" style="object-fit: contain" width="100%" height="100%" alt="Account">
       </button>
-      <button type="button" class="btn btn-outline-primary btn-square mx-1">
-        <img src="/assets/btn_settings.png" style="object-fit: contain" width="24" height="24" alt="Icona 2">
+      <button type="button" class="btn btn-outline-primary mx-2" style="width: 4vw; height: 6vh;">
+        <img src="/assets/btn_settings.png" style="object-fit: contain" width="100%" height="100%" alt="Settings">
       </button>
-      <button type="button" class="btn btn-outline-primary btn-square mx-1">
-        <img src="/assets/btn_machinery_list.png" style="object-fit: contain" width="24" height="24" alt="Icona 3">
+      <button type="button" class="btn btn-outline-primary mx-2" style="width: 4vw; height: 6vh;">
+        <img src="/assets/btn_machinery_list.png" style="object-fit: contain" width="100%" height="100%" alt="List">
       </button>
-      <button type="button" class="btn btn-outline-primary btn-square mx-1">
-        <img src="/assets/btn_logout.png" style="object-fit: contain" width="24" height="24" alt="Icona 4">
+      <button type="button" class="btn btn-outline-primary mx-2" style="width: 4vw; height: 6vh;">
+        <img src="/assets/btn_logout.png" style="object-fit: contain" width="100%" height="100%" alt="Logout">
       </button>
+      <label style="width: 1vw; height: 6vh;"></label>
     </div>
+    
   </div>
 
   <div id="sidebar" class="navbar-light"> 
@@ -43,23 +49,23 @@
 
       <br>
   
-      <div><button type="button" class="btn btn-primary button" (click)="goToHomePage()">HOMEPAGE</button></div>
+      <div><button type="button" class="btn btn-primary button-sidebar" (click)="goToHomePage()">HOMEPAGE</button></div>
       <br>
-      <div><button type="button" class="btn btn-primary button">CHECK FAILURES</button></div>
+      <div><button type="button" class="btn btn-primary button-sidebar">CHECK FAILURES</button></div>
       <br>
-      <div><button type="button" class="btn btn-primary button">MANAGE HEADPHONES</button></div>
+      <div><button type="button" class="btn btn-primary button-sidebar">MANAGE HEADPHONES</button></div>
       <br>
-      <div><button type="button" class="btn btn-primary button">MANAGE USERS</button></div>
+      <div><button type="button" class="btn btn-primary button-sidebar">MANAGE USERS</button></div>
       <br>
-      <div><button type="button" class="btn btn-primary button">MANAGE SENSORS</button></div>
+      <div><button type="button" class="btn btn-primary button-sidebar">MANAGE SENSORS</button></div>
       <br>
-      <div><button type="button" class="btn btn-primary button">MANAGE MACHINERIES</button></div>
+      <div><button type="button" class="btn btn-primary button-sidebar">MANAGE MACHINERIES</button></div>
       <br>
-      <div><button type="button" class="btn btn-primary button">MANAGE SITES/ROOMS</button></div>
+      <div><button type="button" class="btn btn-primary button-sidebar">MANAGE SITES/ROOMS</button></div>
       <br>
-      <div><button type="button" class="btn btn-primary button">SEND MESSAGES</button></div>
+      <div><button type="button" class="btn btn-primary button-sidebar">SEND MESSAGES</button></div>
       <br>
-      <div><button type="button" class="btn btn-primary button">CHECK LOGS</button></div>
+      <div><button type="button" class="btn btn-primary button-sidebar">CHECK LOGS</button></div>
   
     </div>
   </div>

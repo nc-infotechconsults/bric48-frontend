@@ -1,16 +1,18 @@
-<div class="container">
-    <div class="card" *ngFor="let branch of branches">
-      <div class="card-header">
-        Branch Info
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">Branch: {{ branch?.id }}</h5>
-        <p class="card-text"><strong>Name:</strong> {{ branch?.name }}</p>
-        <p class="card-text"><strong>Address:</strong> {{ branch?.address }}</p>
-        <p class="card-text"><strong>Number of workers in this branch:</strong> {{ branch?.workers_count }}</p>
-        <button class="btn btn-primary" (click)="goToRoomsPage(branch?.id)">Go to rooms</button>
-      </div>
+<div class="card-grid">
+  <div class="card" *ngFor="let branch of branches">
+    <div class="card-header">
+      Branch Info
     </div>
+    <div class="card-body">
+      <h5 class="card-text"><strong>Name:</strong> {{ branch?.name }}</h5>
+      <br>
+      <p class="card-text"><strong>Address:</strong> {{ branch?.address }}</p>
+      <p class="card-title"><strong>Branch ID:</strong> {{ branch?.id }}</p>
+      <p class="card-text"><strong>Number of workers in this branch:</strong> {{ branch?.workers_count }}</p>
+      <button class="btn btn-primary" (click)="goToRoomsPage(branch?.id)">Go to rooms</button>
+    </div>
+  </div>
 </div>
+
 
 

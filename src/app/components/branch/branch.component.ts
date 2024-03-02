@@ -26,7 +26,10 @@ export class BranchComponent {
     if (this.branches) {
       for (const branch of this.branches) {
         this.nearbyHeadphones = await this.nearbyHeadphonesService.getNearbyHeadphonesByIdBranch(branch.id);
-        branch.workers_count = this.nearbyHeadphones?.length;
+
+        // Ottieni i valori distinti del campo 'serial'
+        const distinctSerials = Array.from(new Set(this.nearbyHeadphones?.map(obj => obj.serial)));
+        branch.workers_count = distinctSerials.length;
       }
     }
 
@@ -42,7 +45,9 @@ export class BranchComponent {
       if (this.branches) {
         for (const branch of this.branches) {
           this.nearbyHeadphones = await this.nearbyHeadphonesService.getNearbyHeadphonesByIdBranch(branch.id);
-          branch.workers_count = this.nearbyHeadphones?.length;
+          // Ottieni i valori distinti del campo 'serial'
+          const distinctSerials = Array.from(new Set(this.nearbyHeadphones?.map(obj => obj.serial)));
+          branch.workers_count = distinctSerials.length;
         }
       }
 

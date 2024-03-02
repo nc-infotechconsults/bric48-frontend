@@ -6,6 +6,8 @@ import { NearbyHeadphones } from '../../models/nearby-headphones';
 import { Worker } from '../../models/worker';
 import { Machinery } from '../../models/machinery';
 import { MachineryService } from '../../services/machinery.service';
+import { MachineryDataService } from '../../services/machinery-data.service';
+import { MachineryData } from '../../models/machinery-data';
 
 @Component({
   selector: 'app-machinery-details',
@@ -15,6 +17,7 @@ import { MachineryService } from '../../services/machinery.service';
 export class MachineryDetailsComponent {
 
   nearbyHeadphones : NearbyHeadphones[] | null = [];
+  machineryAlarms : MachineryData[] | null = [];
   workers : Worker[] | null = [];
   machinery : Machinery | null = {} as Machinery;
 
@@ -24,7 +27,7 @@ export class MachineryDetailsComponent {
 
   intervalId: any;
   
-  constructor(private nearbyHeadphonesService:NearbyHeadphonesService, private machineryService:MachineryService, private workerService:WorkerService, private router: Router) {
+  constructor(private nearbyHeadphonesService:NearbyHeadphonesService, private machineryService:MachineryService, private workerService:WorkerService, private machineryDataService:MachineryDataService, private router: Router) {
   }
 
 
@@ -34,6 +37,9 @@ export class MachineryDetailsComponent {
     this.mserial = localStorage.getItem("mserial")
 
     this.machinery = await this.machineryService.getMachineryByMserial(this.mserial);
+
+    this.machineryAlarms = await this.machineryDataService.getMachineryDataByTypeAndMserial("alarm", this.mserial);
+
 
     this.nearbyHeadphones = await this.nearbyHeadphonesService.getNearbyHeadphonesByMserial(this.mserial);
 
@@ -65,6 +71,8 @@ export class MachineryDetailsComponent {
           this.workers?.push(this.w)
         }
       }
+
+      this.machineryAlarms = await this.machineryDataService.getMachineryDataByTypeAndMserial("alarm", this.mserial);
 
     }, 1000); // Esegui ogni secondo
   }

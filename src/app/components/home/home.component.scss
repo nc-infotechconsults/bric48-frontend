@@ -28,7 +28,7 @@
     flex-direction: column;
     align-items: left;
 
-    background-image: url("/assets/navbar_background.jpg"); /* Replace with your image path */
+    background-image: url("/assets/sidebar_background.jpg"); /* Replace with your image path */
     background-repeat: no-repeat; /* Control image repetition */
     background-size: cover; /* Resize image to fit the navbar */
     background-position: center; /* Position image in the center */
@@ -43,25 +43,25 @@
 
 /* Immagine */
 .logo {
-    margin-left: 1rem;
-    height: 100%;
+  margin-left: 1rem;
+  height: 100%;
 }
 
 /* Stile per i bottoni */
-.button {
-    margin-left: 1rem;
-    margin-right: 5rem;
-    width: 90%;
-  }
+.button-sidebar {
+  margin-left: 1rem;
+  margin-right: 5rem;
+  width: 90%;
+}
 
 /* Stile per le label */
 .label {
-    text-align: center;
-    width: 100%;
-  }
+  text-align: center;
+  width: 100%;
+}
 
 /* Linea orizzontale */
 hr {
-  border: 1px solid #828282; /* Colore e stile della linea orizzontale */
-  margin: 0 0; /* Margine sopra e sotto la linea orizzontale */
+border: 1px solid #828282; /* Colore e stile della linea orizzontale */
+margin: 0 0; /* Margine sopra e sotto la linea orizzontale */
 }

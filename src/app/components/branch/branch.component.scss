@@ -1,0 +1,7 @@
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(25%, 1fr));
+    /* Adjust grid-gap for desired spacing between cards */
+    grid-gap: 2%;
+}
+
