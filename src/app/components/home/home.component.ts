@@ -16,6 +16,10 @@ export class HomeComponent {
 
   constructor(private adminService:AdminService, private router: Router) { }
 
+  async ngOnInit(){
+    this.admin = await this.adminService.getAdminByEmail(localStorage.getItem('email'));
+  }
+
   isHomePage(): boolean {
     return this.router.url === '/home/branch';
   }
@@ -24,8 +28,9 @@ export class HomeComponent {
     this.router.navigate(['/home/branch']);
   }
 
-  async ngOnInit(){
-    this.admin = await this.adminService.getAdminByEmail(localStorage.getItem('email'));
+  goToHeadphonesList(): void {
+    this.router.navigate(['/home/headphones']);
   }
+
 
 }

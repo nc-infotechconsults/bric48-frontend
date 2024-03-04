@@ -11,6 +11,8 @@ import { BranchComponent } from './components/branch/branch.component';
 import { RoomComponent } from './components/room/room.component';
 import { HomeComponent } from './components/home/home.component';
 import { MachineryDetailsComponent } from './components/machinery-details/machinery-details.component';
+import { HeadphonesListComponent } from './components/headphones-list/headphones-list.component';
+import { NewHeadphonesComponent } from './components/new-headphones/new-headphones.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { MachineryDetailsComponent } from './components/machinery-details/machin
     BranchComponent,
     RoomComponent,
     HomeComponent,
-    MachineryDetailsComponent
+    MachineryDetailsComponent,
+    HeadphonesListComponent,
+    NewHeadphonesComponent
   ],
   imports: [
     HttpClientModule,

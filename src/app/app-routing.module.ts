@@ -6,6 +6,8 @@ import { BranchComponent } from './components/branch/branch.component';
 import { RoomComponent } from './components/room/room.component';
 import { HomeComponent } from './components/home/home.component';
 import { MachineryDetailsComponent } from './components/machinery-details/machinery-details.component';
+import { HeadphonesListComponent } from './components/headphones-list/headphones-list.component';
+import { NewHeadphonesComponent } from './components/new-headphones/new-headphones.component';
 
 const routes: Routes = [
   {
@@ -19,7 +21,9 @@ const routes: Routes = [
       {path:'branch', component: BranchComponent},
       {path:'room', component: RoomComponent},
       {path:'machinery', component: MachineryComponent},
-      {path:'details', component: MachineryDetailsComponent}
+      {path:'details', component: MachineryDetailsComponent},
+      {path:'headphones', component: HeadphonesListComponent},
+      {path:'headphones/new', component: NewHeadphonesComponent}
       /*{path: 'charts', component : ChartsComponent, children: [ {path: 'saw', component:SawChartComponent}, {path: 'lathe', component:LatheChartComponent}]},
       {path: 'info', component : InfoSearchBarComponent, children: [{path: '', component:AllInfoComponent}, {path: 'saw', component:InfoSawComponent}, {path: 'lathe', component:InfoLatheComponent}]},
       {path:'alarms', component: AlarmsSearchBarComponent},*/
