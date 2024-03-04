@@ -8,7 +8,7 @@
 
     <div style="display: flex; justify-content: space-between;">
 
-        <div class="container" style="border-radius: 10px; border: 2px solid gray; height: 40vh; overflow-y: auto;">
+        <div class="container" style="border-radius: 10px; border: 2px solid gray; height: 40vh; width: 20vw; overflow-y: auto;">
             <br>
             <h2 class="title">NEARBY WORKERS</h2>
             <br>
@@ -17,13 +17,13 @@
             <div *ngFor="let worker of workers">
                 <div class="worker">
                     <span class="info-worker">{{ worker.name }} {{ worker.surname }}  [{{ worker.role }}]</span>
-                    <button class="btn btn-primary">Send Message</button>
+                    <button class="btn btn-primary mx-1">Send Message</button>
                     <br>
                 </div>
             </div>
         </div>
 
-        <img src="/assets/grafico.png" alt="Grafico" style="border-radius: 10px; border: 2px solid gray; height: 40vh; width: 60vw;">
+        <img src="/assets/grafico.png" alt="Grafico" style="border-radius: 10px; border: 2px solid gray; height: 40vh; width: 50vw;">
 
     </div>
     
