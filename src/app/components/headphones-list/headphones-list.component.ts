@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { HeadphonesService } from '../../services/headphones.service';
 import { Headphones } from '../../models/headphones';
+import { WorkerService } from '../../services/worker.service';
 
 @Component({
   selector: 'app-headphones-list',
@@ -13,7 +14,7 @@ export class HeadphonesListComponent {
   headphonesArray: Headphones[] | null = [];
   statusCode: number = 0;
 
-  constructor(private headphonesService:HeadphonesService, private router: Router) {
+  constructor(private headphonesService:HeadphonesService, private workerService:WorkerService, private router: Router) {
   }
 
   //On init
@@ -34,9 +35,17 @@ export class HeadphonesListComponent {
     this.statusCode = await this.headphonesService.deleteHeadphones(serial);
 
     if (this.statusCode == 0){
-      window.alert("Headphones deleted!");
-      //this.router.navigate(['/home/headphones'])
+
+      // Aggionrna il campo idHeadphones del Worker impostandolo a stringa vuota
+      this.statusCode = await this.workerService.updateIdHeadphones(serial, "");
+
+      if (this.statusCode == 0){
+        window.alert("Headphones deleted!");
       this.reloadPage()
+      }else{
+        window.alert("Error with status code: " + this.statusCode)
+      }
+
     }else{
       window.alert("Error with status code: " + this.statusCode)
     }

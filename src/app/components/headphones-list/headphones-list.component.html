@@ -17,7 +17,7 @@
             <tr *ngFor="let headphones of headphonesArray">
             <td>{{ headphones.serial }}</td>
             <td>{{ headphones.isAssociated }}</td>
-            <td><button class="btn btn-primary mx-1">Edit</button>
+            <td>
                 <button class="btn btn-primary mx-1" (click)="deleteHeadphones(headphones.serial)">Delete</button></td>
             </tr>
         </tbody>
@@ -29,7 +29,7 @@
 
     <div style="text-align: center;">
         <div class="button-wrapper">
-          <button class="btn btn-primary mx-1" (click)="goToNewHeadphonesPage()">New Headphones</button>
+          <button class="btn btn-primary mx-1" (click)="goToNewHeadphonesPage()">Add Headphones</button>
         </div>
     </div>
 

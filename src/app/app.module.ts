@@ -13,6 +13,12 @@ import { HomeComponent } from './components/home/home.component';
 import { MachineryDetailsComponent } from './components/machinery-details/machinery-details.component';
 import { HeadphonesListComponent } from './components/headphones-list/headphones-list.component';
 import { NewHeadphonesComponent } from './components/new-headphones/new-headphones.component';
+import { WorkersListComponent } from './components/workers-list/workers-list.component';
+import { NewWorkerComponent } from './components/new-worker/new-worker.component';
+import { EditWorkerComponent } from './components/edit-worker/edit-worker.component';
+import { SensorsListComponent } from './components/sensors-list/sensors-list.component';
+import { NewSensorComponent } from './components/new-sensor/new-sensor.component';
+import { EditSensorComponent } from './components/edit-sensor/edit-sensor.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +30,13 @@ import { NewHeadphonesComponent } from './components/new-headphones/new-headphon
     HomeComponent,
     MachineryDetailsComponent,
     HeadphonesListComponent,
-    NewHeadphonesComponent
+    NewHeadphonesComponent,
+    WorkersListComponent,
+    NewWorkerComponent,
+    EditWorkerComponent,
+    SensorsListComponent,
+    NewSensorComponent,
+    EditSensorComponent
   ],
   imports: [
     HttpClientModule,

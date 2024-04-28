@@ -32,5 +32,12 @@ export class HomeComponent {
     this.router.navigate(['/home/headphones']);
   }
 
+  goToWorkersList(): void {
+    this.router.navigate(['/home/workers']);
+  }
+
+  goToSensorsList(): void {
+    this.router.navigate(['/home/sensors']);
+  }
 
 }

@@ -1,0 +1,47 @@
+<h1 class="workers-title">Workers List</h1>
+
+<br>
+<br>
+
+<div >
+    <div class="container mt-5" style="border-radius: 10px; border: 1px solid gray; height: 50vh; width: 80vw; overflow-y: auto;">
+        <table class="table table-striped">
+        <thead>
+            <tr>
+            <th>Roll Number</th>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Email</th>
+            <th>Cellphone</th>
+            <th>Role</th>
+            <th>Headphones Serial</th>
+            <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let worker of workersArray">
+            <td>{{ worker?.rollNumber }}</td>
+            <td>{{ worker?.name }}</td>
+            <td>{{ worker?.surname }}</td>
+            <td>{{ worker?.email }}</td>
+            <td>{{ worker?.phoneNumber }}</td>
+            <td>{{ worker?.role }}</td>
+            <td>{{ worker?.idHeadphones }}</td>
+            <td>
+                <button class="btn btn-primary mx-1" (click)="editWorker(worker?.id)">Edit</button>
+                <button class="btn btn-primary mx-1" (click)="deleteWorker(worker?.id, worker?.idHeadphones)">Delete</button></td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
+
+    <br>
+    <br>
+
+    <div style="text-align: center;">
+        <div class="button-wrapper">
+          <button class="btn btn-primary mx-1" (click)="goToNewWorkerPage()">Add Worker</button>
+        </div>
+    </div>
+
+</div>
