@@ -85,7 +85,9 @@ export class WorkerService {
       if (response.status === 200) {
 
         // Aggiornamento dello stato di associazione delle cuffie da False a True
-        this.statusCode = await this.headphonesService.updateAssociation(worker.idHeadphones, "True");
+        if(worker.idHeadphones != ""){
+          this.statusCode = await this.headphonesService.updateAssociation(worker.idHeadphones, "True");
+        }
         
 
         if (this.statusCode == 0){
@@ -176,7 +178,9 @@ export class WorkerService {
       if (response.status === 200) {
 
         // Aggiornamento dello stato di associazione delle cuffie da False a True
-        this.statusCode = await this.headphonesService.updateAssociation(worker.idHeadphones, "True");
+        if(worker.idHeadphones != ""){
+          this.statusCode = await this.headphonesService.updateAssociation(worker.idHeadphones, "True");
+        }
         
 
         if (this.statusCode == 0){

@@ -28,5 +28,25 @@ export class BranchService {
       return null;
     }
   }
+
+
+  // Get branch by id
+  async getById(id: any)  : Promise<Branch|null> {
+    const apiUrl = 'http://localhost:8080/branch/findById/'+id
+
+    try {
+      var token = JSON.parse(localStorage.getItem('token')!)
+      const response = await axios.get(apiUrl, {
+        headers: {
+          'Authorization': `Bearer `+token.jwt,
+        },
+      });
+      const branch: Branch = response.data;
+      return branch;
+
+    } catch (error) {
+      return null;
+    }
+  }
   
 }

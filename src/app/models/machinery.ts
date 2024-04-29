@@ -4,5 +4,8 @@ export interface Machinery {
     name: string
     topic: string
     idRoom: string
+    idBranch: string
+    branchName: string
+    roomName: string
     nearbyWorkers: number | undefined
 }

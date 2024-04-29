@@ -1,0 +1,43 @@
+<h1 class="machinery-title">Machineries List</h1>
+
+<br>
+<br>
+
+<div >
+    <div class="container mt-5" style="border-radius: 10px; border: 1px solid gray; height: 50vh; width: 80vw; overflow-y: auto;">
+        <table class="table table-striped">
+        <thead>
+            <tr>
+            <th>Mserial</th>
+            <th>Name</th>
+            <th>Topic</th>
+            <th>Branch</th>
+            <th>Room</th>
+            <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let machinery of machineries">
+            <td>{{ machinery.mserial }}</td>
+            <td>{{ machinery.name }}</td>
+            <td>{{ machinery.topic }}</td>
+            <td>{{ machinery.branchName }}</td>
+            <td>{{ machinery.roomName }}</td>
+            <td>
+                <button class="btn btn-primary mx-1" (click)="editMachinery(machinery.mserial)">Edit</button>
+                <button class="btn btn-primary mx-1" (click)="deleteMachinery(machinery.mserial)">Delete</button></td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
+
+    <br>
+    <br>
+
+    <div style="text-align: center;">
+        <div class="button-wrapper">
+          <button class="btn btn-primary mx-1" (click)="goToNewMachineryPage()">Add Machinery</button>
+        </div>
+    </div>
+
+</div>

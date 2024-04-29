@@ -31,6 +31,10 @@ export class NewWorkerComponent {
   async onSubmit(form: any) {
     this.btnDisabled = true;
 
+    if(this.worker.idHeadphones == "No headphones associated"){
+      this.worker.idHeadphones = ""
+    }
+
     this.statusCode = await this.workerService.addWorker(this.worker);
 
     if (this.statusCode == 0){

@@ -40,4 +40,8 @@ export class HomeComponent {
     this.router.navigate(['/home/sensors']);
   }
 
+  goToMachineriesList(): void {
+    this.router.navigate(['/home/machineries']);
+  }
+
 }

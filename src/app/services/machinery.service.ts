@@ -3,13 +3,16 @@ import { Injectable } from '@angular/core';
 import { Machinery } from '../models/machinery';
 import axios from 'axios';
 import { NearbyHeadphones } from '../models/nearby-headphones';
+import { SensorService } from './sensor.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MachineryService {
 
-  constructor(private http:HttpClient) { }
+  statusCode: number = 0;
+
+  constructor(private http:HttpClient, private sensorService:SensorService) { }
 
   // Get all machineries
   async getAll()  : Promise<Machinery[]|null> {
@@ -65,6 +68,60 @@ export class MachineryService {
 
     } catch (error) {
       return null;
+    }
+  }
+
+  // Delete machinery by mserial
+  async deleteMachinery(mserial: any) : Promise<number> {
+    const apiUrl = 'http://localhost:8080/machinery/delete/'+mserial
+
+    try {
+      var token = JSON.parse(localStorage.getItem('token')!)
+      const response = await axios.delete(apiUrl, {
+        headers: {
+          'Authorization': `Bearer `+token.jwt,
+        },
+      });
+      // Verifica se la richiesta è andata bene
+      if (response.status === 200) {
+
+        // Aggiornamento dello stato di associazione delle cuffie da True a False
+        this.statusCode = await this.sensorService.updateMserial(mserial, "");
+        
+        if (this.statusCode == 0){
+          return 0; // Restituisce 0 se la richiesta è andata bene
+        }else {
+          return 1; // Restituisce 1 se la richiesta ha avuto esito negativo
+        }
+
+       
+      } else {
+        return 1; // Restituisce 1 se la richiesta ha avuto esito negativo
+      }
+    } catch (error) {
+      return 1; // Restituisce 1 se si è verificato un errore durante la richiesta
+    }
+  }
+
+  // Add a new machinery
+  async addMachinery(machinery:Machinery): Promise<number> {
+    try {
+      const data = {mserial: machinery.mserial, name: machinery.name, topic: machinery.topic, idRoom: machinery.idRoom, idBranch: machinery.idBranch};
+      var token = JSON.parse(localStorage.getItem('token')!)
+      const response = await axios.post('http://localhost:8080/machinery/add', data, {
+        headers: {
+          'Authorization': `Bearer `+token.jwt,
+        },
+      });
+
+      // Verifica se la richiesta è andata bene
+      if (response.status === 200) {
+        return 0; // Restituisce 0 se la richiesta è andata bene
+      } else {
+        return 1; // Restituisce 1 se la richiesta ha avuto esito negativo
+      }
+    } catch (error) {
+      return 1; // Restituisce 1 se si è verificato un errore durante la richiesta
     }
   }
 

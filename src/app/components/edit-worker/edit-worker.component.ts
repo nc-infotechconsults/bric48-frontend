@@ -34,6 +34,10 @@ export class EditWorkerComponent {
   async onSubmit(form: any) {
     this.btnDisabled = true;
 
+    if(this.worker.idHeadphones == "No headphones associated"){
+      this.worker.idHeadphones = ""
+    }
+
     this.worker.id = this.idWorker;
     this.statusCode = await this.workerService.editWorker(this.worker);
 

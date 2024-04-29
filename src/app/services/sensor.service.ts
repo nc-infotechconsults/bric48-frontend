@@ -74,4 +74,74 @@ export class SensorService {
     }
   }
 
+  // Get sensor by mac
+  async getSensorByMac(mac: string)  : Promise<Sensor|null> {
+    const apiUrl = 'http://localhost:8080/beacon/findByMac/'+mac
+
+    try {
+      var token = JSON.parse(localStorage.getItem('token')!)
+      const response = await axios.get(apiUrl, {
+        headers: {
+          'Authorization': `Bearer `+token.jwt,
+        },
+      });
+      const sensor: Sensor = response.data;
+      return sensor;
+
+    } catch (error) {
+      return null;
+    }
+  }
+
+
+  // Update sensor
+  async editSensor(sensor: Sensor) : Promise<number> {
+
+    const apiUrl = 'http://localhost:8080/beacon/updateBeacon'
+
+    try {
+      var token = JSON.parse(localStorage.getItem('token')!)
+      const data = {id: sensor.id, mac: sensor.mac, mserial: sensor.mserial};
+      const response = await axios.put(apiUrl, data, {
+        headers: {
+          'Authorization': `Bearer `+token.jwt,
+        },
+      });
+
+      // Verifica se la richiesta è andata bene
+      if (response.status === 200) {
+        return 0; // Restituisce 0 se la richiesta è andata bene
+      } else {
+        return 1; // Restituisce 1 se la richiesta ha avuto esito negativo
+      }
+    } catch (error) {
+      return 1; // Restituisce 1 se si è verificato un errore durante la richiesta
+    }
+  }
+
+
+  // Update mserial
+  async updateMserial(oldMserial: string, newMserial: string) : Promise<number> {
+
+    const apiUrl = 'http://localhost:8080/beacon/updateMserial?oldMserial='+oldMserial+'&newMserial='+newMserial
+
+    try {
+      var token = JSON.parse(localStorage.getItem('token')!)
+      const response = await axios.put(apiUrl, {}, {
+        headers: {
+          'Authorization': `Bearer `+token.jwt,
+        },
+      });
+
+      // Verifica se la richiesta è andata bene
+      if (response.status === 200) {
+        return 0; // Restituisce 0 se la richiesta è andata bene
+      } else {
+        return 1; // Restituisce 1 se la richiesta ha avuto esito negativo
+      }
+    } catch (error) {
+      return 1; // Restituisce 1 se si è verificato un errore durante la richiesta
+    }
+  }
+
 }

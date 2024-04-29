@@ -19,6 +19,9 @@ import { EditWorkerComponent } from './components/edit-worker/edit-worker.compon
 import { SensorsListComponent } from './components/sensors-list/sensors-list.component';
 import { NewSensorComponent } from './components/new-sensor/new-sensor.component';
 import { EditSensorComponent } from './components/edit-sensor/edit-sensor.component';
+import { MachineriesListComponent } from './components/machineries-list/machineries-list.component';
+import { NewMachineryComponent } from './components/new-machinery/new-machinery.component';
+import { EditMachineryComponent } from './components/edit-machinery/edit-machinery.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,10 @@ import { EditSensorComponent } from './components/edit-sensor/edit-sensor.compon
     EditWorkerComponent,
     SensorsListComponent,
     NewSensorComponent,
-    EditSensorComponent
+    EditSensorComponent,
+    MachineriesListComponent,
+    NewMachineryComponent,
+    EditMachineryComponent
   ],
   imports: [
     HttpClientModule,

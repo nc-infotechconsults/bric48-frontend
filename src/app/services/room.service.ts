@@ -29,4 +29,23 @@ export class RoomService {
     }
   }
 
+  // Get room by id
+  async getById(id: any)  : Promise<Room|null> {
+    const apiUrl = 'http://localhost:8080/room/findById/'+id
+
+    try {
+      var token = JSON.parse(localStorage.getItem('token')!)
+      const response = await axios.get(apiUrl, {
+        headers: {
+          'Authorization': `Bearer `+token.jwt,
+        },
+      });
+      const room: Room = response.data;
+      return room;
+
+    } catch (error) {
+      return null;
+    }
+  }
+
 }

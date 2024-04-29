@@ -31,6 +31,11 @@ export class NewSensorComponent {
   async onSubmit(form: any) {
     this.btnDisabled = true;
 
+    
+    if(this.sensor.mserial == "No machinery associated"){
+      this.sensor.mserial = ""
+    }
+
     this.statusCode = await this.sensorService.addSensor(this.sensor);
 
     if (this.statusCode == 0){
