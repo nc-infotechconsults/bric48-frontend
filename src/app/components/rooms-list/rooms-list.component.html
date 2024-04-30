@@ -1,0 +1,35 @@
+<h1 class="rooms-title">Rooms List for branch '{{ branchName }}'</h1>
+
+<br>
+<br>
+
+<div >
+    <div class="container mt-5" style="border-radius: 10px; border: 1px solid gray; height: 50vh; width: 80vw; overflow-y: auto;">
+        <table class="table table-striped">
+        <thead>
+            <tr>
+            <th>Name</th>
+            <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let room of rooms">
+            <td>{{ room.name }}</td>
+            <td>
+                <button class="btn btn-primary mx-1" (click)="editRoom(room.id)">Edit</button>
+                <button class="btn btn-primary mx-1" (click)="deleteRoom(room.id)">Delete</button></td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
+
+    <br>
+    <br>
+
+    <div style="text-align: center;">
+        <div class="button-wrapper">
+          <button class="btn btn-primary mx-1" (click)="goToNewRoomPage()">Add Room</button>
+        </div>
+    </div>
+
+</div>

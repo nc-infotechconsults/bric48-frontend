@@ -62,8 +62,8 @@ export class MachineriesListComponent {
 
   // Edit machinery by maserial
   async editMachinery(mserial: any) {
-    //localStorage.setItem('idWorker', id)
-    //this.router.navigate(['/home/machineries/edit'])
+    localStorage.setItem('mserial', mserial)
+    this.router.navigate(['/home/machineries/edit'])
   }
 
   reloadPage() {

@@ -1,1 +1,63 @@
-<p>edit-machinery works!</p>
+<body>
+    <div class="container">
+        <h1 class="machineries-title">Edit Machinery</h1>
+
+        <br>
+        <br>
+
+        <div class="container">
+            <div class="row justify-content-center mt-3">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <form #newMachineryForm="ngForm" (ngSubmit)="onSubmit(newMachineryForm)">
+
+                                <div class="mb-3">
+                                    <label for="mserial" class="form-label"><strong>Mserial</strong></label>
+                                    <input
+                                    [(ngModel)]="machinery.mserial" name="mserial" 
+                                    required 
+                                    #inputMserial="ngModel" 
+                                    type="text" class="form-control" id="mserial" placeholder="Enter mserial">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="name" class="form-label"><strong>Name</strong></label>
+                                    <input
+                                    [(ngModel)] = "machinery.name" name="name"
+                                    required
+                                    #inputName = "ngModel"
+                                    type="text" class="form-control" id="name" placeholder="Enter name">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="branch" class="form-label"><strong>Branch name</strong></label>
+                                    <select [(ngModel)]="machinery.idBranch" name="idBranch" required #inputIdBranch="ngModel" class="form-control" id="idBranch" (change)="onBranchChange($event)">
+                                        <option *ngFor="let branch of branches" [value]="branch.id">{{branch.name}}</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="room" class="form-label"><strong>Room name</strong></label>
+                                    <select [(ngModel)]="machinery.idRoom" name="idRoom" required #inputIdRoom="ngModel" class="form-control" id="idRoom">
+                                        <option *ngFor="let room of rooms" [value]="room.id">{{room.name}}</option>
+                                    </select>
+                                </div>
+                                
+
+                                <div class="d-grid gap-2">
+                                    <button
+                                    [disabled] = "!newMachineryForm.valid || btnDisabled"
+                                    type="submit" class="btn btn-primary">Edit</button>
+                                </div>
+                                
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/js/bootstrap.bundle.min.js"></script>
+
+</body>

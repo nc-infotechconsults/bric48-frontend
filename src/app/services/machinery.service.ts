@@ -125,5 +125,78 @@ export class MachineryService {
     }
   }
 
+  // Update machinery
+  async editMachinery(machinery: Machinery) : Promise<number> {
+
+    const apiUrl = 'http://localhost:8080/machinery/updateMachinery'
+
+    try {
+      var token = JSON.parse(localStorage.getItem('token')!)
+      const data = {id: machinery.id, mserial: machinery.mserial, name: machinery.name, idBranch: machinery.idBranch, idRoom: machinery.idRoom, topic: machinery.topic};
+      const response = await axios.put(apiUrl, data, {
+        headers: {
+          'Authorization': `Bearer `+token.jwt,
+        },
+      });
+
+      // Verifica se la richiesta è andata bene
+      if (response.status === 200) {
+        return 0; // Restituisce 0 se la richiesta è andata bene
+      } else {
+        return 1; // Restituisce 1 se la richiesta ha avuto esito negativo
+      }
+    } catch (error) {
+      return 1; // Restituisce 1 se si è verificato un errore durante la richiesta
+    }
+  }
+
+  // Update machineries by idBranch
+  async updateMachineriesByIdBranch(oldIdBranch: any, newIdBranch: any, newIdRoom: any) : Promise<number> {
+
+    const apiUrl = 'http://localhost:8080/machinery/updateMachineriesByIdBranch?oldIdBranch='+oldIdBranch+'&newIdBranch='+newIdBranch+'&newIdRoom='+newIdRoom
+
+    try {
+      var token = JSON.parse(localStorage.getItem('token')!)
+      const response = await axios.put(apiUrl, {}, {
+        headers: {
+          'Authorization': `Bearer `+token.jwt,
+        },
+      });
+
+      // Verifica se la richiesta è andata bene
+      if (response.status === 200) {
+        return 0; // Restituisce 0 se la richiesta è andata bene
+      } else {
+        return 1; // Restituisce 1 se la richiesta ha avuto esito negativo
+      }
+    } catch (error) {
+      return 1; // Restituisce 1 se si è verificato un errore durante la richiesta
+    }
+  }
+
+  // Update machineries by idRoom
+  async updateMachineriesByIdRoom(oldIdRoom: string, newIdRoom: string) : Promise<number> {
+
+    const apiUrl = 'http://localhost:8080/machinery/updateMachineriesByIdRoom?oldIdRoom='+oldIdRoom+'&newIdRoom='+newIdRoom
+
+    try {
+      var token = JSON.parse(localStorage.getItem('token')!)
+      const response = await axios.put(apiUrl, {}, {
+        headers: {
+          'Authorization': `Bearer `+token.jwt,
+        },
+      });
+
+      // Verifica se la richiesta è andata bene
+      if (response.status === 200) {
+        return 0; // Restituisce 0 se la richiesta è andata bene
+      } else {
+        return 1; // Restituisce 1 se la richiesta ha avuto esito negativo
+      }
+    } catch (error) {
+      return 1; // Restituisce 1 se si è verificato un errore durante la richiesta
+    }
+  }
+
 
 }

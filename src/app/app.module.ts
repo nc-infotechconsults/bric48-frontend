@@ -22,6 +22,12 @@ import { EditSensorComponent } from './components/edit-sensor/edit-sensor.compon
 import { MachineriesListComponent } from './components/machineries-list/machineries-list.component';
 import { NewMachineryComponent } from './components/new-machinery/new-machinery.component';
 import { EditMachineryComponent } from './components/edit-machinery/edit-machinery.component';
+import { BranchesListComponent } from './components/branches-list/branches-list.component';
+import { EditBranchComponent } from './components/edit-branch/edit-branch.component';
+import { NewBranchComponent } from './components/new-branch/new-branch.component';
+import { RoomsListComponent } from './components/rooms-list/rooms-list.component';
+import { EditRoomComponent } from './components/edit-room/edit-room.component';
+import { NewRoomComponent } from './components/new-room/new-room.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +48,13 @@ import { EditMachineryComponent } from './components/edit-machinery/edit-machine
     EditSensorComponent,
     MachineriesListComponent,
     NewMachineryComponent,
-    EditMachineryComponent
+    EditMachineryComponent,
+    BranchesListComponent,
+    EditBranchComponent,
+    NewBranchComponent,
+    RoomsListComponent,
+    EditRoomComponent,
+    NewRoomComponent
   ],
   imports: [
     HttpClientModule,

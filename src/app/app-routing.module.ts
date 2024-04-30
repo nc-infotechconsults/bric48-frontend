@@ -17,6 +17,12 @@ import { EditSensorComponent } from './components/edit-sensor/edit-sensor.compon
 import { MachineriesListComponent } from './components/machineries-list/machineries-list.component';
 import { NewMachineryComponent } from './components/new-machinery/new-machinery.component';
 import { EditMachineryComponent } from './components/edit-machinery/edit-machinery.component';
+import { BranchesListComponent } from './components/branches-list/branches-list.component';
+import { NewBranchComponent } from './components/new-branch/new-branch.component';
+import { EditBranchComponent } from './components/edit-branch/edit-branch.component';
+import { RoomsListComponent } from './components/rooms-list/rooms-list.component';
+import { NewRoomComponent } from './components/new-room/new-room.component';
+import { EditRoomComponent } from './components/edit-room/edit-room.component';
 
 const routes: Routes = [
   {
@@ -41,7 +47,13 @@ const routes: Routes = [
       {path:'sensors/edit', component: EditSensorComponent},
       {path:'machineries', component: MachineriesListComponent},
       {path:'machineries/new', component: NewMachineryComponent},
-      {path:'machineries/edit', component: EditMachineryComponent}
+      {path:'machineries/edit', component: EditMachineryComponent},
+      {path:'branches', component: BranchesListComponent},
+      {path:'branches/new', component: NewBranchComponent},
+      {path:'branches/edit', component: EditBranchComponent},
+      {path:'rooms', component: RoomsListComponent},
+      {path:'rooms/new', component: NewRoomComponent},
+      {path:'rooms/edit', component: EditRoomComponent}
       /*{path: 'charts', component : ChartsComponent, children: [ {path: 'saw', component:SawChartComponent}, {path: 'lathe', component:LatheChartComponent}]},
       {path: 'info', component : InfoSearchBarComponent, children: [{path: '', component:AllInfoComponent}, {path: 'saw', component:InfoSawComponent}, {path: 'lathe', component:InfoLatheComponent}]},
       {path:'alarms', component: AlarmsSearchBarComponent},*/

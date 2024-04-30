@@ -44,4 +44,8 @@ export class HomeComponent {
     this.router.navigate(['/home/machineries']);
   }
 
+  goToBranchesList(): void {
+    this.router.navigate(['/home/branches']);
+  }
+
 }
