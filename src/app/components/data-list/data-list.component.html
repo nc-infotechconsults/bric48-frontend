@@ -1,0 +1,62 @@
+<h1 class="data-title">Data</h1>
+
+<br>
+<br>
+
+<!-- Search Filters -->
+<div class="search-filters container mt-5 mb-3">
+
+    <input [(ngModel)] = "searchedMserial" name="searchedMserial"
+    #inputMaserial = "ngModel"
+    type="text" class="form-control" id="mserial" placeholder="Mserial"/>
+
+
+    <div class="mb-3">
+        <select [(ngModel)]="searchedType" name="searchedType" #inputSearchedType="ngModel" class="form-control" id="searchedType">
+            <option value="all types" selected>All types</option>
+            <option value="guards">Guards</option>
+            <option value="service">Service</option>
+            <option value="operating mode">Operating mode</option>
+            <option value="maintenance">Maintenance</option>
+            <option value="alarm">Alarm</option>
+        </select>
+    </div>
+    
+    <div class="mb-3 d-flex align-items-center">
+        <label for="startDate" class="mr-3">From:</label>
+        <input [(ngModel)]="startDate" name="startDate" #inputStartDate="ngModel" type="date" class="form-control" id="startDate" placeholder="Start Date" onkeydown="return false"/>
+    </div>
+    <div class="mb-3 d-flex align-items-center">
+        <label for="endDate" class="mr-3">To:</label>
+        <input [(ngModel)]="endDate" name="endDate" #inputEndDate="ngModel" type="date" class="form-control" id="endDate" placeholder="End Date" onkeydown="return false"/>
+    </div>
+    
+    <button class="btn btn-primary mx-1" (click)="search()">Search</button>
+</div>
+
+<div >
+    <div class="container mt-5" style="border-radius: 10px; border: 1px solid gray; height: 50vh; width: 80vw; overflow-y: auto;">
+        <table class="table table-striped">
+        <thead>
+            <tr>
+            <th>Mserial</th>
+            <th>Type</th>
+            <th>Value</th>
+            <th>Description</th>
+            <th>Timestamp</th>
+            <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of dataArray">
+            <td>{{ data.mserial }}</td>
+            <td>{{ data.type }}</td>
+            <td>{{ data.value }}</td>
+            <td>{{ data.description }}</td>
+            <td>{{ data.timestamp }}</td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
+
+</div>

@@ -28,6 +28,7 @@ import { NewBranchComponent } from './components/new-branch/new-branch.component
 import { RoomsListComponent } from './components/rooms-list/rooms-list.component';
 import { EditRoomComponent } from './components/edit-room/edit-room.component';
 import { NewRoomComponent } from './components/new-room/new-room.component';
+import { DataListComponent } from './components/data-list/data-list.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { NewRoomComponent } from './components/new-room/new-room.component';
     NewBranchComponent,
     RoomsListComponent,
     EditRoomComponent,
-    NewRoomComponent
+    NewRoomComponent,
+    DataListComponent
   ],
   imports: [
     HttpClientModule,

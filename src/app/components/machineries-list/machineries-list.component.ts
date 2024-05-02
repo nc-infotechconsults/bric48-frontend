@@ -20,8 +20,8 @@ export class MachineriesListComponent {
 
   searchedMserial: string = ""
   searchedName: string = ""
-  searchedBranch: string = ""
-  searchedRoom: string = ""
+  searchedBranch: string = "all branches"
+  searchedRoom: string = "all rooms"
 
   statusCode: number = 0;
 
@@ -45,11 +45,6 @@ export class MachineriesListComponent {
         let room = await this.roomService.getById(machinery.idRoom)
         if(room != null){
           machinery.roomName = room.name
-        }
-
-        if(this.searchedMserial != ""){
-          console.log("entrato")
-          this.machineries = this.machineries.filter(machinery => machinery.mserial === this.searchedMserial);
         }
         
       }
@@ -90,12 +85,45 @@ export class MachineriesListComponent {
   }
 
   // Search
-  search() {
-    this.reloadPage()
+  async search() {
+    this.machineries = await this.machineryService.getAll();
+  
+    if(this.machineries != null){
+      this.machineries = await Promise.all(this.machineries.map(async (machinery) => {
+        let branch = await this.branchService.getById(machinery.idBranch)
+        if(branch != null){
+          machinery.branchName = branch.name
+        }
+  
+        let room = await this.roomService.getById(machinery.idRoom)
+        if(room != null){
+          machinery.roomName = room.name
+        }
+  
+        return machinery;
+      }));
+  
+      this.machineries = this.machineries.filter(machinery => {
+        if(this.searchedMserial != "" && !machinery.mserial.toLowerCase().includes(this.searchedMserial.toLowerCase())){
+          return false;
+        }
+        if(this.searchedName != "" && !machinery.name.toLowerCase().includes(this.searchedName.toLowerCase())){
+          return false;
+        }
+        if(this.searchedBranch != "all branches" && machinery.idBranch !== this.searchedBranch){
+          return false;
+        }
+        if(this.searchedRoom != "all rooms" && machinery.idRoom !== this.searchedRoom){
+          return false;
+        }
+        return true;
+      });
+    }
   }
 
   async onBranchChange(event: Event) {
     this.rooms = await this.roomService.getRoomsByIdBranch(this.searchedBranch);
+    this.searchedRoom = "all rooms"
   }
 
 }

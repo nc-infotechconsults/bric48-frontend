@@ -28,4 +28,23 @@ export class MachineryDataService {
       return null;
     }
   }
+
+  // Get all data
+  async getAll() : Promise<MachineryData[]|null> {
+    const apiUrl = 'http://localhost:8080/data/getAll'
+
+    try {
+      var token = JSON.parse(localStorage.getItem('token')!)
+      const response = await axios.get(apiUrl, {
+        headers: {
+          'Authorization': `Bearer `+token.jwt,
+        },
+      });
+      const dataArray: MachineryData[] = response.data;
+      return dataArray;
+
+    } catch (error) {
+      return null;
+    }
+  }
 }

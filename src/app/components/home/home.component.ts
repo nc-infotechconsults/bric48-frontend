@@ -48,4 +48,14 @@ export class HomeComponent {
     this.router.navigate(['/home/branches']);
   }
 
+  goToMachineriesDataList(): void {
+    this.router.navigate(['/home/data']);
+  }
+
+  logout(): void {
+    localStorage.setItem('token', "")
+    localStorage.setItem('email', "")
+    this.router.navigate(['/']);
+  }
+
 }

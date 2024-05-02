@@ -23,6 +23,7 @@ import { EditBranchComponent } from './components/edit-branch/edit-branch.compon
 import { RoomsListComponent } from './components/rooms-list/rooms-list.component';
 import { NewRoomComponent } from './components/new-room/new-room.component';
 import { EditRoomComponent } from './components/edit-room/edit-room.component';
+import { DataListComponent } from './components/data-list/data-list.component';
 
 const routes: Routes = [
   {
@@ -53,7 +54,8 @@ const routes: Routes = [
       {path:'branches/edit', component: EditBranchComponent},
       {path:'rooms', component: RoomsListComponent},
       {path:'rooms/new', component: NewRoomComponent},
-      {path:'rooms/edit', component: EditRoomComponent}
+      {path:'rooms/edit', component: EditRoomComponent},
+      {path:'data', component: DataListComponent}
       /*{path: 'charts', component : ChartsComponent, children: [ {path: 'saw', component:SawChartComponent}, {path: 'lathe', component:LatheChartComponent}]},
       {path: 'info', component : InfoSearchBarComponent, children: [{path: '', component:AllInfoComponent}, {path: 'saw', component:InfoSawComponent}, {path: 'lathe', component:InfoLatheComponent}]},
       {path:'alarms', component: AlarmsSearchBarComponent},*/

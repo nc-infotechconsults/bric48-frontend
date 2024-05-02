@@ -16,14 +16,14 @@
 
     <div class="mb-3">
         <select [(ngModel)]="searchedBranch" name="searchedBranch" #inputSearchedBranch="ngModel" class="form-control" id="searchedBranch" (change)="onBranchChange($event)">
-            <option value="" disabled selected>Branch</option>
+            <option value="all branches" selected>All branches</option>
             <option *ngFor="let branch of branches" [value]="branch.id">{{branch.name}}</option>
         </select>
     </div>
 
     <div class="mb-3">
         <select [(ngModel)]="searchedRoom" name="searchedRoom" #inputSearchedRoom="ngModel" class="form-control" id="searchedRoom">
-            <option value="" disabled selected>Room</option>
+            <option value="all rooms" selected>All rooms</option>
             <option *ngFor="let room of rooms" [value]="room.id">{{room.name}}</option>
         </select>
     </div>
