@@ -10,9 +10,9 @@ export class MachineryDataService {
 
   constructor(private http:HttpClient) { }
 
-  // Get machineryData by type and mserial
-  async getMachineryDataByTypeAndMserial(type: string, mserial: string)  : Promise<MachineryData[]|null> {
-    const apiUrl = 'http://localhost:8080/data/find?type='+type+'&mserial='+mserial
+  // Get machineryData by type and mserial and isSolved
+  async getMachineryDataByTypeAndMserialAndIsSolved(type: string, mserial: string, isSolved: string)  : Promise<MachineryData[]|null> {
+    const apiUrl = 'http://localhost:8080/data/find/machinery?type='+type+'&mserial='+mserial+'&isSolved=False'
 
     try {
       var token = JSON.parse(localStorage.getItem('token')!)
@@ -47,4 +47,30 @@ export class MachineryDataService {
       return null;
     }
   }
+
+  // Update isSolved
+  async solveAlarm(id: string) : Promise<number> {
+
+    const apiUrl = 'http://localhost:8080/data/updateIsSolved?id='+id
+
+    try {
+      var token = JSON.parse(localStorage.getItem('token')!)
+      const response = await axios.put(apiUrl, {}, {
+        headers: {
+          'Authorization': `Bearer `+token.jwt,
+        },
+      });
+
+      // Verifica se la richiesta è andata bene
+      if (response.status === 200) {
+        return 0; // Restituisce 0 se la richiesta è andata bene
+      } else {
+        return 1; // Restituisce 1 se la richiesta ha avuto esito negativo
+      }
+    } catch (error) {
+      return 1; // Restituisce 1 se si è verificato un errore durante la richiesta
+    }
+  }
+
+
 }

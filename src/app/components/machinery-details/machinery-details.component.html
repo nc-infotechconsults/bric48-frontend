@@ -12,7 +12,11 @@
             <br>
             <h2 class="title">NEARBY WORKERS</h2>
             <br>
-            <button class="btn btn-primary" (click)="sendMessage()">SEND MESSAGE TO ALL</button>
+
+            <button class="btn btn-primary" (click)="sendMessage()" [ngClass]="{'bg-danger text-white': isInAlarm}">
+                {{ isInAlarm ? 'SEND ALARM' : 'SEND MESSAGE TO ALL' }}
+            </button>
+
             <br>
             <div *ngFor="let worker of workers">
                 <div class="worker">
@@ -36,6 +40,7 @@
         <div *ngFor="let alarm of machineryAlarms">
             <div class="alarm">
                 <label class="info-alarm"><strong>Value</strong>: {{ alarm.value }}, <strong>Description</strong>: {{ alarm.description }}, <strong>Timestamp</strong>: {{ alarm.timestamp }}</label>
+                <button class="btn btn-primary mx-1" (click)="solveAlarm(alarm.id)">Solve</button>
             </div>
         </div>
     </div>

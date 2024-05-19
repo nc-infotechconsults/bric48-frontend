@@ -7,5 +7,6 @@ export interface Machinery {
     idBranch: string
     branchName: string
     roomName: string
+    dangerousness: string //HIGH - MEDIUM - LOW - ZERO
     nearbyWorkers: number | undefined
 }

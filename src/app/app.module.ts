@@ -32,12 +32,10 @@ import { DataListComponent } from './components/data-list/data-list.component';
 
 import { IMqttServiceOptions, MqttModule } from 'ngx-mqtt';
 
-
 export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   hostname: 'test.mosquitto.org',
   port: 8081,
-  path: '/mqtt',
-  protocol: 'wss'
+  path: '/mqtt'
 };
 
 

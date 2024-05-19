@@ -3,6 +3,7 @@ export interface MachineryData {
     type: string
     value: string
     description: string
+    isSolved: string
     timestamp: string
     mserial: string
 }

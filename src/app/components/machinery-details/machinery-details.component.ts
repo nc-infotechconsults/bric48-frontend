@@ -31,13 +31,10 @@ export class MachineryDetailsComponent {
 
   intervalId: any;
 
-  private subscription;
-  message: string = "";
+  isInAlarm: boolean = false;
   
-  constructor(private _mqttService: MqttService, private nearbyHeadphonesService:NearbyHeadphonesService, private machineryService:MachineryService, private workerService:WorkerService, private machineryDataService:MachineryDataService, private router: Router) {
-    this.subscription = this._mqttService.observe('/bric48').subscribe((message: IMqttMessage) => {
-      this.message = message.payload.toString();
-    });
+  constructor(private mqttService: MqttService, private nearbyHeadphonesService:NearbyHeadphonesService, private machineryService:MachineryService, private workerService:WorkerService, private machineryDataService:MachineryDataService, private router: Router) {
+
   }
 
 
@@ -57,7 +54,13 @@ export class MachineryDetailsComponent {
       }
     } 
 
-    this.machineryAlarms = await this.machineryDataService.getMachineryDataByTypeAndMserial("alarm", this.mserial);
+    this.machineryAlarms = await this.machineryDataService.getMachineryDataByTypeAndMserialAndIsSolved("alarm", this.mserial, "False");
+
+    if (this.machineryAlarms?.length != 0 && this.nearbyHeadphones?.length != 0){
+      this.isInAlarm = true
+    }else{
+      this.isInAlarm = false
+    }
 
     this.startPolling()
   }
@@ -85,10 +88,16 @@ export class MachineryDetailsComponent {
         this.workers = this.workers_temp
       }
 
-      this.machineryAlarms_temp = await this.machineryDataService.getMachineryDataByTypeAndMserial("alarm", this.mserial);
+      this.machineryAlarms_temp = await this.machineryDataService.getMachineryDataByTypeAndMserialAndIsSolved("alarm", this.mserial, "False");
 
       if(!this.isEqual(this.machineryAlarms_temp, this.machineryAlarms)){
         this.machineryAlarms = this.machineryAlarms_temp
+      }
+
+      if (this.machineryAlarms?.length != 0 && this.nearbyHeadphones?.length != 0){
+        this.isInAlarm = true
+      }else{
+        this.isInAlarm = false
       }
 
     }, 1000); // Esegui ogni secondo
@@ -111,9 +120,18 @@ export class MachineryDetailsComponent {
     return true;
   }
 
-  sendMessage(){
-    this._mqttService.unsafePublish('/bric48', 'Ciao mondo', { qos: 1, retain: true });
-    console.log("Messaggio inviato")
+  // Send alarm to nearbyWorkers
+  sendMessage() {
+    if(this.machineryAlarms != null){
+      const message = this.machineryAlarms[0].description;
+      this.mqttService.unsafePublish('/'+this.mserial, message, { qos: 0, retain: false });
+    }
   }
+
+  // Solve alarm
+  async solveAlarm(id: string) {
+    await this.machineryDataService.solveAlarm(id);
+  }
+
 
 }

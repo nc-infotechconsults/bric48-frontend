@@ -1,5 +1,5 @@
 <div class="card-grid">
-    <div class="card" *ngFor="let room of rooms">
+    <div class="card" *ngFor="let room of rooms" [ngStyle]="{'border': room.dangerousness == 'HIGH' ? '3px solid red' : ''}">
       <div class="card-header">
         Room Info
       </div>
@@ -7,7 +7,6 @@
         <h5 class="card-text"><strong>Name:</strong> {{ room?.name }}</h5>
         <br>
         <p class="card-title"><strong>Room ID:</strong> {{ room?.id }}</p>
-        <p class="card-text"><strong>Number of workers in this room:</strong> {{ room?.workers_count }}</p>
         <button class="btn btn-primary" (click)="goToMachineriesPage(room?.id)">Go to machineries</button>
       </div>
     </div>
