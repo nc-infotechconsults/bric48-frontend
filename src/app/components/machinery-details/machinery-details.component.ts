@@ -9,6 +9,8 @@ import { MachineryService } from '../../services/machinery.service';
 import { MachineryDataService } from '../../services/machinery-data.service';
 import { MachineryData } from '../../models/machinery-data';
 
+import { IMqttMessage, MqttService } from 'ngx-mqtt';
+
 @Component({
   selector: 'app-machinery-details',
   templateUrl: './machinery-details.component.html',
@@ -28,8 +30,14 @@ export class MachineryDetailsComponent {
   mserial: any;
 
   intervalId: any;
+
+  private subscription;
+  message: string = "";
   
-  constructor(private nearbyHeadphonesService:NearbyHeadphonesService, private machineryService:MachineryService, private workerService:WorkerService, private machineryDataService:MachineryDataService, private router: Router) {
+  constructor(private _mqttService: MqttService, private nearbyHeadphonesService:NearbyHeadphonesService, private machineryService:MachineryService, private workerService:WorkerService, private machineryDataService:MachineryDataService, private router: Router) {
+    this.subscription = this._mqttService.observe('/bric48').subscribe((message: IMqttMessage) => {
+      this.message = message.payload.toString();
+    });
   }
 
 
@@ -101,6 +109,11 @@ export class MachineryDetailsComponent {
         }
     }
     return true;
-}
+  }
+
+  sendMessage(){
+    this._mqttService.unsafePublish('/bric48', 'Ciao mondo', { qos: 1, retain: true });
+    console.log("Messaggio inviato")
+  }
 
 }

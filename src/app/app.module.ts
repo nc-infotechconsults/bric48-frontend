@@ -30,6 +30,17 @@ import { EditRoomComponent } from './components/edit-room/edit-room.component';
 import { NewRoomComponent } from './components/new-room/new-room.component';
 import { DataListComponent } from './components/data-list/data-list.component';
 
+import { IMqttServiceOptions, MqttModule } from 'ngx-mqtt';
+
+
+export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
+  hostname: 'test.mosquitto.org',
+  port: 8081,
+  path: '/mqtt',
+  protocol: 'wss'
+};
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,7 +73,8 @@ import { DataListComponent } from './components/data-list/data-list.component';
     HttpClientModule,
     BrowserModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MqttModule.forRoot(MQTT_SERVICE_OPTIONS)
   ],
   providers: [],
   bootstrap: [AppComponent]
