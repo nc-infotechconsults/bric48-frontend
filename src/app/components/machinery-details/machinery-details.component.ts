@@ -133,5 +133,9 @@ export class MachineryDetailsComponent {
     await this.machineryDataService.solveAlarm(id);
   }
 
+  goToSendMessages(): void{
+    this.router.navigate(['/home/messages']);
+  }
+
 
 }

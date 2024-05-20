@@ -52,6 +52,10 @@ export class HomeComponent {
     this.router.navigate(['/home/data']);
   }
 
+  goToSendMessages(): void{
+    this.router.navigate(['/home/messages']);
+  }
+
   logout(): void {
     localStorage.setItem('token', "")
     localStorage.setItem('email', "")

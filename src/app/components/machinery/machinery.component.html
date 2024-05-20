@@ -1,5 +1,5 @@
 <div class="card-grid">
-    <div class="card" *ngFor="let machinery of machineries" [ngStyle]="{'border': machinery.dangerousness == 'HIGH' ? '3px solid red' : ''}">
+    <div class="card" *ngFor="let machinery of machineries_view" [ngStyle]="{'border': machinery.dangerousness == 'HIGH' ? '3px solid red' : ''}">
       <div class="card-header">
         Machinery Info
       </div>

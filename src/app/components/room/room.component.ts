@@ -17,6 +17,7 @@ import { MachineryData } from '../../models/machinery-data';
 export class RoomComponent {
 
   rooms: Room[] | null = [];
+  rooms_view: Room[] | null = [];
   machineries: Machinery[] | null = [];
   alarms: MachineryData[] | null = [];
   nearbyHeadphones: NearbyHeadphones[] | null = [];
@@ -29,7 +30,7 @@ export class RoomComponent {
   }
 
   async ngOnInit() {
-    this.rooms = await this.roomService.getRoomsByIdBranch(this.idBranch);
+    this.rooms_view = await this.roomService.getRoomsByIdBranch(this.idBranch);
 
     this.machineries = await this.machineryService.getMachineryByIdBranch(this.idBranch);
 
@@ -39,8 +40,8 @@ export class RoomComponent {
         this.nearbyHeadphones = await this.nearbyHeadphonesService.getNearbyHeadphonesByMserial(machinery.mserial);
 
         if(this.alarms?.length != 0 && this.nearbyHeadphones?.length != 0){
-          if (this.rooms) {
-            for (const room of this.rooms) {
+          if (this.rooms_view) {
+            for (const room of this.rooms_view) {
               if(machinery.idRoom == room.id){
                 room.dangerousness = "HIGH"
               }
@@ -83,8 +84,11 @@ export class RoomComponent {
               }
             }
           }
-
         }
+      }
+
+      if (!this.isEqual(this.rooms_view, this.rooms)){
+        this.rooms_view = this.rooms
       }
 
     }, 1000); // Esegui ogni secondo
@@ -102,6 +106,19 @@ export class RoomComponent {
   goToMachineriesPage(idRoom: any) {
     localStorage.setItem('idRoom', idRoom)
     this.router.navigate(['home/machinery']);
+  }
+
+  // Funzione per confrontare due array di oggetti
+  isEqual(a: object[] | any , b: object[] | any): boolean {
+    if (a?.length !== b?.length) {
+        return false;
+    }
+    for (let i = 0; i < a.length; i++) {
+        if (JSON.stringify(a[i]) !== JSON.stringify(b[i])) {
+            return false;
+        }
+    }
+    return true;
   }
 
 

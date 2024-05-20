@@ -17,9 +17,12 @@ import { MachineryDataService } from '../../services/machinery-data.service';
 export class BranchComponent {
 
   branches: Branch[] | null = [];
+  branches_view: Branch[] | null = [];
   machineries: Machinery[] | null = [];
   alarms: MachineryData[] | null = [];
   nearbyHeadphones: NearbyHeadphones[] | null = [];
+
+  dataChanged = false;
 
   intervalId: any;
 
@@ -27,10 +30,10 @@ export class BranchComponent {
   }
 
   async ngOnInit() {
-    this.branches = await this.branchService.getAll();
+    this.branches_view = await this.branchService.getAll();
 
-    if (this.branches) {
-      for (const branch of this.branches) {
+    if (this.branches_view) {
+      for (const branch of this.branches_view) {
           branch.dangerousness = "ZERO"
       }
     }
@@ -43,8 +46,8 @@ export class BranchComponent {
         this.nearbyHeadphones = await this.nearbyHeadphonesService.getNearbyHeadphonesByMserial(machinery.mserial);
 
         if(this.alarms?.length != 0 && this.nearbyHeadphones?.length != 0){
-          if (this.branches) {
-            for (const branch of this.branches) {
+          if (this.branches_view) {
+            for (const branch of this.branches_view) {
               if(machinery.idBranch == branch.id){
                 branch.dangerousness = "HIGH"
               }
@@ -61,6 +64,8 @@ export class BranchComponent {
 
   startPolling() {
     this.intervalId = setInterval(async () => {
+
+      this.dataChanged = false;
 
       this.branches = await this.branchService.getAll();
 
@@ -88,6 +93,10 @@ export class BranchComponent {
           }
 
         }
+      }
+
+      if (!this.isEqual(this.branches_view, this.branches)){
+        this.branches_view = this.branches
       }
 
     }, 1000); // Esegui ogni secondo

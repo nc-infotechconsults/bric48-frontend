@@ -1,5 +1,5 @@
 <div class="card-grid">
-  <div class="card" *ngFor="let branch of branches" [ngStyle]="{'border': branch.dangerousness == 'HIGH' ? '3px solid red' : ''}">
+  <div class="card" *ngFor="let branch of branches_view" [ngStyle]="{'border': branch.dangerousness == 'HIGH' ? '3px solid red' : ''}">
     <div class="card-header">Branch Info</div>
     <div class="card-body">
       <h5 class="card-text"><strong>Name:</strong> {{ branch?.name }}</h5>

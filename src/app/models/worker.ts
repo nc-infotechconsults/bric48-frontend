@@ -7,4 +7,5 @@ export interface Worker {
     phoneNumber: string
     role: string
     idHeadphones: string
+    checked: boolean
 }

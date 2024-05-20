@@ -15,6 +15,7 @@ import { MachineryDataService } from '../../services/machinery-data.service';
 export class MachineryComponent {
 
   machineries: Machinery[] | null = [];
+  machineries_view: Machinery[] | null = [];
   alarms: MachineryData[] | null = [];
   nearbyHeadphones: NearbyHeadphones[] | null = [];
 
@@ -28,10 +29,10 @@ export class MachineryComponent {
   //On init
   async ngOnInit() {
 
-    this.machineries = await this.machineryService.getMachineryByIdRoom(this.idRoom);
+    this.machineries_view = await this.machineryService.getMachineryByIdRoom(this.idRoom);
 
-    if (this.machineries) {
-      for (const machinery of this.machineries) {
+    if (this.machineries_view) {
+      for (const machinery of this.machineries_view) {
         this.alarms = await this.machineryDataService.getMachineryDataByTypeAndMserialAndIsSolved("alarm", machinery.mserial, "False");
         this.nearbyHeadphones = await this.nearbyHeadphonesService.getNearbyHeadphonesByMserial(machinery.mserial);
         machinery.nearbyWorkers = this.nearbyHeadphones?.length
@@ -74,6 +75,9 @@ export class MachineryComponent {
         }
       }
 
+      if (!this.isEqual(this.machineries_view, this.machineries)){
+        this.machineries_view = this.machineries
+      }
     
 
     }, 1000); // Esegui ogni secondo
@@ -87,6 +91,19 @@ export class MachineryComponent {
   goToMachineryDetails(mserial: any) {
     localStorage.setItem('mserial', mserial)
     this.router.navigate(['home/details']);
+  }
+
+  // Funzione per confrontare due array di oggetti
+  isEqual(a: object[] | any , b: object[] | any): boolean {
+    if (a?.length !== b?.length) {
+        return false;
+    }
+    for (let i = 0; i < a.length; i++) {
+        if (JSON.stringify(a[i]) !== JSON.stringify(b[i])) {
+            return false;
+        }
+    }
+    return true;
   }
 
 
