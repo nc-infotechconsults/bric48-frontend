@@ -85,7 +85,7 @@ export class WorkerService {
       if (response.status === 200) {
 
         // Aggiornamento dello stato di associazione delle cuffie da False a True
-        if(worker.idHeadphones != ""){
+        /*if(worker.idHeadphones != ""){
           this.statusCode = await this.headphonesService.updateAssociation(worker.idHeadphones, "True");
         }
         
@@ -94,7 +94,9 @@ export class WorkerService {
           return 0; // Restituisce 0 se la richiesta è andata bene
         }else {
           return 1; // Restituisce 1 se la richiesta ha avuto esito negativo
-        }
+        }*/
+
+        return 0;
 
       } else {
         return 1; // Restituisce 1 se la richiesta ha avuto esito negativo
@@ -119,14 +121,16 @@ export class WorkerService {
       if (response.status === 200) {
 
         // Aggiornamento dello stato di associazione delle cuffie da True a False
-        this.statusCode = await this.headphonesService.updateAssociation(idHeadphones, "False");
+        /*this.statusCode = await this.headphonesService.updateAssociation(idHeadphones, "False");
         
 
         if (this.statusCode == 0){
           return 0; // Restituisce 0 se la richiesta è andata bene
         }else {
           return 1; // Restituisce 1 se la richiesta ha avuto esito negativo
-        }
+        }*/
+
+        return 0;
 
       } else {
         return 1; // Restituisce 1 se la richiesta ha avuto esito negativo
@@ -161,7 +165,9 @@ export class WorkerService {
   }
 
   // Update worker
-  async editWorker(worker: Worker) : Promise<number> {
+  async editWorker(oldIdHeadphones: string, worker: Worker) : Promise<number> {
+
+    console.log(oldIdHeadphones, worker.idHeadphones)
 
     const apiUrl = 'http://localhost:8080/worker/updateWorker'
 
@@ -177,11 +183,11 @@ export class WorkerService {
       // Verifica se la richiesta è andata bene
       if (response.status === 200) {
 
-        // Aggiornamento dello stato di associazione delle cuffie da False a True
-        if(worker.idHeadphones != ""){
-          this.statusCode = await this.headphonesService.updateAssociation(worker.idHeadphones, "True");
+        // Aggiornamento dello stato di associazione delle vecchie cuffie da True a False
+        if(oldIdHeadphones != worker.idHeadphones && oldIdHeadphones != ""){
+          console.log("diversi")
+          this.statusCode = await this.headphonesService.updateAssociation(oldIdHeadphones, "False");
         }
-        
 
         if (this.statusCode == 0){
           return 0; // Restituisce 0 se la richiesta è andata bene

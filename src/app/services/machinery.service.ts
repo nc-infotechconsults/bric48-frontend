@@ -105,14 +105,14 @@ export class MachineryService {
       if (response.status === 200) {
 
         // Aggiornamento dello stato di associazione delle cuffie da True a False
-        this.statusCode = await this.sensorService.updateMserial(mserial, "");
+        /*this.statusCode = await this.sensorService.updateMserial(mserial, "");
         
         if (this.statusCode == 0){
           return 0; // Restituisce 0 se la richiesta è andata bene
         }else {
           return 1; // Restituisce 1 se la richiesta ha avuto esito negativo
-        }
-
+        }*/
+        return 0;
        
       } else {
         return 1; // Restituisce 1 se la richiesta ha avuto esito negativo

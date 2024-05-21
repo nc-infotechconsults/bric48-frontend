@@ -67,13 +67,15 @@ export class RoomService {
       if (response.status === 200) {
 
         // Aggiornamento del campo idRoom del machinery
-        this.statusCode = await this.machineryService.updateMachineriesByIdRoom(id, "")
+        /*this.statusCode = await this.machineryService.updateMachineriesByIdRoom(id, "")
         
         if (this.statusCode == 0){
           return 0; // Restituisce 0 se la richiesta è andata bene
         }else {
           return 1; // Restituisce 1 se la richiesta ha avuto esito negativo
-        }
+        }*/
+
+        return 0;
         
 
       } else {
@@ -99,14 +101,16 @@ export class RoomService {
       // Verifica se la richiesta è andata bene
       if (response.status === 200) {
 
-        // Aggiornamento del campo idRoom e idBranch del machinery
+        /*// Aggiornamento del campo idRoom e idBranch del machinery
         this.statusCode = await this.machineryService.updateMachineriesByIdBranch(idBranch, "", "")
         
         if (this.statusCode == 0){
           return 0; // Restituisce 0 se la richiesta è andata bene
         }else {
           return 1; // Restituisce 1 se la richiesta ha avuto esito negativo
-        }
+        }*/
+
+        return 0;
 
       } else {
         return 1; // Restituisce 1 se la richiesta ha avuto esito negativo
@@ -158,13 +162,15 @@ export class RoomService {
       if (response.status === 200) {
 
         // Aggiornamento del campo idRoom e idBranch del machinery
-        this.statusCode = await this.machineryService.updateMachineriesByIdBranch(oldIdBranch, room.idBranch, room.id)
+        /*this.statusCode = await this.machineryService.updateMachineriesByIdBranch(oldIdBranch, room.idBranch, room.id)
         
         if (this.statusCode == 0){
           return 0; // Restituisce 0 se la richiesta è andata bene
         }else {
           return 1; // Restituisce 1 se la richiesta ha avuto esito negativo
-        }
+        }*/
+
+        return 0;
 
       } else {
         return 1; // Restituisce 1 se la richiesta ha avuto esito negativo

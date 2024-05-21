@@ -66,15 +66,16 @@ export class BranchService {
       // Verifica se la richiesta è andata bene
       if (response.status === 200) {
 
+        return 0;
         // Aggiornamento dello stato di associazione delle cuffie da True a False
-        this.statusCode = await this.roomService.deleteRoomsByIdBranch(id);
+        /*this.statusCode = await this.roomService.deleteRoomsByIdBranch(id);
         
 
         if (this.statusCode == 0){
           return 0; // Restituisce 0 se la richiesta è andata bene
         }else {
           return 1; // Restituisce 1 se la richiesta ha avuto esito negativo
-        }
+        }*/
 
       } else {
         return 1; // Restituisce 1 se la richiesta ha avuto esito negativo

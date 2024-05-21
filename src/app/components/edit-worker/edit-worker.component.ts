@@ -13,6 +13,9 @@ import { Headphones } from '../../models/headphones';
 export class EditWorkerComponent {
 
   worker:any = {} as any;
+
+  oldIdHeadphones: string = ""
+
   headphonesArray: Headphones[] | null = [];
 
   idWorker: any = localStorage.getItem('idWorker');
@@ -28,6 +31,7 @@ export class EditWorkerComponent {
   async ngOnInit() {
     this.btnDisabled = false;
     this.worker = await this.workerService.getWorkerById(this.idWorker);
+    this.oldIdHeadphones = this.worker.idHeadphones;
     this.headphonesArray = await this.headphonesService.getByIsAssociated("False");
   }
 
@@ -39,7 +43,7 @@ export class EditWorkerComponent {
     }
 
     this.worker.id = this.idWorker;
-    this.statusCode = await this.workerService.editWorker(this.worker);
+    this.statusCode = await this.workerService.editWorker(this.oldIdHeadphones, this.worker);
 
     if (this.statusCode == 0){
       window.alert("Worker edited!");
