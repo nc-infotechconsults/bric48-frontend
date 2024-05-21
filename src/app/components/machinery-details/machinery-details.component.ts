@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NearbyHeadphonesService } from '../../services/nearby-headphones.service';
 import { WorkerService } from '../../services/worker.service';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { NearbyHeadphones } from '../../models/nearby-headphones';
 import { Worker } from '../../models/worker';
 import { Machinery } from '../../models/machinery';
@@ -32,6 +32,7 @@ export class MachineryDetailsComponent {
   intervalId: any;
 
   isInAlarm: boolean = false;
+
   
   constructor(private mqttService: MqttService, private nearbyHeadphonesService:NearbyHeadphonesService, private machineryService:MachineryService, private workerService:WorkerService, private machineryDataService:MachineryDataService, private router: Router) {
 
@@ -71,6 +72,7 @@ export class MachineryDetailsComponent {
   }
 
 
+  // Polling
   startPolling() {
     this.intervalId = setInterval(async () => {
 
@@ -122,10 +124,18 @@ export class MachineryDetailsComponent {
 
   // Send alarm to nearbyWorkers
   sendMessage() {
-    if(this.machineryAlarms != null){
-      const message = this.machineryAlarms[0].description;
-      this.mqttService.unsafePublish('/'+this.mserial, message, { qos: 0, retain: false });
+
+    if(this.isInAlarm == false){
+      this.router.navigate(['/home/messages']);
+    }else{
+
+      if(this.machineryAlarms != null){
+        const message = this.machineryAlarms[0].description;
+        this.mqttService.unsafePublish('/'+this.mserial, message, { qos: 0, retain: false });
+      }
+
     }
+
   }
 
   // Solve alarm
@@ -133,7 +143,19 @@ export class MachineryDetailsComponent {
     await this.machineryDataService.solveAlarm(id);
   }
 
+  // Send message to all
   goToSendMessages(): void{
+    const workersJSON = JSON.stringify(this.workers);
+    localStorage.setItem('workers', workersJSON);
+
+    this.router.navigate(['/home/messages']);
+  }
+
+  // Send message to a worker
+  goToSendIndividualMessages(worker: Worker): void{
+    const workerJSON = JSON.stringify(worker);
+    localStorage.setItem('workers', workerJSON);
+    
     this.router.navigate(['/home/messages']);
   }
 

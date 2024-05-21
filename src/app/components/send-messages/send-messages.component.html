@@ -6,24 +6,58 @@
     <br>
     <br>
 
+    <!-- Search Filters -->
+    <div class="search-filters mb-3">
+
+        <input [(ngModel)] = "searchedRoll" name="searchedRoll"
+        #inputRoll = "ngModel"
+        type="text" class="form-control" id="roll" placeholder="Roll number"/>
+
+        <input [(ngModel)] = "searchedName" name="searchedName"
+        #inputName = "ngModel"
+        type="text" class="form-control" id="name" placeholder="Name"/>
+
+        <input [(ngModel)] = "searchedSurname" name="searchedSurname"
+        #inputSurname = "ngModel"
+        type="text" class="form-control" id="surname" placeholder="Surname"/>
+
+
+        <div class="mb-3">
+            <select [(ngModel)]="searchedRole" name="searchedRole" #inputSearchedRole="ngModel" class="form-control" id="searchedRole">
+                <option value="all roles" selected>All roles</option>
+                <option value="worker">Worker</option>
+                <option value="security manager">Security Manager</option>
+                <option value="admin">Admin</option>
+            </select>
+        </div>
+        
+        <button class="btn btn-primary mx-1" (click)="search()">Search</button>
+    </div>
+
+    <!-- End Filters -->
+
+
+
     <div style="display: flex; justify-content: space-between;">
 
-        <div class="container" style="border-radius: 10px; border: 2px solid gray; height: 40vh; width: 20vw; overflow-y: auto;">
+        <div class="container" style="border-radius: 10px; border: 2px solid gray; height: 40vh; width: 30vw; overflow-y: auto;">
             <br>
             <h2 class="title">WORKERS</h2>
             <br>
             <br>
+
             <ul style="list-style-type: none; padding-left: 0;">
                 <li *ngFor="let worker of workers">
-                    <div class="worker" style="display: flex; align-items: center;">
-                        <input type="checkbox" [id]="worker.id" [checked]="worker.checked" (change)="toggleWorker(worker, $event)">
-                        <label [for]="worker.id" style="margin-left: 0.5rem;">{{ worker.name }} {{ worker.surname }} [{{ worker.role }}]</label>
-                    </div>
+                  <div class="worker" style="display: flex; align-items: center;">
+                    <input type="checkbox" [id]="worker.id" [checked]="worker.checked" (change)="toggleWorker(worker, $event)">
+                    <label [for]="worker.id" style="margin-left: 0.5rem;">{{ worker.name }} {{ worker.surname }} [{{ worker.role }}]</label>
+                  </div>
                 </li>
             </ul>
+
         </div>
 
-        <div class="container" style="border-radius: 10px; border: 2px solid gray; height: 40vh; width: 20vw; overflow-y: auto;">
+        <div class="container" style="border-radius: 10px; border: 2px solid gray; height: 40vh; width: 30vw; overflow-y: auto;">
             <br>
             <h2 class="title">RECIPIENTS</h2>
             <br>
@@ -31,10 +65,11 @@
             <ul style="list-style-type: none; padding-left: 0;">
                 <li *ngFor="let worker of checked_workers">
                     <div class="worker" style="display: flex; align-items: center;">
-                        <label [for]="worker.id" style="margin-left: 0.5rem;">{{ worker.name }} {{ worker.surname }} [{{ worker.role }}]</label>
+                        <label [for]="worker.id" style="margin-left: 0.5rem;">{{ worker.name }} {{ worker.surname }} [{{ worker.role }}]
+                        </label>
                     </div>
                 </li>
-            </ul>
+            </ul>            
         </div>
 
     </div>
@@ -42,26 +77,27 @@
     <br>
     <br>
 
-    <div class="container" style="border-radius: 10px; border: 2px solid gray; height: 20vh; width: 60vw; overflow-y: auto; overflow-x: auto;">
+    <div class="container" style="border-radius: 10px; border: 2px solid gray; height: 20vh; width: 50vw;">
         <br>
         
-            <h2 class="title">MESSAGE</h2>
+        <h2 class="title">MESSAGE</h2>
 
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <select  style="width: 20vw; height: 4vh;" [(ngModel)]="messageText" name="message" id="message">
-                    <option value="" disabled selected>Select a message</option>
-                    <option value="Message A">Message A</option>
-                    <option value="Message B">Message B</option>
-                </select>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <select (change)="handleSelectChange($event)" style="width: 20vw; height: 4vh;" name="message" id="message">
+                <option value="" disabled selected>Select a message</option>
+                <option value="Message A">Message A</option>
+                <option value="Message B">Message B</option>
+              </select>         
+          
+            <input style="width: 30vw; height: 4vh;" type="text" [(ngModel)]="messageText" value="{{ messageText }}">
+        </div>
 
-                <input style="width: 30vw; height: 4vh;" type="text" [(ngModel)]="messageText" value="{{ messageText }}">
-            </div>
+        <br>
 
-            <br>
+        <div class="d-grid gap-2" style="display: flex; justify-content: center; align-items: center;">
+            <button type="button" class="btn btn-primary" [disabled]="number_checked_workers === 0 || messageText.trim() == '' " (click)="sendMessage(messageText)">SEND</button>
+        </div>
 
-            <div class="d-grid gap-2" style="display: flex; justify-content: center; align-items: center;">
-                <button type="button" class="btn btn-primary" [disabled]="checked_workers?.length === 0 || messageText.trim() == '' " (click)="sendMessage(messageText, checked_workers)">SEND</button>
-            </div>
     </div>
 
 </body>

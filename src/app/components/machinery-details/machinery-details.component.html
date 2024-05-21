@@ -21,7 +21,7 @@
             <div *ngFor="let worker of workers">
                 <div class="worker">
                     <span class="info-worker">{{ worker.name }} {{ worker.surname }}  [{{ worker.role }}]</span>
-                    <button class="btn btn-primary mx-1" (click)="goToSendMessages()">Send Message</button>
+                    <button class="btn btn-primary mx-1" (click)="goToSendIndividualMessages(worker)">Send Message</button>
                     <br>
                 </div>
             </div>
