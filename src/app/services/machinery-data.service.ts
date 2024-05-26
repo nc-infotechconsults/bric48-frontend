@@ -48,6 +48,27 @@ export class MachineryDataService {
     }
   }
 
+
+  // Get data from to
+  async getDataFromTo(from: number, to: number) : Promise<MachineryData[]|null> {
+    const apiUrl = 'http://localhost:8080/data/getDataFromTo?from='+from+'&to='+to
+
+    try {
+      var token = JSON.parse(localStorage.getItem('token')!)
+      const response = await axios.get(apiUrl, {
+        headers: {
+          'Authorization': `Bearer `+token.jwt,
+        },
+      });
+      const dataArray: MachineryData[] = response.data;
+      
+      return dataArray;
+
+    } catch (error) {
+      return null;
+    }
+  }
+
   // Update isSolved
   async solveAlarm(id: string) : Promise<number> {
 

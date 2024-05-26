@@ -1,0 +1,15 @@
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: 0; /* Cambia da left: 0 a right: 0 */
+  width: 18vw; /* Puoi cambiare la larghezza secondo necessità */
+  height: 100%;
+  background-color: rgba(0, 0, 0, 1); /* Colore di sfondo con trasparenza */
+  color: white;
+  z-index: 1000; /* Alto valore per sovrapporsi agli altri elementi */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+  

@@ -20,12 +20,16 @@ export class DataListComponent {
 
   statusCode: number = 0;
 
+  currentPage = 1;
+  itemsPerPage = 10;
+  totalPages = false;
+
   constructor(private machineryDataService: MachineryDataService, private router: Router) {
   }
 
   //On init
   async ngOnInit() {
-    this.dataArray = await this.machineryDataService.getAll();
+    this.dataArray = await this.machineryDataService.getDataFromTo(1, this.itemsPerPage);
   }
 
   //On destroy
@@ -84,6 +88,30 @@ export class DataListComponent {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
     this.router.navigate([this.router.url]);
+  }
+
+
+  async goToPreviousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+      this.dataArray = await this.machineryDataService.getDataFromTo(startIndex, startIndex + this.itemsPerPage - 1);
+      this.totalPages = false
+    }
+  }
+
+  async goToNextPage() {
+    if (!this.totalPages) {
+      this.currentPage++;
+      const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+      this.dataArray = await this.machineryDataService.getDataFromTo(startIndex, startIndex + this.itemsPerPage - 1);
+
+      if(this.dataArray){
+        if(this.dataArray?.length < this.itemsPerPage){
+          this.totalPages = true
+        }
+      }
+    }
   }
 
 

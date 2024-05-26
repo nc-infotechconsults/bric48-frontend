@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Admin } from '../../models/admin';
 import { AdminService } from '../../services/admin.service';
+import { MachineryBarComponent } from '../machinery-bar/machinery-bar.component';
 
 @Component({
   selector: 'app-home',
@@ -9,6 +10,7 @@ import { AdminService } from '../../services/admin.service';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
+  @ViewChild(MachineryBarComponent) sidebar!: MachineryBarComponent;
 
   admin:Admin | null = {} as Admin | null;
 
