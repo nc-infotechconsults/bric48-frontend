@@ -30,8 +30,11 @@ export class EditWorkerComponent {
   //On init
   async ngOnInit() {
     this.btnDisabled = false;
+
     this.worker = await this.workerService.getWorkerById(this.idWorker);
+
     this.oldIdHeadphones = this.worker.idHeadphones;
+
     this.headphonesArray = await this.headphonesService.getByIsAssociated("False");
   }
 

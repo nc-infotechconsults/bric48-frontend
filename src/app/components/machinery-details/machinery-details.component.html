@@ -13,7 +13,7 @@
             <h2 class="title">NEARBY WORKERS</h2>
             <br>
 
-            <button class="btn btn-primary" (click)="sendMessage()" [ngClass]="{'bg-danger text-white': isInAlarm}" (click)="goToSendMessages()">
+            <button class="btn btn-primary" (click)="sendMessage()" [ngClass]="{'bg-danger text-white': isInAlarm}">
                 {{ isInAlarm ? 'SEND ALARM' : 'SEND MESSAGE TO ALL' }}
             </button>
 

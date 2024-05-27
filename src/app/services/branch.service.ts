@@ -33,6 +33,27 @@ export class BranchService {
   }
 
 
+  // Get branches from to
+  async getBranchesFromTo(from: number, to: number) : Promise<Branch[]|null> {
+    const apiUrl = 'http://localhost:8080/branch/getBranchesFromTo?from='+from+'&to='+to
+
+    try {
+      var token = JSON.parse(localStorage.getItem('token')!)
+      const response = await axios.get(apiUrl, {
+        headers: {
+          'Authorization': `Bearer `+token.jwt,
+        },
+      });
+      const dataArray: Branch[] = response.data;
+      
+      return dataArray;
+
+    } catch (error) {
+      return null;
+    }
+  }
+
+
   // Get branch by id
   async getById(id: any)  : Promise<Branch|null> {
     const apiUrl = 'http://localhost:8080/branch/findById/'+id

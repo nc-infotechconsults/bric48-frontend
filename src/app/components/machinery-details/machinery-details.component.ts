@@ -126,7 +126,7 @@ export class MachineryDetailsComponent {
   sendMessage() {
 
     if(this.isInAlarm == false){
-      this.router.navigate(['/home/messages']);
+      this.goToSendMessages();
     }else{
 
       if(this.machineryAlarms != null){
@@ -135,8 +135,8 @@ export class MachineryDetailsComponent {
       }
 
     }
-
   }
+
 
   // Solve alarm
   async solveAlarm(id: string) {

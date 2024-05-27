@@ -29,6 +29,25 @@ export class HeadphonesService {
     }
   }
 
+  // Get headphones from-to
+  async getHeadphonesFromTo(from: number, to: number) : Promise<Headphones[]|null> {
+    const apiUrl = 'http://localhost:8080/headphones/getHeadphonesFromTo?from='+from+'&to='+to
+
+    try {
+      var token = JSON.parse(localStorage.getItem('token')!)
+      const response = await axios.get(apiUrl, {
+        headers: {
+          'Authorization': `Bearer `+token.jwt,
+        },
+      });
+      const headphones: Headphones[] = response.data;
+      return headphones;
+
+    } catch (error) {
+      return null;
+    }
+  }
+
   // Get headphones by isAssociated
   async getByIsAssociated(isAssociated: string) : Promise<Headphones[]|null> {
     const apiUrl = 'http://localhost:8080/headphones/find/'+isAssociated

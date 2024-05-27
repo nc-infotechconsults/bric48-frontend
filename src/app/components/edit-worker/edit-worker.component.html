@@ -59,9 +59,11 @@
                                 
                                 <div class="mb-3">
                                     <label for="headphones" class="form-label"><strong>Headphones Serial</strong></label>
-                                    <select [(ngModel)]="worker.idHeadphones" name="idHeadphones" required #inputIdHeadphones="ngModel" class="form-control" id="idHeadphones">
+                                    <select [(ngModel)]="this.worker.idHeadphones" name="idHeadphones" required #inputIdHeadphones="ngModel" class="form-control" id="idHeadphones">
                                         <option [value]="">No headphones associated</option>
-                                        <option [value]="worker.idHeadphones">{{worker.idHeadphones}}</option>
+                                        <option *ngIf="this.worker.idHeadphones !== ''" [value]="this.worker.idHeadphones">
+                                            {{this.worker.idHeadphones}}
+                                        </option>                                          
                                         <option *ngFor="let headphones of headphonesArray" [value]="headphones.serial">{{headphones.serial}}</option>
                                     </select>
                                 </div>

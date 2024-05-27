@@ -13,12 +13,22 @@ export class SensorsListComponent {
   sensorsArray: Sensor[] | null = [];
   statusCode: number = 0;
 
+  currentPage = 1;
+  itemsPerPage = 10;
+  totalPages = false;
+
   constructor(private sensorService:SensorService, private router: Router) {
   }
 
   //On init
   async ngOnInit() {
-    this.sensorsArray = await this.sensorService.getAll();
+    this.sensorsArray = await this.sensorService.getSensorsFromTo(1, this.itemsPerPage);
+
+    if(this.sensorsArray){
+      if(this.sensorsArray.length < this.itemsPerPage){
+        this.totalPages = true;
+      }
+    }
   }
 
   //On destroy
@@ -51,6 +61,30 @@ export class SensorsListComponent {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
     this.router.navigate([this.router.url]);
+  }
+
+
+  async goToPreviousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+      this.sensorsArray = await this.sensorService.getSensorsFromTo(startIndex, startIndex + this.itemsPerPage - 1);
+      this.totalPages = false
+    }
+  }
+
+  async goToNextPage() {
+    if (!this.totalPages) {
+      this.currentPage++;
+      const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+      this.sensorsArray = await this.sensorService.getSensorsFromTo(startIndex, startIndex + this.itemsPerPage - 1);
+
+      if(this.sensorsArray){
+        if(this.sensorsArray?.length < this.itemsPerPage){
+          this.totalPages = true
+        }
+      }
+    }
   }
 
 }

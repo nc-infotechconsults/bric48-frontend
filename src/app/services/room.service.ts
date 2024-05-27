@@ -33,6 +33,25 @@ export class RoomService {
     }
   }
 
+  // Get rooms by idBranch from-to
+  async getRoomsByIdBranchFromTo(idBranch: string, from: number, to: number)  : Promise<Room[]|null> {
+    const apiUrl = 'http://localhost:8080/room/getRoomsFromTo?idBranch='+idBranch+'&from='+from+'&to='+to
+
+    try {
+      var token = JSON.parse(localStorage.getItem('token')!)
+      const response = await axios.get(apiUrl, {
+        headers: {
+          'Authorization': `Bearer `+token.jwt,
+        },
+      });
+      const rooms: Room[] = response.data;
+      return rooms;
+
+    } catch (error) {
+      return null;
+    }
+  }
+
   // Get room by id
   async getById(id: any)  : Promise<Room|null> {
     const apiUrl = 'http://localhost:8080/room/findById/'+id

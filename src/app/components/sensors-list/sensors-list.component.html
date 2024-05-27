@@ -4,7 +4,7 @@
 <br>
 
 <div >
-    <div class="container mt-5" style="border-radius: 10px; border: 1px solid gray; height: 50vh; width: 80vw; overflow-y: auto;">
+    <div class="container mt-5" style="border-radius: 10px; border: 1px solid gray; height: 42vh; width: 80vw; overflow-y: auto;">
         <table class="table table-striped">
         <thead>
             <tr>
@@ -23,6 +23,16 @@
             </tr>
         </tbody>
         </table>
+    </div>
+
+    <div class="pagination-controls" style="display: flex; justify-content: center; align-items: center; margin-top: 10px;">
+        <button (click)="goToPreviousPage()" [disabled]="currentPage === 1" class="btn btn-primary">
+            &#8592;
+        </button>
+        <span style="margin: 0 10px;">Page {{ currentPage }}</span>
+        <button (click)="goToNextPage()" [disabled]="totalPages" class="btn btn-primary">
+             &#8594;
+        </button>
     </div>
 
     <br>

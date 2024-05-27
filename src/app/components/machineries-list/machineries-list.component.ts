@@ -25,13 +25,24 @@ export class MachineriesListComponent {
 
   statusCode: number = 0;
 
+  currentPage = 1;
+  itemsPerPage = 10;
+  totalPages = false;
+
   constructor(private machineryService:MachineryService, private branchService:BranchService, private roomService:RoomService, private router: Router) {
   }
 
   //On init
   async ngOnInit() {
 
-    this.machineries = await this.machineryService.getAll();
+    this.machineries = await this.machineryService.getMachineriesFromTo(1, this.itemsPerPage);
+
+    if(this.machineries){
+      if(this.machineries.length < this.itemsPerPage){
+        this.totalPages = true;
+      }
+    }
+
     this.branches = await this.branchService.getAll();
 
     if(this.machineries != null){
@@ -118,12 +129,39 @@ export class MachineriesListComponent {
         }
         return true;
       });
+
+      //this.currentPage = 1;
+
     }
   }
 
   async onBranchChange(event: Event) {
     this.rooms = await this.roomService.getRoomsByIdBranch(this.searchedBranch);
     this.searchedRoom = "all rooms"
+  }
+
+
+  async goToPreviousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+      this.machineries = await this.machineryService.getMachineriesFromTo(startIndex, startIndex + this.itemsPerPage - 1);
+      this.totalPages = false
+    }
+  }
+
+  async goToNextPage() {
+    if (!this.totalPages) {
+      this.currentPage++;
+      const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+      this.machineries = await this.machineryService.getMachineriesFromTo(startIndex, startIndex + this.itemsPerPage - 1);
+
+      if(this.machineries){
+        if(this.machineries?.length < this.itemsPerPage){
+          this.totalPages = true
+        }
+      }
+    }
   }
 
 }

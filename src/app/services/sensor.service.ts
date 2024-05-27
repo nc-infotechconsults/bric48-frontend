@@ -29,6 +29,26 @@ export class SensorService {
     }
   }
 
+
+  // Get sensors from-to
+  async getSensorsFromTo(from: number, to: number) : Promise<Sensor[]|null> {
+    const apiUrl = 'http://localhost:8080/beacon/getBeaconsFromTo?from='+from+'&to='+to
+
+    try {
+      var token = JSON.parse(localStorage.getItem('token')!)
+      const response = await axios.get(apiUrl, {
+        headers: {
+          'Authorization': `Bearer `+token.jwt,
+        },
+      });
+      const sensors: Sensor[] = response.data;
+      return sensors;
+
+    } catch (error) {
+      return null;
+    }
+  }
+
   // Add a new sensor
   async addSensor(sensor:Sensor): Promise<number> {
     try {

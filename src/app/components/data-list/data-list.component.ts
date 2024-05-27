@@ -30,6 +30,12 @@ export class DataListComponent {
   //On init
   async ngOnInit() {
     this.dataArray = await this.machineryDataService.getDataFromTo(1, this.itemsPerPage);
+
+    if(this.dataArray){
+      if(this.dataArray.length < this.itemsPerPage){
+        this.totalPages = true;
+      }
+    }
   }
 
   //On destroy

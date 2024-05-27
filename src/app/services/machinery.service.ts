@@ -33,6 +33,25 @@ export class MachineryService {
     }
   }
 
+  // Get machineries from-to
+  async getMachineriesFromTo(from: number, to: number)  : Promise<Machinery[]|null> {
+    const apiUrl = 'http://localhost:8080/machinery/getMachineriesFromTo?from='+from+'&to='+to
+
+    try {
+      var token = JSON.parse(localStorage.getItem('token')!)
+      const response = await axios.get(apiUrl, {
+        headers: {
+          'Authorization': `Bearer `+token.jwt,
+        },
+      });
+      const machineries: Machinery[] = response.data;
+      return machineries;
+
+    } catch (error) {
+      return null;
+    }
+  }
+
   // Get machineries by idRoom
   async getMachineryByIdRoom(idRoom: string)  : Promise<Machinery[]|null> {
     const apiUrl = 'http://localhost:8080/machinery/find?idRoom='+idRoom

@@ -32,6 +32,26 @@ export class WorkerService {
     }
   }
 
+
+  // Get workers from-to
+  async getWorkersFromTo(from: number, to: number) : Promise<Worker[]|null> {
+    const apiUrl = 'http://localhost:8080/worker/getWorkersFromTo?from='+from+'&to='+to
+
+    try {
+      var token = JSON.parse(localStorage.getItem('token')!)
+      const response = await axios.get(apiUrl, {
+        headers: {
+          'Authorization': `Bearer `+token.jwt,
+        },
+      });
+      const workers: Worker[] = response.data;
+      return workers;
+
+    } catch (error) {
+      return null;
+    }
+  }
+
   // Get worker by serial
   async getWorkerBySerial(serial: string)  : Promise<Worker|null> {
     const apiUrl = 'http://localhost:8080/worker/find/'+serial
