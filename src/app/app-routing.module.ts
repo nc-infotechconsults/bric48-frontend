@@ -25,6 +25,7 @@ import { NewRoomComponent } from './components/new-room/new-room.component';
 import { EditRoomComponent } from './components/edit-room/edit-room.component';
 import { DataListComponent } from './components/data-list/data-list.component';
 import { SendMessagesComponent } from './components/send-messages/send-messages.component';
+import { EditAccountComponent } from './components/edit-account/edit-account.component';
 
 const routes: Routes = [
   {
@@ -57,7 +58,8 @@ const routes: Routes = [
       {path:'rooms/new', component: NewRoomComponent},
       {path:'rooms/edit', component: EditRoomComponent},
       {path:'data', component: DataListComponent},
-      {path:'messages', component: SendMessagesComponent}
+      {path:'messages', component: SendMessagesComponent},
+      {path:'account', component: EditAccountComponent}
       /*{path: 'charts', component : ChartsComponent, children: [ {path: 'saw', component:SawChartComponent}, {path: 'lathe', component:LatheChartComponent}]},
       {path: 'info', component : InfoSearchBarComponent, children: [{path: '', component:AllInfoComponent}, {path: 'saw', component:InfoSawComponent}, {path: 'lathe', component:InfoLatheComponent}]},
       {path:'alarms', component: AlarmsSearchBarComponent},*/

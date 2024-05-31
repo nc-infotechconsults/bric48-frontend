@@ -24,16 +24,20 @@ export class DataListComponent {
   itemsPerPage = 10;
   totalPages = false;
 
+  filtered = false;
+
   constructor(private machineryDataService: MachineryDataService, private router: Router) {
   }
 
   //On init
   async ngOnInit() {
-    this.dataArray = await this.machineryDataService.getDataFromTo(1, this.itemsPerPage);
+    this.dataArray = await this.machineryDataService.getDataFromTo(1, this.itemsPerPage + 1);
 
     if(this.dataArray){
-      if(this.dataArray.length < this.itemsPerPage){
+      if(this.dataArray.length <= this.itemsPerPage){
         this.totalPages = true;
+      }else{
+        this.dataArray.pop();
       }
     }
   }
@@ -44,6 +48,8 @@ export class DataListComponent {
 
   // Search
   async search() {
+
+    this.filtered = true;
 
     if(this.compareDate(this.startDate, this.endDate) == 1){
       this.reloadPage()
@@ -71,6 +77,7 @@ export class DataListComponent {
         return true;
       });
     }
+
   }
 
   compareDate(firstDate: string, secondDate: string): number {
@@ -100,8 +107,8 @@ export class DataListComponent {
   async goToPreviousPage() {
     if (this.currentPage > 1) {
       this.currentPage--;
-      const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-      this.dataArray = await this.machineryDataService.getDataFromTo(startIndex, startIndex + this.itemsPerPage - 1);
+      let startIndex = (this.currentPage - 1) * this.itemsPerPage;
+      this.dataArray = await this.machineryDataService.getDataFromTo(startIndex + 1, startIndex + this.itemsPerPage);
       this.totalPages = false
     }
   }
@@ -109,12 +116,14 @@ export class DataListComponent {
   async goToNextPage() {
     if (!this.totalPages) {
       this.currentPage++;
-      const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-      this.dataArray = await this.machineryDataService.getDataFromTo(startIndex, startIndex + this.itemsPerPage - 1);
+      let startIndex = (this.currentPage - 1) * this.itemsPerPage;
+      this.dataArray = await this.machineryDataService.getDataFromTo(startIndex + 1, startIndex + this.itemsPerPage + 1);
 
       if(this.dataArray){
-        if(this.dataArray?.length < this.itemsPerPage){
+        if(this.dataArray?.length <= this.itemsPerPage){
           this.totalPages = true
+        }else{
+          this.dataArray.pop();
         }
       }
     }

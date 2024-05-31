@@ -22,11 +22,13 @@ export class WorkersListComponent {
 
   //On init
   async ngOnInit() {
-    this.workersArray = await this.workerService.getWorkersFromTo(1, this.itemsPerPage);
+    this.workersArray = await this.workerService.getWorkersFromTo(1, this.itemsPerPage + 1);
 
     if(this.workersArray){
-      if(this.workersArray.length < this.itemsPerPage){
+      if(this.workersArray.length <= this.itemsPerPage){
         this.totalPages = true;
+      }else{
+        this.workersArray.pop();
       }
     }
   }
@@ -40,14 +42,18 @@ export class WorkersListComponent {
   }
 
   // Delete worker by id
-  async deleteWorker(id: any, idHeadphones: any) {
-    this.statusCode = await this.workerService.deleteWorker(id, idHeadphones);
+  async deleteWorker(worker: Worker) {
 
-    if (this.statusCode == 0){
-      this.reloadPage()
-      window.alert("Worker deleted!");
-    }else{
-      window.alert("Error with status code: " + this.statusCode)
+    if (window.confirm('Are you sure you want to delete the worker ' + worker.rollNumber + '?')) {
+
+      this.statusCode = await this.workerService.deleteWorker(worker.id, worker.idHeadphones);
+
+      if (this.statusCode == 0){
+        this.reloadPage()
+        window.alert("Worker deleted!");
+      }else{
+        window.alert("Error with status code: " + this.statusCode)
+      }
     }
   }
 
@@ -68,7 +74,7 @@ export class WorkersListComponent {
     if (this.currentPage > 1) {
       this.currentPage--;
       const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-      this.workersArray = await this.workerService.getWorkersFromTo(startIndex, startIndex + this.itemsPerPage - 1);
+      this.workersArray = await this.workerService.getWorkersFromTo(startIndex + 1, startIndex + this.itemsPerPage);
       this.totalPages = false
     }
   }
@@ -77,11 +83,13 @@ export class WorkersListComponent {
     if (!this.totalPages) {
       this.currentPage++;
       const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-      this.workersArray = await this.workerService.getWorkersFromTo(startIndex, startIndex + this.itemsPerPage - 1);
+      this.workersArray = await this.workerService.getWorkersFromTo(startIndex + 1, startIndex + this.itemsPerPage + 1);
 
       if(this.workersArray){
         if(this.workersArray?.length < this.itemsPerPage){
           this.totalPages = true
+        }else{
+          this.workersArray.pop();
         }
       }
     }

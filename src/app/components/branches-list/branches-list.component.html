@@ -19,7 +19,7 @@
             <td>{{ branch.address }}</td>
             <td>
                 <button class="btn btn-primary mx-1" (click)="editBranch(branch.id)">Edit</button>
-                <button class="btn btn-primary mx-1" (click)="deleteBranch(branch.id)">Delete</button>
+                <button class="btn btn-primary mx-1" (click)="deleteBranch(branch)">Delete</button>
                 <button class="btn btn-primary mx-1" (click)="goToRoomsPage(branch.id, branch.name)">See rooms</button></td>
             </tr>
         </tbody>

@@ -137,4 +137,23 @@ export class HeadphonesService {
     }
   }
 
+  // Get headphones by serial
+  async getHeadphonesBySerial(serial: string)  : Promise<Headphones|null> {
+    const apiUrl = 'http://localhost:8080/headphones/find?serial='+serial
+
+    try {
+      var token = JSON.parse(localStorage.getItem('token')!)
+      const response = await axios.get(apiUrl, {
+        headers: {
+          'Authorization': `Bearer `+token.jwt,
+        },
+      });
+      const headphones: Headphones = response.data;
+      return headphones;
+
+    } catch (error) {
+      return null;
+    }
+  }
+
 }

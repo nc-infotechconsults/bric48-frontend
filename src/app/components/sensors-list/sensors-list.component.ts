@@ -22,11 +22,13 @@ export class SensorsListComponent {
 
   //On init
   async ngOnInit() {
-    this.sensorsArray = await this.sensorService.getSensorsFromTo(1, this.itemsPerPage);
+    this.sensorsArray = await this.sensorService.getSensorsFromTo(1, this.itemsPerPage + 1);
 
     if(this.sensorsArray){
-      if(this.sensorsArray.length < this.itemsPerPage){
+      if(this.sensorsArray.length <= this.itemsPerPage){
         this.totalPages = true;
+      }else{
+        this.sensorsArray.pop();
       }
     }
   }
@@ -41,13 +43,16 @@ export class SensorsListComponent {
 
   // Delete sensor by mac
   async deleteSensor(mac: any) {
-    this.statusCode = await this.sensorService.deleteSensor(mac);
 
-    if (this.statusCode == 0){
-      this.reloadPage()
-      window.alert("Sensor deleted!");
-    }else{
-      window.alert("Error with status code: " + this.statusCode)
+    if (window.confirm('Are you sure you want to delete the sensor ' + mac + '?')) {
+      this.statusCode = await this.sensorService.deleteSensor(mac);
+
+      if (this.statusCode == 0){
+        this.reloadPage()
+        window.alert("Sensor deleted!");
+      }else{
+        window.alert("Error with status code: " + this.statusCode)
+      }
     }
   }
 
@@ -68,7 +73,7 @@ export class SensorsListComponent {
     if (this.currentPage > 1) {
       this.currentPage--;
       const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-      this.sensorsArray = await this.sensorService.getSensorsFromTo(startIndex, startIndex + this.itemsPerPage - 1);
+      this.sensorsArray = await this.sensorService.getSensorsFromTo(startIndex + 1, startIndex + this.itemsPerPage);
       this.totalPages = false
     }
   }
@@ -77,11 +82,13 @@ export class SensorsListComponent {
     if (!this.totalPages) {
       this.currentPage++;
       const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-      this.sensorsArray = await this.sensorService.getSensorsFromTo(startIndex, startIndex + this.itemsPerPage - 1);
+      this.sensorsArray = await this.sensorService.getSensorsFromTo(startIndex + 1, startIndex + this.itemsPerPage + 1);
 
       if(this.sensorsArray){
         if(this.sensorsArray?.length < this.itemsPerPage){
           this.totalPages = true
+        }else{
+          this.sensorsArray.pop();
         }
       }
     }

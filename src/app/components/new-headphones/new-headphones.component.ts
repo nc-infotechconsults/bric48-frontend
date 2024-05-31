@@ -26,11 +26,19 @@ export class NewHeadphonesComponent {
   async onSubmit(form: any) {
     this.btnDisabled = true;
 
-    this.statusCode = await this.headphonesService.addHeadphones(this.headphones);
+    let existingHeadphones:Headphones | null = {} as Headphones | null;
 
-    if (this.statusCode == 0){
-      window.alert("New headphones added!");
-      this.router.navigate(['/home/headphones'])
+    existingHeadphones = await this.headphonesService.getHeadphonesBySerial(this.headphones.serial)
+
+    if(existingHeadphones?.id != null){
+      window.alert("An headphones with this serial already exists!");
+    }else{
+      this.statusCode = await this.headphonesService.addHeadphones(this.headphones);
+
+      if (this.statusCode == 0){
+        window.alert("New headphones added!");
+        this.router.navigate(['/home/headphones'])
+      }
     }
 
     this.btnDisabled = false;

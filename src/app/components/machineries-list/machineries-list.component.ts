@@ -35,11 +35,14 @@ export class MachineriesListComponent {
   //On init
   async ngOnInit() {
 
-    this.machineries = await this.machineryService.getMachineriesFromTo(1, this.itemsPerPage);
+    this.machineries = await this.machineryService.getMachineriesFromTo(1, this.itemsPerPage + 1);
+
 
     if(this.machineries){
-      if(this.machineries.length < this.itemsPerPage){
+      if(this.machineries.length <= this.itemsPerPage){
         this.totalPages = true;
+      }else{
+        this.machineries.pop();
       }
     }
 
@@ -72,13 +75,16 @@ export class MachineriesListComponent {
 
   // Delete machinery by mserial
   async deleteMachinery(mserial: any) {
-    this.statusCode = await this.machineryService.deleteMachinery(mserial);
 
-    if (this.statusCode == 0){
-      this.reloadPage()
-      window.alert("Machinery deleted!");
-    }else{
-      window.alert("Error with status code: " + this.statusCode)
+    if (window.confirm('Are you sure you want to delete the machinery ' + mserial + '?')) {
+      this.statusCode = await this.machineryService.deleteMachinery(mserial);
+
+      if (this.statusCode == 0){
+        this.reloadPage()
+        window.alert("Machinery deleted!");
+      }else{
+        window.alert("Error with status code: " + this.statusCode)
+      }
     }
   }
   
@@ -145,7 +151,7 @@ export class MachineriesListComponent {
     if (this.currentPage > 1) {
       this.currentPage--;
       const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-      this.machineries = await this.machineryService.getMachineriesFromTo(startIndex, startIndex + this.itemsPerPage - 1);
+      this.machineries = await this.machineryService.getMachineriesFromTo(startIndex + 1, startIndex + this.itemsPerPage);
       this.totalPages = false
     }
   }
@@ -154,11 +160,13 @@ export class MachineriesListComponent {
     if (!this.totalPages) {
       this.currentPage++;
       const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-      this.machineries = await this.machineryService.getMachineriesFromTo(startIndex, startIndex + this.itemsPerPage - 1);
+      this.machineries = await this.machineryService.getMachineriesFromTo(startIndex + 1, startIndex + this.itemsPerPage + 1);
 
       if(this.machineries){
-        if(this.machineries?.length < this.itemsPerPage){
+        if(this.machineries?.length <= this.itemsPerPage){
           this.totalPages = true
+        }else{
+          this.machineries.pop();
         }
       }
     }

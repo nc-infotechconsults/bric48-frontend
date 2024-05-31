@@ -40,15 +40,23 @@ export class NewMachineryComponent {
   async onSubmit(form: any) {
     this.btnDisabled = true;
 
-    this.machinery.topic = "/"+this.machinery.mserial
+    let existingMachinery:Machinery | null = {} as Machinery | null;
 
-    this.statusCode = await this.machineryService.addMachinery(this.machinery);
+    existingMachinery = await this.machineryService.getMachineryByMserial(this.machinery.mserial)
 
-    if (this.statusCode == 0){
-      window.alert("New machinery added!");
-      this.router.navigate(['/home/machineries'])
+    if(existingMachinery != null){
+      window.alert("A machinery with this mserial already exists!");
+    }else{
+      this.machinery.topic = "/"+this.machinery.mserial
+
+      this.statusCode = await this.machineryService.addMachinery(this.machinery);
+
+      if (this.statusCode == 0){
+        window.alert("New machinery added!");
+        this.router.navigate(['/home/machineries'])
+      }
+
     }
-
     this.btnDisabled = false;
   }
 

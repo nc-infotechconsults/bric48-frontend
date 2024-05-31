@@ -58,6 +58,10 @@ export class HomeComponent {
     this.router.navigate(['/home/messages']);
   }
 
+  goToAccount(): void{
+    this.router.navigate(['/home/account']);
+  }
+
   logout(): void {
     localStorage.setItem('token', "")
     localStorage.setItem('email', "")

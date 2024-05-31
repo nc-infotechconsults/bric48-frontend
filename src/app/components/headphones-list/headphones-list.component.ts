@@ -23,11 +23,13 @@ export class HeadphonesListComponent {
 
   //On init
   async ngOnInit() {
-    this.headphonesArray = await this.headphonesService.getHeadphonesFromTo(1, this.itemsPerPage);
+    this.headphonesArray = await this.headphonesService.getHeadphonesFromTo(1, this.itemsPerPage + 1);
 
     if(this.headphonesArray){
-      if(this.headphonesArray.length < this.itemsPerPage){
+      if(this.headphonesArray.length <= this.itemsPerPage){
         this.totalPages = true;
+      }else{
+        this.headphonesArray.pop();
       }
     }
   }
@@ -42,23 +44,29 @@ export class HeadphonesListComponent {
 
   // Delete headphones by serial
   async deleteHeadphones(serial: string) {
-    this.statusCode = await this.headphonesService.deleteHeadphones(serial);
 
-    if (this.statusCode == 0){
+    if (window.confirm('Are you sure you want to delete the headphones ' + serial + '?')) {
 
-      // Aggionrna il campo idHeadphones del Worker impostandolo a stringa vuota
-      this.statusCode = await this.workerService.updateIdHeadphones(serial, "");
+      this.statusCode = await this.headphonesService.deleteHeadphones(serial);
 
       if (this.statusCode == 0){
-        window.alert("Headphones deleted!");
-      this.reloadPage()
+
+        // Aggionrna il campo idHeadphones del Worker impostandolo a stringa vuota
+        this.statusCode = await this.workerService.updateIdHeadphones(serial, "");
+
+        if (this.statusCode == 0){
+          window.alert("Headphones deleted!");
+        this.reloadPage()
+        }else{
+          window.alert("Error with status code: " + this.statusCode)
+        }
+
       }else{
         window.alert("Error with status code: " + this.statusCode)
       }
 
-    }else{
-      window.alert("Error with status code: " + this.statusCode)
     }
+    
   }
 
   reloadPage() {
@@ -71,7 +79,7 @@ export class HeadphonesListComponent {
     if (this.currentPage > 1) {
       this.currentPage--;
       const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-      this.headphonesArray = await this.headphonesService.getHeadphonesFromTo(startIndex, startIndex + this.itemsPerPage - 1);
+      this.headphonesArray = await this.headphonesService.getHeadphonesFromTo(startIndex + 1, startIndex + this.itemsPerPage);
       this.totalPages = false
     }
   }
@@ -80,11 +88,13 @@ export class HeadphonesListComponent {
     if (!this.totalPages) {
       this.currentPage++;
       const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-      this.headphonesArray = await this.headphonesService.getHeadphonesFromTo(startIndex, startIndex + this.itemsPerPage - 1);
+      this.headphonesArray = await this.headphonesService.getHeadphonesFromTo(startIndex + 1, startIndex + this.itemsPerPage + 1);
 
       if(this.headphonesArray){
-        if(this.headphonesArray?.length < this.itemsPerPage){
+        if(this.headphonesArray?.length <= this.itemsPerPage){
           this.totalPages = true
+        }else{
+          this.headphonesArray.pop();
         }
       }
     }

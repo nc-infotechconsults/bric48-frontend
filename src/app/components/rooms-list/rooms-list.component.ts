@@ -26,11 +26,13 @@ export class RoomsListComponent {
 
   //On init
   async ngOnInit() {
-    this.rooms = await this.roomService.getRoomsByIdBranchFromTo(this.idBranch, 1, this.itemsPerPage);
+    this.rooms = await this.roomService.getRoomsByIdBranchFromTo(this.idBranch, 1, this.itemsPerPage + 1);
 
     if(this.rooms){
-      if(this.rooms.length < this.itemsPerPage){
+      if(this.rooms.length <= this.itemsPerPage){
         this.totalPages = true;
+      }else{
+        this.rooms.pop();
       }
     }
   }
@@ -44,15 +46,18 @@ export class RoomsListComponent {
   }
 
   // Delete room by id
-  async deleteRoom(id: any) {
+  async deleteRoom(room: Room) {
 
-    this.statusCode = await this.roomService.deleteRoom(id);
+    if (window.confirm('Are you sure you want to delete the room ' + room.name + '?')) {
 
-    if (this.statusCode == 0){
-      this.reloadPage()
-      window.alert("Room deleted!");
-    }else{
-      window.alert("Error with status code: " + this.statusCode)
+      this.statusCode = await this.roomService.deleteRoom(room.id);
+
+      if (this.statusCode == 0){
+        this.reloadPage()
+        window.alert("Room deleted!");
+      }else{
+        window.alert("Error with status code: " + this.statusCode)
+      }
     }
   }
   
@@ -73,7 +78,7 @@ export class RoomsListComponent {
     if (this.currentPage > 1) {
       this.currentPage--;
       const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-      this.rooms = await this.roomService.getRoomsByIdBranchFromTo(this.idBranch, startIndex, startIndex + this.itemsPerPage - 1);
+      this.rooms = await this.roomService.getRoomsByIdBranchFromTo(this.idBranch, startIndex + 1, startIndex + this.itemsPerPage);
       this.totalPages = false
     }
   }
@@ -82,11 +87,13 @@ export class RoomsListComponent {
     if (!this.totalPages) {
       this.currentPage++;
       const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-      this.rooms = await this.roomService.getRoomsByIdBranchFromTo(this.idBranch, startIndex, startIndex + this.itemsPerPage - 1);
+      this.rooms = await this.roomService.getRoomsByIdBranchFromTo(this.idBranch, startIndex + 1, startIndex + this.itemsPerPage + 1);
 
       if(this.rooms){
-        if(this.rooms?.length < this.itemsPerPage){
+        if(this.rooms?.length <= this.itemsPerPage){
           this.totalPages = true
+        }else{
+          this.rooms.pop();
         }
       }
     }

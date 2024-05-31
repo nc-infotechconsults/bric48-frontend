@@ -22,11 +22,13 @@ export class BranchesListComponent {
 
   //On init
   async ngOnInit() {
-    this.branches = await this.branchService.getBranchesFromTo(1, this.itemsPerPage);
+    this.branches = await this.branchService.getBranchesFromTo(1, this.itemsPerPage + 1);
 
     if(this.branches){
-      if(this.branches.length < this.itemsPerPage){
+      if(this.branches.length <= this.itemsPerPage){
         this.totalPages = true;
+      }else{
+        this.branches.pop();
       }
     }
   }
@@ -46,14 +48,17 @@ export class BranchesListComponent {
   }
 
   // Delete branch by id
-  async deleteBranch(id: any) {
-    this.statusCode = await this.branchService.deleteBranch(id);
+  async deleteBranch(branch: Branch) {
 
-    if (this.statusCode == 0){
-      this.reloadPage()
-      window.alert("Branch deleted!");
-    }else{
-      window.alert("Error with status code: " + this.statusCode)
+    if (window.confirm('Are you sure you want to delete the branch ' + branch.name + '?')) {
+      this.statusCode = await this.branchService.deleteBranch(branch.id);
+
+      if (this.statusCode == 0){
+        this.reloadPage()
+        window.alert("Branch deleted!");
+      }else{
+        window.alert("Error with status code: " + this.statusCode)
+      }
     }
   }
   
@@ -75,7 +80,7 @@ export class BranchesListComponent {
     if (this.currentPage > 1) {
       this.currentPage--;
       const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-      this.branches = await this.branchService.getBranchesFromTo(startIndex, startIndex + this.itemsPerPage - 1);
+      this.branches = await this.branchService.getBranchesFromTo(startIndex + 1, startIndex + this.itemsPerPage);
       this.totalPages = false
     }
   }
@@ -84,11 +89,13 @@ export class BranchesListComponent {
     if (!this.totalPages) {
       this.currentPage++;
       const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-      this.branches = await this.branchService.getBranchesFromTo(startIndex, startIndex + this.itemsPerPage - 1);
+      this.branches = await this.branchService.getBranchesFromTo(startIndex + 1, startIndex + this.itemsPerPage + 1);
 
       if(this.branches){
-        if(this.branches?.length < this.itemsPerPage){
+        if(this.branches?.length <= this.itemsPerPage){
           this.totalPages = true
+        }else{
+          this.branches.pop();
         }
       }
     }

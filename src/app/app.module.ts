@@ -33,6 +33,9 @@ import { DataListComponent } from './components/data-list/data-list.component';
 import { IMqttServiceOptions, MqttModule } from 'ngx-mqtt';
 import { SendMessagesComponent } from './components/send-messages/send-messages.component';
 import { MachineryBarComponent } from './components/machinery-bar/machinery-bar.component';
+import { EditAccountComponent } from './components/edit-account/edit-account.component';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   hostname: 'test.mosquitto.org',
@@ -69,9 +72,12 @@ export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     NewRoomComponent,
     DataListComponent,
     SendMessagesComponent,
-    MachineryBarComponent
+    MachineryBarComponent,
+    EditAccountComponent
   ],
   imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     BrowserModule,
     FormsModule,

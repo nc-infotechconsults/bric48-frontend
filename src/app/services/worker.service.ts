@@ -223,4 +223,44 @@ export class WorkerService {
     }
   }
 
+
+  // Get worker by email
+  async getWorkerByEmail(email: string)  : Promise<Worker|null> {
+    const apiUrl = 'http://localhost:8080/worker/findByEmail?email='+email
+
+    try {
+      var token = JSON.parse(localStorage.getItem('token')!)
+      const response = await axios.get(apiUrl, {
+        headers: {
+          'Authorization': `Bearer `+token.jwt,
+        },
+      });
+      const worker: Worker = response.data;
+      return worker;
+
+    } catch (error) {
+      return null;
+    }
+  }
+
+
+  // Get worker by rollNumber
+  async getWorkerByRollNumber(rollNumber: string)  : Promise<Worker|null> {
+    const apiUrl = 'http://localhost:8080/worker/findByRollNumber?rollNumber='+rollNumber
+
+    try {
+      var token = JSON.parse(localStorage.getItem('token')!)
+      const response = await axios.get(apiUrl, {
+        headers: {
+          'Authorization': `Bearer `+token.jwt,
+        },
+      });
+      const worker: Worker = response.data;
+      return worker;
+
+    } catch (error) {
+      return null;
+    }
+  }
+
 }

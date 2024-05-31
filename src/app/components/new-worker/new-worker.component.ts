@@ -31,15 +31,27 @@ export class NewWorkerComponent {
   async onSubmit(form: any) {
     this.btnDisabled = true;
 
-    if(this.worker.idHeadphones == "No headphones associated"){
-      this.worker.idHeadphones = ""
-    }
+    let existingWorkerEmail:Worker | null = {} as Worker | null;
+    existingWorkerEmail = await this.workerService.getWorkerByEmail(this.worker.email)
 
-    this.statusCode = await this.workerService.addWorker(this.worker);
+    let existingWorkerRollNumber:Worker | null = {} as Worker | null;
+    existingWorkerRollNumber = await this.workerService.getWorkerByRollNumber(this.worker.rollNumber)
 
-    if (this.statusCode == 0){
-      window.alert("New worker added!");
-      this.router.navigate(['/home/workers'])
+    if(existingWorkerEmail?.id != null){
+      window.alert("A worker with this email already exists!");
+    }else if(existingWorkerRollNumber?.id != null){
+      window.alert("A worker with this roll number already exists!");
+    }else{
+      if(this.worker.idHeadphones == "No headphones associated"){
+        this.worker.idHeadphones = ""
+      }
+  
+      this.statusCode = await this.workerService.addWorker(this.worker);
+  
+      if (this.statusCode == 0){
+        window.alert("New worker added!");
+        this.router.navigate(['/home/workers'])
+      }
     }
 
     this.btnDisabled = false;
