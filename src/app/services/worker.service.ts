@@ -18,7 +18,7 @@ export class WorkerService {
     const apiUrl = 'http://localhost:8080/worker/getAll'
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.get(apiUrl, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -38,7 +38,7 @@ export class WorkerService {
     const apiUrl = 'http://localhost:8080/worker/getWorkersFromTo?from='+from+'&to='+to
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.get(apiUrl, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -57,7 +57,7 @@ export class WorkerService {
     const apiUrl = 'http://localhost:8080/worker/find/'+serial
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.get(apiUrl, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -76,7 +76,7 @@ export class WorkerService {
     const apiUrl = 'http://localhost:8080/worker/findById/'+id
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.get(apiUrl, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -94,7 +94,7 @@ export class WorkerService {
   async addWorker(worker:Worker): Promise<number> {
     try {
       const data = {rollNumber: worker.rollNumber, name: worker.name, surname: worker.surname, email: worker.email, phoneNumber: worker.phoneNumber, role: worker.role, idHeadphones: worker.idHeadphones};
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.post('http://localhost:8080/worker/add', data, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -131,7 +131,7 @@ export class WorkerService {
     const apiUrl = 'http://localhost:8080/worker/delete/'+id
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.delete(apiUrl, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -166,7 +166,7 @@ export class WorkerService {
     const apiUrl = 'http://localhost:8080/worker/updateIdHeadphones?oldIdHeadphones='+oldIdHeadphones+'&newIdHeadphones='
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.put(apiUrl, {}, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -192,7 +192,7 @@ export class WorkerService {
     const apiUrl = 'http://localhost:8080/worker/updateWorker'
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const data = {id: worker.id, rollNumber: worker.rollNumber, name: worker.name, surname: worker.surname, email: worker.email, phoneNumber: worker.phoneNumber, role: worker.role, idHeadphones: worker.idHeadphones};
       const response = await axios.put(apiUrl, data, {
         headers: {
@@ -229,7 +229,7 @@ export class WorkerService {
     const apiUrl = 'http://localhost:8080/worker/findByEmail?email='+email
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.get(apiUrl, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -249,7 +249,7 @@ export class WorkerService {
     const apiUrl = 'http://localhost:8080/worker/findByRollNumber?rollNumber='+rollNumber
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.get(apiUrl, {
         headers: {
           'Authorization': `Bearer `+token.jwt,

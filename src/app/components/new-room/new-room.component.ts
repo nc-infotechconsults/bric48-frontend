@@ -12,7 +12,7 @@ export class NewRoomComponent {
 
   room:Room = {} as Room;
 
-  branchName: string | null = localStorage.getItem('branchName')
+  branchName: string | null = sessionStorage.getItem('branchName')
 
   statusCode: number = 0;
 
@@ -28,7 +28,7 @@ export class NewRoomComponent {
   async onSubmit(form: any) {
     this.btnDisabled = true;
 
-    this.room.idBranch = localStorage.getItem('idBranch')!
+    this.room.idBranch = sessionStorage.getItem('idBranch')!
 
     this.statusCode = await this.roomService.addRoom(this.room);
 

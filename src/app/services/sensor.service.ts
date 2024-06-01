@@ -15,7 +15,7 @@ export class SensorService {
     const apiUrl = 'http://localhost:8080/beacon/getAll'
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.get(apiUrl, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -35,7 +35,7 @@ export class SensorService {
     const apiUrl = 'http://localhost:8080/beacon/getBeaconsFromTo?from='+from+'&to='+to
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.get(apiUrl, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -53,7 +53,7 @@ export class SensorService {
   async addSensor(sensor:Sensor): Promise<number> {
     try {
       const data = {mac: sensor.mac, mserial:sensor.mserial};
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.post('http://localhost:8080/beacon/add', data, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -76,7 +76,7 @@ export class SensorService {
     const apiUrl = 'http://localhost:8080/beacon/delete/'+mac
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.delete(apiUrl, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -99,7 +99,7 @@ export class SensorService {
     const apiUrl = 'http://localhost:8080/beacon/findByMac/'+mac
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.get(apiUrl, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -120,7 +120,7 @@ export class SensorService {
     const apiUrl = 'http://localhost:8080/beacon/updateBeacon'
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const data = {id: sensor.id, mac: sensor.mac, mserial: sensor.mserial};
       const response = await axios.put(apiUrl, data, {
         headers: {
@@ -146,7 +146,7 @@ export class SensorService {
     const apiUrl = 'http://localhost:8080/beacon/updateMserial?oldMserial='+oldMserial+'&newMserial='+newMserial
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.put(apiUrl, {}, {
         headers: {
           'Authorization': `Bearer `+token.jwt,

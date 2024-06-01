@@ -10,8 +10,8 @@ import { Router } from '@angular/router';
 })
 export class RoomsListComponent {
 
-  branchName: string | null = localStorage.getItem('branchName')
-  idBranch: any = localStorage.getItem('idBranch')
+  branchName: string | null = sessionStorage.getItem('branchName')
+  idBranch: any = sessionStorage.getItem('idBranch')
 
   rooms: Room[] | null = [];
 
@@ -64,7 +64,7 @@ export class RoomsListComponent {
 
   // Edit room by id
   async editRoom(id: any) {
-    localStorage.setItem('idRoom', id)
+    sessionStorage.setItem('idRoom', id)
     this.router.navigate(['/home/rooms/edit'])
   }
 

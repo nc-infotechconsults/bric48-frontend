@@ -24,7 +24,7 @@ export class RoomComponent {
 
   intervalId: any;
 
-  idBranch: any = localStorage.getItem('idBranch')
+  idBranch: any = sessionStorage.getItem('idBranch')
 
   constructor(private roomService:RoomService, private machineryService:MachineryService, private machineryDataService:MachineryDataService, private nearbyHeadphonesService:NearbyHeadphonesService, private router: Router) {
   }
@@ -104,7 +104,7 @@ export class RoomComponent {
   }
 
   goToMachineriesPage(idRoom: any) {
-    localStorage.setItem('idRoom', idRoom)
+    sessionStorage.setItem('idRoom', idRoom)
     this.router.navigate(['home/machinery']);
   }
 

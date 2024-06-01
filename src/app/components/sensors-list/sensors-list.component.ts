@@ -58,7 +58,7 @@ export class SensorsListComponent {
 
   // Edit sensor by mac
   async editSensor(mac: any) {
-    localStorage.setItem('macSensor', mac)
+    sessionStorage.setItem('macSensor', mac)
     this.router.navigate(['/home/sensors/edit'])
   }
 

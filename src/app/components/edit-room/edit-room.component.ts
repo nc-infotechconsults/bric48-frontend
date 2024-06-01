@@ -16,8 +16,8 @@ export class EditRoomComponent {
 
   statusCode: number = 0;
 
-  idBranch: any = localStorage.getItem('idBranch');
-  idRoom: any = localStorage.getItem('idRoom');
+  idBranch: any = sessionStorage.getItem('idBranch');
+  idRoom: any = sessionStorage.getItem('idRoom');
 
   btnDisabled: boolean = false;
 

@@ -24,8 +24,8 @@ export class AdminService {
       if (response.status === 200) {
         const jsonObject = JSON.parse(responseString);
 
-        localStorage.setItem('token', JSON.stringify(jsonObject))
-        localStorage.setItem('email', email)
+        sessionStorage.setItem('token', JSON.stringify(jsonObject))
+        sessionStorage.setItem('email', email)
 
         return 0; // Restituisce 0 se la richiesta è andata bene
       } else {
@@ -41,7 +41,7 @@ export class AdminService {
     const apiUrl = 'http://localhost:8080/admin/find/'+email
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.get(apiUrl, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -61,7 +61,7 @@ export class AdminService {
     const apiUrl = 'http://localhost:8080/admin/updateAdmin'
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const data = {id: admin.id, name: admin.name, surname: admin.surname, email: admin.email, password: admin.password, phoneNumber: admin.phoneNumber};
       const response = await axios.put(apiUrl, data, {
         headers: {

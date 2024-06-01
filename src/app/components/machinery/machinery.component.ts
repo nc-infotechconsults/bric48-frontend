@@ -19,7 +19,7 @@ export class MachineryComponent {
   alarms: MachineryData[] | null = [];
   nearbyHeadphones: NearbyHeadphones[] | null = [];
 
-  idRoom: any = localStorage.getItem('idRoom');
+  idRoom: any = sessionStorage.getItem('idRoom');
 
   intervalId: any;
 
@@ -89,7 +89,7 @@ export class MachineryComponent {
 
 
   goToMachineryDetails(mserial: any) {
-    localStorage.setItem('mserial', mserial)
+    sessionStorage.setItem('mserial', mserial)
     this.router.navigate(['home/details']);
   }
 

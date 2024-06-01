@@ -42,8 +42,8 @@ export class BranchesListComponent {
   }
 
   goToRoomsPage(id: any, name: string): void {
-    localStorage.setItem('idBranch', id)
-    localStorage.setItem('branchName', name)
+    sessionStorage.setItem('idBranch', id)
+    sessionStorage.setItem('branchName', name)
     this.router.navigate(['/home/rooms']);
   }
 
@@ -65,7 +65,7 @@ export class BranchesListComponent {
 
   // Edit branch by id
   async editBranch(id: any) {
-    localStorage.setItem('idBranch', id)
+    sessionStorage.setItem('idBranch', id)
     this.router.navigate(['/home/branches/edit'])
   }
 

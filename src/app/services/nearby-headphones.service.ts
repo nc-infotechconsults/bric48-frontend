@@ -15,7 +15,7 @@ export class NearbyHeadphonesService {
     const apiUrl = 'http://localhost:8080/nearbyHeadphones/find/'+mserial
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.get(apiUrl, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -34,7 +34,7 @@ export class NearbyHeadphonesService {
     const apiUrl = 'http://localhost:8080/nearbyHeadphones/find/room/'+idRoom
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.get(apiUrl, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -54,7 +54,7 @@ export class NearbyHeadphonesService {
     const apiUrl = 'http://localhost:8080/nearbyHeadphones/find/branch/'+idBranch
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.get(apiUrl, {
         headers: {
           'Authorization': `Bearer `+token.jwt,

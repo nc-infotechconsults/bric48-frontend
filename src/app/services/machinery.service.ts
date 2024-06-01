@@ -19,7 +19,7 @@ export class MachineryService {
     const apiUrl = 'http://localhost:8080/machinery/getAll'
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.get(apiUrl, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -38,7 +38,7 @@ export class MachineryService {
     const apiUrl = 'http://localhost:8080/machinery/getMachineriesFromTo?from='+from+'&to='+to
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.get(apiUrl, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -57,7 +57,7 @@ export class MachineryService {
     const apiUrl = 'http://localhost:8080/machinery/find?idRoom='+idRoom
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.get(apiUrl, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -76,7 +76,7 @@ export class MachineryService {
     const apiUrl = 'http://localhost:8080/machinery/find?idBranch='+idBranch
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.get(apiUrl, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -95,7 +95,7 @@ export class MachineryService {
     const apiUrl = 'http://localhost:8080/machinery/find/machinery/'+mserial
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.get(apiUrl, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -114,7 +114,7 @@ export class MachineryService {
     const apiUrl = 'http://localhost:8080/machinery/delete/'+mserial
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.delete(apiUrl, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -145,7 +145,7 @@ export class MachineryService {
   async addMachinery(machinery:Machinery): Promise<number> {
     try {
       const data = {mserial: machinery.mserial, name: machinery.name, topic: machinery.topic, idRoom: machinery.idRoom, idBranch: machinery.idBranch};
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.post('http://localhost:8080/machinery/add', data, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -169,7 +169,7 @@ export class MachineryService {
     const apiUrl = 'http://localhost:8080/machinery/updateMachinery'
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const data = {id: machinery.id, mserial: machinery.mserial, name: machinery.name, idBranch: machinery.idBranch, idRoom: machinery.idRoom, topic: machinery.topic};
       const response = await axios.put(apiUrl, data, {
         headers: {
@@ -194,7 +194,7 @@ export class MachineryService {
     const apiUrl = 'http://localhost:8080/machinery/updateMachineriesByIdBranch?oldIdBranch='+oldIdBranch+'&newIdBranch='+newIdBranch+'&newIdRoom='+newIdRoom
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.put(apiUrl, {}, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -218,7 +218,7 @@ export class MachineryService {
     const apiUrl = 'http://localhost:8080/machinery/updateMachineriesByIdRoom?oldIdRoom='+oldIdRoom+'&newIdRoom='+newIdRoom
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.put(apiUrl, {}, {
         headers: {
           'Authorization': `Bearer `+token.jwt,

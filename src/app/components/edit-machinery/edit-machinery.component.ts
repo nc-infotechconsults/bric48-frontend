@@ -17,7 +17,7 @@ export class EditMachineryComponent {
   branches: Branch[] | null = [];
   rooms: Room[] | null = [];
 
-  mserial: any = localStorage.getItem('mserial');
+  mserial: any = sessionStorage.getItem('mserial');
 
   statusCode: number = 0;
 

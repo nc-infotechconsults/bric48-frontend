@@ -10,7 +10,7 @@ import { Admin } from '../../models/admin';
 })
 export class EditAccountComponent {
 
-  email: any = localStorage.getItem('email');
+  email: any = sessionStorage.getItem('email');
 
   admin: any = {} as any;
 

@@ -42,7 +42,7 @@ export class MachineryDetailsComponent {
   //On init
   async ngOnInit() {
 
-    this.mserial = localStorage.getItem("mserial")
+    this.mserial = sessionStorage.getItem("mserial")
 
     this.machinery = await this.machineryService.getMachineryByMserial(this.mserial);
 
@@ -146,7 +146,7 @@ export class MachineryDetailsComponent {
   // Send message to all
   goToSendMessages(): void{
     const workersJSON = JSON.stringify(this.workers);
-    localStorage.setItem('workers', workersJSON);
+    sessionStorage.setItem('workers', workersJSON);
 
     this.router.navigate(['/home/messages']);
   }
@@ -154,7 +154,7 @@ export class MachineryDetailsComponent {
   // Send message to a worker
   goToSendIndividualMessages(worker: Worker): void{
     const workerJSON = JSON.stringify(worker);
-    localStorage.setItem('workers', workerJSON);
+    sessionStorage.setItem('workers', workerJSON);
     
     this.router.navigate(['/home/messages']);
   }

@@ -35,8 +35,8 @@ export class SendMessagesComponent {
 
     this.workers = await this.workerService.getAll();
 
-    const checked_workersJSON = localStorage.getItem('workers');
-    localStorage.removeItem('workers');
+    const checked_workersJSON = sessionStorage.getItem('workers');
+    sessionStorage.removeItem('workers');
 
     if (checked_workersJSON) {
       const workers_gotten: Worker[] | Worker = JSON.parse(checked_workersJSON);

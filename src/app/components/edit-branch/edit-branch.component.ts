@@ -11,7 +11,7 @@ export class EditBranchComponent {
 
   branch:any = {} as any;
 
-  idBranch: any = localStorage.getItem('idBranch');
+  idBranch: any = sessionStorage.getItem('idBranch');
 
   statusCode: number = 0;
 

@@ -19,7 +19,7 @@ export class RoomService {
     const apiUrl = 'http://localhost:8080/room/find/'+idBranch
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.get(apiUrl, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -38,7 +38,7 @@ export class RoomService {
     const apiUrl = 'http://localhost:8080/room/getRoomsFromTo?idBranch='+idBranch+'&from='+from+'&to='+to
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.get(apiUrl, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -57,7 +57,7 @@ export class RoomService {
     const apiUrl = 'http://localhost:8080/room/findById/'+id
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.get(apiUrl, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -76,7 +76,7 @@ export class RoomService {
     const apiUrl = 'http://localhost:8080/room/delete/'+id
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.delete(apiUrl, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -110,7 +110,7 @@ export class RoomService {
     const apiUrl = 'http://localhost:8080/room/deleteByBranch/'+idBranch
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.delete(apiUrl, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -144,7 +144,7 @@ export class RoomService {
   async addRoom(room:Room): Promise<number> {
     try {
       const data = {name: room.name, idBranch: room.idBranch};
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.post('http://localhost:8080/room/add', data, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -169,7 +169,7 @@ export class RoomService {
     const apiUrl = 'http://localhost:8080/room/updateRoom'
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const data = {id: room.id, name: room.name, idBranch: room.idBranch};
       const response = await axios.put(apiUrl, data, {
         headers: {

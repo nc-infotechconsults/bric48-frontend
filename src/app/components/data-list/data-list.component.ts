@@ -12,9 +12,10 @@ export class DataListComponent {
 
   dataArray: MachineryData[] | null = [];
 
+  dataArrayFiltered: MachineryData[] | null = [];
+
   searchedMserial: string = ""
   searchedType: string = "all types"
-
   startDate: string = ""
   endDate: string = ""
 
@@ -24,14 +25,12 @@ export class DataListComponent {
   itemsPerPage = 10;
   totalPages = false;
 
-  filtered = false;
-
   constructor(private machineryDataService: MachineryDataService, private router: Router) {
   }
 
   //On init
   async ngOnInit() {
-    this.dataArray = await this.machineryDataService.getDataFromTo(1, this.itemsPerPage + 1);
+    this.dataArray = await this.machineryDataService.getDataFromTo(1, this.itemsPerPage + 1, this.searchedMserial, this.searchedType, this.startDate, this.endDate);
 
     if(this.dataArray){
       if(this.dataArray.length <= this.itemsPerPage){
@@ -49,35 +48,23 @@ export class DataListComponent {
   // Search
   async search() {
 
-    this.filtered = true;
+    this.currentPage = 1;
+    this.totalPages = false;
 
     if(this.compareDate(this.startDate, this.endDate) == 1){
       this.reloadPage()
       window.alert("Invalid data selection!");
     }
   
-    this.dataArray = await this.machineryDataService.getAll();
-  
-    if(this.dataArray != null){
-      this.dataArray = this.dataArray.filter(data => {
-        let [timestamp, hour] = data.timestamp.split("+");
-  
-        if(this.searchedMserial != "" && !data.mserial.toLowerCase().includes(this.searchedMserial.toLowerCase())){
-          return false;
-        }
-        if(this.searchedType != "all types" && !data.type.toLowerCase().includes(this.searchedType.toLowerCase())){
-          return false;
-        }
-        if(this.startDate != "" && !(this.compareDate(timestamp, this.startDate) == 1 || this.compareDate(timestamp, this.startDate) == 0)){
-          return false;
-        }
-        if(this.endDate != "" && !(this.compareDate(timestamp, this.endDate) == -1 || this.compareDate(timestamp, this.endDate) == 0)){
-          return false;
-        }
-        return true;
-      });
+    this.dataArray = await this.machineryDataService.getDataFromTo(1, this.itemsPerPage + 1, this.searchedMserial, this.searchedType, this.startDate, this.endDate);
+    
+    if(this.dataArray){
+      if(this.dataArray.length <= this.itemsPerPage){
+        this.totalPages = true;
+      }else{
+        this.dataArray.pop();
+      }
     }
-
   }
 
   compareDate(firstDate: string, secondDate: string): number {
@@ -108,7 +95,7 @@ export class DataListComponent {
     if (this.currentPage > 1) {
       this.currentPage--;
       let startIndex = (this.currentPage - 1) * this.itemsPerPage;
-      this.dataArray = await this.machineryDataService.getDataFromTo(startIndex + 1, startIndex + this.itemsPerPage);
+      this.dataArray = await this.machineryDataService.getDataFromTo(startIndex + 1, startIndex + this.itemsPerPage, this.searchedMserial, this.searchedType, this.startDate, this.endDate);
       this.totalPages = false
     }
   }
@@ -117,7 +104,8 @@ export class DataListComponent {
     if (!this.totalPages) {
       this.currentPage++;
       let startIndex = (this.currentPage - 1) * this.itemsPerPage;
-      this.dataArray = await this.machineryDataService.getDataFromTo(startIndex + 1, startIndex + this.itemsPerPage + 1);
+
+      this.dataArray = await this.machineryDataService.getDataFromTo(startIndex + 1, startIndex + this.itemsPerPage + 1, this.searchedMserial, this.searchedType, this.startDate, this.endDate);
 
       if(this.dataArray){
         if(this.dataArray?.length <= this.itemsPerPage){
@@ -126,6 +114,32 @@ export class DataListComponent {
           this.dataArray.pop();
         }
       }
+    }
+  }
+
+  // Funzioni per esportare gli elementi di dataArray in formato CSV
+  
+  convertToCSV(objArray: any[]): string {
+    const array = [Object.keys(objArray[0])].concat(objArray);
+    return array.map(it => {
+      return Object.values(it).toString();
+    }).join('\n');
+  }
+
+  downloadCSV(csv: string, filename: string): void {
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.setAttribute('href', url);
+    a.setAttribute('download', filename);
+    a.click();
+  }
+
+  async exportToCSV(){
+    this.dataArrayFiltered = await this.machineryDataService.getDataFiltered(this.searchedMserial, this.searchedType, this.startDate, this.endDate);
+    if(this.dataArrayFiltered){
+      const csvData = this.convertToCSV(this.dataArrayFiltered);
+      this.downloadCSV(csvData, "Machinery_Data");
     }
   }
 

@@ -91,7 +91,7 @@ export class MachineriesListComponent {
 
   // Edit machinery by maserial
   async editMachinery(mserial: any) {
-    localStorage.setItem('mserial', mserial)
+    sessionStorage.setItem('mserial', mserial)
     this.router.navigate(['/home/machineries/edit'])
   }
 

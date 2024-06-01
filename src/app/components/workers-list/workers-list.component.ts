@@ -59,7 +59,7 @@ export class WorkersListComponent {
 
   // Edit worker by id
   async editWorker(id: any) {
-    localStorage.setItem('idWorker', id)
+    sessionStorage.setItem('idWorker', id)
     this.router.navigate(['/home/workers/edit'])
   }
 

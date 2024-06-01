@@ -19,7 +19,7 @@ export class HomeComponent {
   constructor(private adminService:AdminService, private router: Router) { }
 
   async ngOnInit(){
-    this.admin = await this.adminService.getAdminByEmail(localStorage.getItem('email'));
+    this.admin = await this.adminService.getAdminByEmail(sessionStorage.getItem('email'));
   }
 
   isHomePage(): boolean {
@@ -63,8 +63,8 @@ export class HomeComponent {
   }
 
   logout(): void {
-    localStorage.setItem('token', "")
-    localStorage.setItem('email', "")
+    sessionStorage.setItem('token', "")
+    sessionStorage.setItem('email', "")
     this.router.navigate(['/']);
   }
 

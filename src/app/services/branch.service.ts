@@ -18,7 +18,7 @@ export class BranchService {
     const apiUrl = 'http://localhost:8080/branch/getAll'
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.get(apiUrl, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -38,7 +38,7 @@ export class BranchService {
     const apiUrl = 'http://localhost:8080/branch/getBranchesFromTo?from='+from+'&to='+to
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.get(apiUrl, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -59,7 +59,7 @@ export class BranchService {
     const apiUrl = 'http://localhost:8080/branch/findById/'+id
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.get(apiUrl, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -78,7 +78,7 @@ export class BranchService {
     const apiUrl = 'http://localhost:8080/branch/delete/'+id
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.delete(apiUrl, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -110,7 +110,7 @@ export class BranchService {
   async addBranch(branch:Branch): Promise<number> {
     try {
       const data = {name: branch.name, address: branch.address};
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.post('http://localhost:8080/branch/add', data, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -135,7 +135,7 @@ export class BranchService {
     const apiUrl = 'http://localhost:8080/branch/updateBranch'
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const data = {id: branch.id, name: branch.name, address: branch.address};
       const response = await axios.put(apiUrl, data, {
         headers: {

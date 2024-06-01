@@ -18,7 +18,7 @@ export class EditWorkerComponent {
 
   headphonesArray: Headphones[] | null = [];
 
-  idWorker: any = localStorage.getItem('idWorker');
+  idWorker: any = sessionStorage.getItem('idWorker');
 
   statusCode: number = 0;
 

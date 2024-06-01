@@ -15,7 +15,7 @@ export class MachineryDataService {
     const apiUrl = 'http://localhost:8080/data/find/machinery?type='+type+'&mserial='+mserial+'&isSolved=False'
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.get(apiUrl, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -34,7 +34,7 @@ export class MachineryDataService {
     const apiUrl = 'http://localhost:8080/data/getAll'
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.get(apiUrl, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -50,11 +50,41 @@ export class MachineryDataService {
 
 
   // Get data from to
-  async getDataFromTo(from: number, to: number) : Promise<MachineryData[]|null> {
-    const apiUrl = 'http://localhost:8080/data/getDataFromTo?from='+from+'&to='+to
+  async getDataFromTo(from: number, to: number, searchedMserial: string, searchedType: string, startDate: string, endDate: string,) : Promise<MachineryData[]|null> {
+    
+    if(searchedType == "all types"){
+      searchedType = ""
+    }
+
+    const apiUrl = 'http://localhost:8080/data/getDataFromTo?from='+from+'&to='+to+'&mserial='+searchedMserial+'&type='+searchedType+'&startDate='+startDate+'&endDate='+endDate
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
+      const response = await axios.get(apiUrl, {
+        headers: {
+          'Authorization': `Bearer `+token.jwt,
+        },
+      });
+      const dataArray: MachineryData[] = response.data;
+      
+      return dataArray;
+
+    } catch (error) {
+      return null;
+    }
+  }
+
+  // Get data filtered
+  async getDataFiltered(searchedMserial: string, searchedType: string, startDate: string, endDate: string,) : Promise<MachineryData[]|null> {
+    
+    if(searchedType == "all types"){
+      searchedType = ""
+    }
+    
+    const apiUrl = 'http://localhost:8080/data/getDataFiltered?mserial='+searchedMserial+'&type='+searchedType+'&startDate='+startDate+'&endDate='+endDate
+
+    try {
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.get(apiUrl, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -75,7 +105,7 @@ export class MachineryDataService {
     const apiUrl = 'http://localhost:8080/data/updateIsSolved?id='+id
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.put(apiUrl, {}, {
         headers: {
           'Authorization': `Bearer `+token.jwt,

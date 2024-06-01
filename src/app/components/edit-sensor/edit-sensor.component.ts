@@ -15,7 +15,7 @@ export class EditSensorComponent {
 
   machineries: Machinery[] | null = [];
 
-  mac: any = localStorage.getItem('macSensor');
+  mac: any = sessionStorage.getItem('macSensor');
 
   statusCode: number = 0;
 

@@ -15,7 +15,7 @@ export class HeadphonesService {
     const apiUrl = 'http://localhost:8080/headphones/getAll'
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.get(apiUrl, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -34,7 +34,7 @@ export class HeadphonesService {
     const apiUrl = 'http://localhost:8080/headphones/getHeadphonesFromTo?from='+from+'&to='+to
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.get(apiUrl, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -53,7 +53,7 @@ export class HeadphonesService {
     const apiUrl = 'http://localhost:8080/headphones/find/'+isAssociated
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.get(apiUrl, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -71,7 +71,7 @@ export class HeadphonesService {
   async addHeadphones(headphones:Headphones): Promise<number> {
     try {
       const data = {serial: headphones.serial, isAssociated:"False"};
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.post('http://localhost:8080/headphones/add', data, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -95,7 +95,7 @@ export class HeadphonesService {
     const apiUrl = 'http://localhost:8080/headphones/updateAssociation?serial='+serial+'&isAssociated='+isAssociated
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.put(apiUrl, {}, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -119,7 +119,7 @@ export class HeadphonesService {
     const apiUrl = 'http://localhost:8080/headphones/delete/'+serial
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.delete(apiUrl, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -142,7 +142,7 @@ export class HeadphonesService {
     const apiUrl = 'http://localhost:8080/headphones/find?serial='+serial
 
     try {
-      var token = JSON.parse(localStorage.getItem('token')!)
+      var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.get(apiUrl, {
         headers: {
           'Authorization': `Bearer `+token.jwt,

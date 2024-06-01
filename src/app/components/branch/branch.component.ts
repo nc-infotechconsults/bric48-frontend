@@ -111,7 +111,7 @@ export class BranchComponent {
   }
 
   goToRoomsPage(idBranch: any) {
-    localStorage.setItem('idBranch', idBranch);
+    sessionStorage.setItem('idBranch', idBranch);
     this.router.navigate(['home/room']);
   }
 
