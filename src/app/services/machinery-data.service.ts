@@ -50,7 +50,7 @@ export class MachineryDataService {
 
 
   // Get data from to
-  async getDataFromTo(from: number, to: number, searchedMserial: string, searchedType: string, startDate: string, endDate: string,) : Promise<MachineryData[]|null> {
+  async getDataFromTo(from: number, to: number, searchedMserial: string, searchedType: string, startDate: string, endDate: string) : Promise<MachineryData[]|null> {
     
     if(searchedType == "all types"){
       searchedType = ""

@@ -15,6 +15,7 @@ import { Room } from '../../models/room';
 export class MachineriesListComponent {
 
   machineries: Machinery[] | null = [];
+  machineriesFiltered: Machinery[] | null = [];
   branches: Branch[] | null = [];
   rooms: Room[] | null = [];
 
@@ -35,8 +36,7 @@ export class MachineriesListComponent {
   //On init
   async ngOnInit() {
 
-    this.machineries = await this.machineryService.getMachineriesFromTo(1, this.itemsPerPage + 1);
-
+    this.machineries = await this.machineryService.getMachineriesFromTo(1, this.itemsPerPage + 1, this.searchedMserial, this.searchedName, this.searchedBranch, this.searchedRoom);
 
     if(this.machineries){
       if(this.machineries.length <= this.itemsPerPage){
@@ -103,7 +103,11 @@ export class MachineriesListComponent {
 
   // Search
   async search() {
-    this.machineries = await this.machineryService.getAll();
+
+    this.currentPage = 1;
+    this.totalPages = false;
+
+    this.machineries = await this.machineryService.getMachineriesFromTo(1, this.itemsPerPage + 1, this.searchedMserial, this.searchedName, this.searchedBranch, this.searchedRoom);
   
     if(this.machineries != null){
       this.machineries = await Promise.all(this.machineries.map(async (machinery) => {
@@ -119,24 +123,15 @@ export class MachineriesListComponent {
   
         return machinery;
       }));
-  
-      this.machineries = this.machineries.filter(machinery => {
-        if(this.searchedMserial != "" && !machinery.mserial.toLowerCase().includes(this.searchedMserial.toLowerCase())){
-          return false;
-        }
-        if(this.searchedName != "" && !machinery.name.toLowerCase().includes(this.searchedName.toLowerCase())){
-          return false;
-        }
-        if(this.searchedBranch != "all branches" && machinery.idBranch !== this.searchedBranch){
-          return false;
-        }
-        if(this.searchedRoom != "all rooms" && machinery.idRoom !== this.searchedRoom){
-          return false;
-        }
-        return true;
-      });
 
-      //this.currentPage = 1;
+      if(this.machineries){
+        if(this.machineries.length <= this.itemsPerPage){
+          this.totalPages = true;
+        }else{
+          this.machineries.pop();
+        }
+      }
+  
 
     }
   }
@@ -151,7 +146,7 @@ export class MachineriesListComponent {
     if (this.currentPage > 1) {
       this.currentPage--;
       const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-      this.machineries = await this.machineryService.getMachineriesFromTo(startIndex + 1, startIndex + this.itemsPerPage);
+      this.machineries = await this.machineryService.getMachineriesFromTo(startIndex + 1, startIndex + this.itemsPerPage, this.searchedMserial, this.searchedName, this.searchedBranch, this.searchedRoom);
       this.totalPages = false
     }
   }
@@ -160,7 +155,7 @@ export class MachineriesListComponent {
     if (!this.totalPages) {
       this.currentPage++;
       const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-      this.machineries = await this.machineryService.getMachineriesFromTo(startIndex + 1, startIndex + this.itemsPerPage + 1);
+      this.machineries = await this.machineryService.getMachineriesFromTo(startIndex + 1, startIndex + this.itemsPerPage + 1, this.searchedMserial, this.searchedName, this.searchedBranch, this.searchedRoom);
 
       if(this.machineries){
         if(this.machineries?.length <= this.itemsPerPage){
@@ -169,6 +164,32 @@ export class MachineriesListComponent {
           this.machineries.pop();
         }
       }
+    }
+  }
+
+  // Funzioni per esportare gli elementi di dataArray in formato CSV
+  
+  convertToCSV(objArray: any[]): string {
+    const array = [Object.keys(objArray[0])].concat(objArray);
+    return array.map(it => {
+      return Object.values(it).toString();
+    }).join('\n');
+  }
+
+  downloadCSV(csv: string, filename: string): void {
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.setAttribute('href', url);
+    a.setAttribute('download', filename);
+    a.click();
+  }
+
+  async exportToCSV(){
+    this.machineriesFiltered = await this.machineryService.getMachineriesFiltered(this.searchedMserial, this.searchedName, this.searchedBranch, this.searchedRoom);
+    if(this.machineriesFiltered){
+      const csvData = this.convertToCSV(this.machineriesFiltered);
+      this.downloadCSV(csvData, "Machinery_List");
     }
   }
 

@@ -101,4 +101,29 @@ export class BranchesListComponent {
     }
   }
 
+  // Funzioni per esportare gli elementi di dataArray in formato CSV
+  
+  convertToCSV(objArray: any[]): string {
+    const array = [Object.keys(objArray[0])].concat(objArray);
+    return array.map(it => {
+      return Object.values(it).toString();
+    }).join('\n');
+  }
+
+  downloadCSV(csv: string, filename: string): void {
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.setAttribute('href', url);
+    a.setAttribute('download', filename);
+    a.click();
+  }
+
+  async exportToCSV(){
+    if(this.branches){
+      const csvData = this.convertToCSV(this.branches);
+      this.downloadCSV(csvData, "Branches_List");
+    }
+  }
+
 }

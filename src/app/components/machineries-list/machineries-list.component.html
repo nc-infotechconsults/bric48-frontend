@@ -4,7 +4,7 @@
 <br>
 
 <!-- Search Filters -->
-<div class="search-filters container mt-5 mb-3">
+<div class="search-filters container mb-3">
 
     <input [(ngModel)] = "searchedMserial" name="searchedMserial"
     #inputMaserial = "ngModel"
@@ -60,22 +60,25 @@
         </table>
     </div>
 
-    <div class="pagination-controls" style="display: flex; justify-content: center; align-items: center; margin-top: 10px;">
-        <button (click)="goToPreviousPage()" [disabled]="currentPage === 1" class="btn btn-primary">
-            &#8592;
-        </button>
-        <span style="margin: 0 10px;">Page {{ currentPage }}</span>
-        <button (click)="goToNextPage()" [disabled]="totalPages" class="btn btn-primary">
-             &#8594;
-        </button>
+    <div class="container">
+        <div style="position: relative; height: 100px;">
+            <div style="position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);">
+                <button (click)="goToPreviousPage()" [disabled]="currentPage === 1" class="btn btn-primary">
+                    &#8592;
+                </button>
+                <span style="margin: 0 10px;">Page {{ currentPage }}</span>
+                <button (click)="goToNextPage()" [disabled]="totalPages" class="btn btn-primary">
+                    &#8594;
+                </button>
+            </div>
+            <button class="btn btn-success" style="position: absolute;top: 50%;right: 10px;transform: translateY(-50%);" (click)="exportToCSV()">EXPORT CSV</button>
+        </div>
     </div>
 
-    <br>
-    <br>
 
-    <div style="text-align: center;">
+    <div class="container mt-3" style="text-align: center;">
         <div class="button-wrapper">
-          <button class="btn btn-primary mx-1" (click)="goToNewMachineryPage()">Add Machinery</button>
+            <button class="btn btn-primary mx-1" (click)="goToNewMachineryPage()">Add Machinery</button>
         </div>
     </div>
 

@@ -5,15 +5,10 @@
     left: 0;
     width: 100%;
     height: 10%;
-    background-color: #dddddd;
+    background: linear-gradient(to right, rgb(153, 215, 248), rgb(211, 229, 238)); /* Gradazione di colore */
     color: #d0d0d0a4;
     display: flex;
     align-items: center;
-
-    background-image: url("/assets/navbar_background.jpg"); /* Replace with your image path */
-    background-repeat: no-repeat; /* Control image repetition */
-    background-size: cover; /* Resize image to fit the navbar */
-    background-position: center; /* Position image in the center */
 
     border: 2px solid gray;
 }
@@ -25,15 +20,10 @@
     left: 0;
     width: 15%;
     height: 90%;
-    background-color: #dddddd;
+    background: linear-gradient(to bottom, rgb(153, 215, 248), rgb(211, 229, 238)); /* Gradazione di colore */
     display: flex;
     flex-direction: column;
     align-items: left;
-
-    background-image: url("/assets/sidebar_background.jpg"); /* Replace with your image path */
-    background-repeat: no-repeat; /* Control image repetition */
-    background-size: cover; /* Resize image to fit the navbar */
-    background-position: center; /* Position image in the center */
 
     border-bottom: 2px solid gray;
     border-right: 2px solid gray;

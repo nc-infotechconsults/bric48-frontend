@@ -33,9 +33,46 @@ export class MachineryService {
     }
   }
 
-  // Get machineries from-to
-  async getMachineriesFromTo(from: number, to: number)  : Promise<Machinery[]|null> {
-    const apiUrl = 'http://localhost:8080/machinery/getMachineriesFromTo?from='+from+'&to='+to
+  // Get machineries from-to filtered
+  async getMachineriesFromTo(from: number, to: number, searchedMserial: string, searchedName: string, searchedIdBranch: string, searchedIdRoom: string)  : Promise<Machinery[]|null> {
+    
+    if(searchedIdBranch == "all branches"){
+      searchedIdBranch = ""
+    }
+
+    if(searchedIdRoom == "all rooms"){
+      searchedIdRoom = ""
+    }
+
+    const apiUrl = 'http://localhost:8080/machinery/getMachineriesFromTo?from='+from+'&to='+to+'&mserial='+searchedMserial+'&name='+searchedName+'&idBranch='+searchedIdBranch+'&idRoom='+searchedIdRoom
+
+    try {
+      var token = JSON.parse(sessionStorage.getItem('token')!)
+      const response = await axios.get(apiUrl, {
+        headers: {
+          'Authorization': `Bearer `+token.jwt,
+        },
+      });
+      const machineries: Machinery[] = response.data;
+      return machineries;
+
+    } catch (error) {
+      return null;
+    }
+  }
+
+  // Get machineries filtered
+  async getMachineriesFiltered(searchedMserial: string, searchedName: string, searchedIdBranch: string, searchedIdRoom: string)  : Promise<Machinery[]|null> {
+    
+    if(searchedIdBranch == "all branches"){
+      searchedIdBranch = ""
+    }
+
+    if(searchedIdRoom == "all rooms"){
+      searchedIdRoom = ""
+    }
+    
+    const apiUrl = 'http://localhost:8080/machinery/getMachineriesFiltered?mserial='+searchedMserial+'&name='+searchedName+'&idBranch='+searchedIdBranch+'&idRoom='+searchedIdRoom
 
     try {
       var token = JSON.parse(sessionStorage.getItem('token')!)
