@@ -132,6 +132,7 @@ export class MachineryDetailsComponent {
       if(this.machineryAlarms != null){
         const message = this.machineryAlarms[0].description;
         this.mqttService.unsafePublish('/'+this.mserial, message, { qos: 0, retain: false });
+        window.alert("Alarm sent!")
       }
 
     }
@@ -157,6 +158,12 @@ export class MachineryDetailsComponent {
     sessionStorage.setItem('workers', workerJSON);
     
     this.router.navigate(['/home/messages']);
+  }
+
+  reloadPage() {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate([this.router.url]);
   }
 
 

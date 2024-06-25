@@ -273,5 +273,26 @@ export class MachineryService {
     }
   }
 
+  // Get machineries by alarm is solved
+  async getMachineriesByAlarmIsSolved(solved: string) : Promise<Machinery[]|null> {
+    
+    const apiUrl = 'http://localhost:8080/machinery/find/machinery/alarm?solved='+solved
+
+    try {
+      var token = JSON.parse(sessionStorage.getItem('token')!)
+      const response = await axios.get(apiUrl, {
+        headers: {
+          'Authorization': `Bearer `+token.jwt,
+        },
+      });
+      const dataArray: Machinery[] = response.data;
+      
+      return dataArray;
+
+    } catch (error) {
+      return null;
+    }
+  }
+
 
 }

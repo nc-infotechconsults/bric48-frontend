@@ -50,7 +50,7 @@
                 <li *ngFor="let worker of workers">
                   <div class="worker" style="display: flex; align-items: center;">
                     <input type="checkbox" [id]="worker.id" [checked]="worker.checked" (change)="toggleWorker(worker, $event)">
-                    <label [for]="worker.id" style="margin-left: 0.5rem;">{{ worker.name }} {{ worker.surname }} [{{ worker.role }}]</label>
+                    <label [for]="worker.id" style="margin-left: 0.5rem;">{{ worker.rollNumber }} - {{ worker.name }} {{ worker.surname }} [{{ worker.role }}]</label>
                   </div>
                 </li>
             </ul>
@@ -65,7 +65,7 @@
             <ul style="list-style-type: none; padding-left: 0;">
                 <li *ngFor="let worker of checked_workers">
                     <div class="worker" style="display: flex; align-items: center;">
-                        <label [for]="worker.id" style="margin-left: 0.5rem;">{{ worker.name }} {{ worker.surname }} [{{ worker.role }}]
+                        <label [for]="worker.id" style="margin-left: 0.5rem;">{{ worker.rollNumber }} - {{ worker.name }} {{ worker.surname }} [{{ worker.role }}]
                         </label>
                     </div>
                 </li>

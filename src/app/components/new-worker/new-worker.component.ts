@@ -24,6 +24,7 @@ export class NewWorkerComponent {
   }
 
   async ngOnInit(){
+    this.worker.password = ""
     this.btnDisabled = false;
     this.headphonesArray = await this.headphonesService.getByIsAssociated("False");
   }
@@ -44,6 +45,10 @@ export class NewWorkerComponent {
     }else{
       if(this.worker.idHeadphones == "No headphones associated"){
         this.worker.idHeadphones = ""
+      }
+
+      if(this.worker.role != "Security Manager"){
+        this.worker.password = ""
       }
   
       this.statusCode = await this.workerService.addWorker(this.worker);

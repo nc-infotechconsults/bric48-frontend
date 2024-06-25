@@ -61,3 +61,23 @@ hr {
 border: 1px solid #828282; /* Colore e stile della linea orizzontale */
 margin: 0 0; /* Margine sopra e sotto la linea orizzontale */
 }
+
+.top-0 {
+  top: 0 !important;
+}
+
+.start-100 {
+  left: 100% !important;
+}
+
+.translate-middle {
+  transform: translate(-50%, -50%) !important;
+}
+
+.badge {
+  padding: 0.5em 0.75em;
+  background-color: red;
+  color: white;
+}
+
+

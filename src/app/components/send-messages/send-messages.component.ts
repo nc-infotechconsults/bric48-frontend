@@ -100,9 +100,9 @@ export class SendMessagesComponent {
 
     if(this.checked_workers != null){
       for(const worker of this.checked_workers){
-        console.log(worker)
         this.mqttService.unsafePublish('/'+worker.idHeadphones, message, { qos: 0, retain: false });
       }
+      window.alert("Message sent!")
     }
     this.reloadPage()
     
@@ -139,7 +139,7 @@ export class SendMessagesComponent {
   
     if(this.workers != null){
       this.workers = this.workers.filter(worker => {
-        if(this.searchedRoll != "" && !worker.role.toLowerCase().includes(this.searchedRoll.toLowerCase())){
+        if(this.searchedRoll != "" && !worker.rollNumber.toLowerCase().includes(this.searchedRoll.toLowerCase())){
           return false;
         }
         if(this.searchedName != "" && !worker.name.toLowerCase().includes(this.searchedName.toLowerCase())){

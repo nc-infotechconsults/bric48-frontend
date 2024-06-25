@@ -59,7 +59,7 @@
                                 
                                 <div class="mb-3">
                                     <label for="headphones" class="form-label"><strong>Headphones Serial</strong></label>
-                                    <select [(ngModel)]="this.worker.idHeadphones" name="idHeadphones" required #inputIdHeadphones="ngModel" class="form-control" id="idHeadphones">
+                                    <select [(ngModel)]="this.worker.idHeadphones" name="idHeadphones" #inputIdHeadphones="ngModel" class="form-control" id="idHeadphones">
                                         <option value="">No headphones associated</option>
                                         <option *ngIf="this.worker.idHeadphones !== ''" [value]="this.worker.idHeadphones">
                                             {{this.worker.idHeadphones}}
@@ -70,16 +70,24 @@
 
                                 <div class="mb-3">
                                     <label for="role" class="form-label"><strong>Role</strong></label>
-                                    <select [(ngModel)]="worker.role" name="role" required #inputRole="ngModel" class="form-control" id="role">
+                                    <select [(ngModel)]="worker.role" name="role" required #inputRole="ngModel" class="form-control" id="role" [disabled]="!isAdmin">
                                         <option value="Worker">Worker</option>
                                         <option value="Security Manager">Security Manager</option>
                                     </select>
+                                </div>
+
+                                <div class="mb-3" *ngIf="worker.role === 'Security Manager'">
+                                    <label for="password" class="form-label"><strong>Password</strong> <small> (leave this field empty to keep the old password)</small></label>
+                                    <input
+                                    [(ngModel)]="worker.password" name="password"
+                                    #inputPassword="ngModel"
+                                    type="password" class="form-control" id="password" placeholder="Enter password">
                                 </div>
                                 
 
                                 <div class="d-grid gap-2">
                                     <button
-                                    [disabled] = "!newWorkerForm.valid || btnDisabled"
+                                    [disabled] = "!newWorkerForm.valid || btnDisabled || (worker.role === 'Security Manager' && oldRole !== 'Security Manager' && worker.password === '')"
                                     type="submit" class="btn btn-primary">Edit</button>
                                 </div>
                                 

@@ -13,6 +13,30 @@ export class WorkerService {
 
   constructor(private http:HttpClient, private headphonesService: HeadphonesService) { }
 
+  // Login
+  async loginWorker(email: string, password: string): Promise<number> {
+    try {
+      const data = {email: email, password: password};
+      const response = await axios.post('http://localhost:8080/worker/authenticate', data);
+      const responseString = JSON.stringify(response.data);
+
+      // Verifica se la richiesta è andata bene
+      if (response.status === 200) {
+        const jsonObject = JSON.parse(responseString);
+
+        sessionStorage.setItem('token', JSON.stringify(jsonObject))
+        sessionStorage.setItem('email', email)
+        sessionStorage.setItem('role', 'SECURITY MANAGER')
+
+        return 0; // Restituisce 0 se la richiesta è andata bene
+      } else {
+        return 1; // Restituisce 1 se la richiesta ha avuto esito negativo
+      }
+    } catch (error) {
+      return 1; // Restituisce 1 se si è verificato un errore durante la richiesta
+    }
+  }
+
   // Get all workers
   async getAll() : Promise<Worker[]|null> {
     const apiUrl = 'http://localhost:8080/worker/getAll'
@@ -93,7 +117,13 @@ export class WorkerService {
   // Add a new worker
   async addWorker(worker:Worker): Promise<number> {
     try {
-      const data = {rollNumber: worker.rollNumber, name: worker.name, surname: worker.surname, email: worker.email, phoneNumber: worker.phoneNumber, role: worker.role, idHeadphones: worker.idHeadphones};
+      let data = {}
+      if(worker.password == ""){
+        data = {rollNumber: worker.rollNumber, name: worker.name, surname: worker.surname, email: worker.email, phoneNumber: worker.phoneNumber, role: worker.role, idHeadphones: worker.idHeadphones};
+      }else{
+        data = {rollNumber: worker.rollNumber, name: worker.name, surname: worker.surname, email: worker.email, password: worker.password, phoneNumber: worker.phoneNumber, role: worker.role, idHeadphones: worker.idHeadphones};
+      }
+  
       var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.post('http://localhost:8080/worker/add', data, {
         headers: {
@@ -103,18 +133,6 @@ export class WorkerService {
 
       // Verifica se la richiesta è andata bene
       if (response.status === 200) {
-
-        // Aggiornamento dello stato di associazione delle cuffie da False a True
-        /*if(worker.idHeadphones != ""){
-          this.statusCode = await this.headphonesService.updateAssociation(worker.idHeadphones, "True");
-        }
-        
-
-        if (this.statusCode == 0){
-          return 0; // Restituisce 0 se la richiesta è andata bene
-        }else {
-          return 1; // Restituisce 1 se la richiesta ha avuto esito negativo
-        }*/
 
         return 0;
 
@@ -139,17 +157,6 @@ export class WorkerService {
       });
       // Verifica se la richiesta è andata bene
       if (response.status === 200) {
-
-        // Aggiornamento dello stato di associazione delle cuffie da True a False
-        /*this.statusCode = await this.headphonesService.updateAssociation(idHeadphones, "False");
-        
-
-        if (this.statusCode == 0){
-          return 0; // Restituisce 0 se la richiesta è andata bene
-        }else {
-          return 1; // Restituisce 1 se la richiesta ha avuto esito negativo
-        }*/
-
         return 0;
 
       } else {
@@ -187,13 +194,18 @@ export class WorkerService {
   // Update worker
   async editWorker(oldIdHeadphones: string, worker: Worker) : Promise<number> {
 
-    console.log(oldIdHeadphones, worker.idHeadphones)
-
     const apiUrl = 'http://localhost:8080/worker/updateWorker'
 
     try {
       var token = JSON.parse(sessionStorage.getItem('token')!)
-      const data = {id: worker.id, rollNumber: worker.rollNumber, name: worker.name, surname: worker.surname, email: worker.email, phoneNumber: worker.phoneNumber, role: worker.role, idHeadphones: worker.idHeadphones};
+
+      let data = {}
+      if(worker.password == ""){
+        data = {id: worker.id, rollNumber: worker.rollNumber, name: worker.name, surname: worker.surname, email: worker.email, phoneNumber: worker.phoneNumber, role: worker.role, idHeadphones: worker.idHeadphones};
+      }else{
+        data = {id: worker.id, rollNumber: worker.rollNumber, name: worker.name, surname: worker.surname, email: worker.email, password: worker.password, phoneNumber: worker.phoneNumber, role: worker.role, idHeadphones: worker.idHeadphones};
+      }
+      
       const response = await axios.put(apiUrl, data, {
         headers: {
           'Authorization': `Bearer `+token.jwt,
@@ -205,7 +217,6 @@ export class WorkerService {
 
         // Aggiornamento dello stato di associazione delle vecchie cuffie da True a False
         if(oldIdHeadphones != worker.idHeadphones && oldIdHeadphones != ""){
-          console.log("diversi")
           this.statusCode = await this.headphonesService.updateAssociation(oldIdHeadphones, "False");
         }
 
@@ -225,7 +236,7 @@ export class WorkerService {
 
 
   // Get worker by email
-  async getWorkerByEmail(email: string)  : Promise<Worker|null> {
+  async getWorkerByEmail(email: string | null)  : Promise<Worker|null> {
     const apiUrl = 'http://localhost:8080/worker/findByEmail?email='+email
 
     try {

@@ -15,45 +15,45 @@
                                 <div class="mb-3">
                                     <label for="rollNumber" class="form-label"><strong>Roll Number</strong></label>
                                     <input
-                                    [(ngModel)] = "worker.rollNumber" name="rollNumber"
+                                    [(ngModel)]="worker.rollNumber" name="rollNumber"
                                     required
-                                    #inputRollNumber = "ngModel"
+                                    #inputRollNumber="ngModel"
                                     type="text" class="form-control" id="rollNumber" placeholder="Enter roll number">
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="name" class="form-label"><strong>Name</strong></label>
                                     <input
-                                    [(ngModel)] = "worker.name" name="name"
+                                    [(ngModel)]="worker.name" name="name"
                                     required
-                                    #inputName = "ngModel"
+                                    #inputName="ngModel"
                                     type="text" class="form-control" id="name" placeholder="Enter name">
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="surname" class="form-label"><strong>Surname</strong></label>
                                     <input
-                                    [(ngModel)] = "worker.surname" name="surname"
+                                    [(ngModel)]="worker.surname" name="surname"
                                     required
-                                    #inputSurname = "ngModel"
+                                    #inputSurname="ngModel"
                                     type="text" class="form-control" id="surname" placeholder="Enter surname">
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="email" class="form-label"><strong>Email</strong></label>
                                     <input
-                                    [(ngModel)] = "worker.email" name="email"
+                                    [(ngModel)]="worker.email" name="email"
                                     required
-                                    #inputEmail = "ngModel"
+                                    #inputEmail="ngModel"
                                     type="text" class="form-control" id="email" placeholder="Enter email">
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="phoneNumber" class="form-label"><strong>Phone Number</strong></label>
                                     <input
-                                    [(ngModel)] = "worker.phoneNumber" name="phoneNumber"
+                                    [(ngModel)]="worker.phoneNumber" name="phoneNumber"
                                     required
-                                    #inputPhoneNumber = "ngModel"
+                                    #inputPhoneNumber="ngModel"
                                     type="text" class="form-control" id="phoneNumber" placeholder="Enter Phone Number">
                                 </div>
                                 
@@ -72,11 +72,19 @@
                                         <option value="Security Manager">Security Manager</option>
                                     </select>
                                 </div>
-                                
+
+                                <div class="mb-3" *ngIf="worker.role === 'Security Manager'">
+                                    <label for="password" class="form-label"><strong>Password</strong></label>
+                                    <input
+                                    [(ngModel)]="worker.password" name="password"
+                                    required
+                                    #inputPassword="ngModel"
+                                    type="password" class="form-control" id="password" placeholder="Enter password">
+                                </div>
 
                                 <div class="d-grid gap-2">
                                     <button
-                                    [disabled] = "!newWorkerForm.valid || btnDisabled"
+                                    [disabled]="!newWorkerForm.valid || btnDisabled"
                                     type="submit" class="btn btn-primary">Add</button>
                                 </div>
                             </form>
@@ -87,5 +95,4 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/js/bootstrap.bundle.min.js"></script>
-
 </body>

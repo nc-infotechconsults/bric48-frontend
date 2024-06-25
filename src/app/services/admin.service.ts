@@ -26,6 +26,7 @@ export class AdminService {
 
         sessionStorage.setItem('token', JSON.stringify(jsonObject))
         sessionStorage.setItem('email', email)
+        sessionStorage.setItem('role', 'ADMIN')
 
         return 0; // Restituisce 0 se la richiesta è andata bene
       } else {
