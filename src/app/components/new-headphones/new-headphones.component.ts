@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Headphones } from '../../models/headphones';
 import { HeadphonesService } from '../../services/headphones.service';
 import { Router } from '@angular/router';
+import { LogService } from '../../services/log.service';
 
 @Component({
   selector: 'app-new-headphones',
@@ -16,7 +17,7 @@ export class NewHeadphonesComponent {
 
   btnDisabled: boolean = false;
 
-  constructor(private headphonesService:HeadphonesService, private router: Router) {
+  constructor(private headphonesService:HeadphonesService, private logService:LogService, private router: Router) {
   }
 
   ngOnInit(){
@@ -37,6 +38,7 @@ export class NewHeadphonesComponent {
 
       if (this.statusCode == 0){
         window.alert("New headphones added!");
+        this.logService.addLog("Added headphones with serial: "+this.headphones.serial)
         this.router.navigate(['/home/headphones'])
       }
     }

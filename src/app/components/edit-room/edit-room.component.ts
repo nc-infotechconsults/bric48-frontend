@@ -3,6 +3,7 @@ import { BranchService } from '../../services/branch.service';
 import { RoomService } from '../../services/room.service';
 import { Router } from '@angular/router';
 import { Branch } from '../../models/branch';
+import { LogService } from '../../services/log.service';
 
 @Component({
   selector: 'app-edit-room',
@@ -21,7 +22,7 @@ export class EditRoomComponent {
 
   btnDisabled: boolean = false;
 
-  constructor( private branchService:BranchService, private roomService:RoomService, private router: Router) {
+  constructor( private branchService:BranchService, private roomService:RoomService, private logService:LogService, private router: Router) {
   }
 
    //On init
@@ -39,6 +40,7 @@ export class EditRoomComponent {
 
     if (this.statusCode == 0){
       window.alert("Room edited!");
+      this.logService.addLog("Edited room "+this.room.name)
       this.router.navigate(['/home/rooms'])
     }
 

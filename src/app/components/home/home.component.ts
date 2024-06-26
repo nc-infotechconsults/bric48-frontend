@@ -7,6 +7,7 @@ import { MachineryService } from '../../services/machinery.service';
 import { Machinery } from '../../models/machinery';
 import { Worker } from '../../models/worker';
 import { WorkerService } from '../../services/worker.service';
+import { LogService } from '../../services/log.service';
 
 @Component({
   selector: 'app-home',
@@ -24,7 +25,7 @@ export class HomeComponent {
 
   intervalId: any;
 
-  constructor(private adminService:AdminService, private workerService:WorkerService, private router: Router) { }
+  constructor(private adminService:AdminService, private workerService:WorkerService, private logService:LogService, private router: Router) { }
 
   notificationCount: any;
 
@@ -79,9 +80,11 @@ export class HomeComponent {
     this.router.navigate(['/home/messages']);
   }
 
-  goToAccount(): void{
+  goToCheckLogs(): void{
+    this.router.navigate(['/home/logs']);
+  }
 
-    console.log(this.role)
+  goToAccount(): void{
 
     if(this.role == 'ADMIN'){
       this.router.navigate(['/home/account']);
@@ -93,6 +96,7 @@ export class HomeComponent {
   }
 
   logout(): void {
+    this.logService.addLog("Logout "+this.role+" with email: "+this.admin?.email)
     sessionStorage.removeItem('token')
     sessionStorage.removeItem('email')
     sessionStorage.removeItem('role')

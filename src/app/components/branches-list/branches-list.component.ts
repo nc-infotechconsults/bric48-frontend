@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Branch } from '../../models/branch';
 import { BranchService } from '../../services/branch.service';
 import { Router } from '@angular/router';
+import { LogService } from '../../services/log.service';
 
 @Component({
   selector: 'app-branches-list',
@@ -17,7 +18,7 @@ export class BranchesListComponent {
   itemsPerPage = 10;
   totalPages = false;
 
-  constructor(private branchService:BranchService, private router: Router) {
+  constructor(private branchService:BranchService, private logService:LogService, private router: Router) {
   }
 
   //On init
@@ -56,6 +57,7 @@ export class BranchesListComponent {
       if (this.statusCode == 0){
         this.reloadPage()
         window.alert("Branch deleted!");
+        this.logService.addLog("Deleted branch "+branch.name)
       }else{
         window.alert("Error with status code: " + this.statusCode)
       }
@@ -123,6 +125,7 @@ export class BranchesListComponent {
     if(this.branches){
       const csvData = this.convertToCSV(this.branches);
       this.downloadCSV(csvData, "Branches_List");
+      this.logService.addLog("Branches list exported in CSV")
     }
   }
 

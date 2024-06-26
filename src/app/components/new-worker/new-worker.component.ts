@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Worker } from '../../models/worker';
 import { Headphones } from '../../models/headphones';
 import { HeadphonesService } from '../../services/headphones.service';
+import { LogService } from '../../services/log.service';
 
 @Component({
   selector: 'app-new-worker',
@@ -20,7 +21,7 @@ export class NewWorkerComponent {
 
   btnDisabled: boolean = false;
 
-  constructor(private workerService:WorkerService, private headphonesService:HeadphonesService, private router: Router) {
+  constructor(private workerService:WorkerService, private headphonesService:HeadphonesService, private logService:LogService, private router: Router) {
   }
 
   async ngOnInit(){
@@ -55,6 +56,7 @@ export class NewWorkerComponent {
   
       if (this.statusCode == 0){
         window.alert("New worker added!");
+        this.logService.addLog("Added worker "+this.worker.name+" "+this.worker.surname+" ["+this.worker.role+"]")
         this.router.navigate(['/home/workers'])
       }
     }

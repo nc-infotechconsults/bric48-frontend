@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { HeadphonesService } from '../../services/headphones.service';
 import { Headphones } from '../../models/headphones';
 import { WorkerService } from '../../services/worker.service';
+import { LogService } from '../../services/log.service';
 
 @Component({
   selector: 'app-headphones-list',
@@ -18,7 +19,7 @@ export class HeadphonesListComponent {
   itemsPerPage = 10;
   totalPages = false;
 
-  constructor(private headphonesService:HeadphonesService, private workerService:WorkerService, private router: Router) {
+  constructor(private headphonesService:HeadphonesService, private workerService:WorkerService, private logService:LogService, private router: Router) {
   }
 
   //On init
@@ -56,7 +57,8 @@ export class HeadphonesListComponent {
 
         if (this.statusCode == 0){
           window.alert("Headphones deleted!");
-        this.reloadPage()
+          this.logService.addLog("Deleted headphones with serial: "+serial)
+          this.reloadPage()
         }else{
           window.alert("Error with status code: " + this.statusCode)
         }
@@ -123,6 +125,7 @@ export class HeadphonesListComponent {
     if(this.headphonesArray){
       const csvData = this.convertToCSV(this.headphonesArray);
       this.downloadCSV(csvData, "Headphones_List");
+      this.logService.addLog("Headphones list exported in CSV")
     }
   }
 

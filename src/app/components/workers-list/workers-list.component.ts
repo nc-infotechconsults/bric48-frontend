@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Worker } from '../../models/worker';
 import { WorkerService } from '../../services/worker.service';
+import { LogService } from '../../services/log.service';
 
 @Component({
   selector: 'app-workers-list',
@@ -17,7 +18,7 @@ export class WorkersListComponent {
   itemsPerPage = 10;
   totalPages = false;
 
-  constructor(private workerService:WorkerService, private router: Router) {
+  constructor(private workerService:WorkerService, private logService:LogService, private router: Router) {
   }
 
   //On init
@@ -51,6 +52,7 @@ export class WorkersListComponent {
       if (this.statusCode == 0){
         this.reloadPage()
         window.alert("Worker deleted!");
+        this.logService.addLog("Deleted worker "+worker.name+" "+worker.surname+" ["+worker.role+"]")
       }else{
         window.alert("Error with status code: " + this.statusCode)
       }
@@ -118,6 +120,7 @@ export class WorkersListComponent {
     if(this.workersArray){
       const csvData = this.convertToCSV(this.workersArray);
       this.downloadCSV(csvData, "Workers_List");
+      this.logService.addLog("Workers list exported in CSV")
     }
   }
 

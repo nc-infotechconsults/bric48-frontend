@@ -6,6 +6,7 @@ import { BranchService } from '../../services/branch.service';
 import { RoomService } from '../../services/room.service';
 import { Branch } from '../../models/branch';
 import { Room } from '../../models/room';
+import { LogService } from '../../services/log.service';
 
 @Component({
   selector: 'app-machineries-list',
@@ -30,7 +31,7 @@ export class MachineriesListComponent {
   itemsPerPage = 10;
   totalPages = false;
 
-  constructor(private machineryService:MachineryService, private branchService:BranchService, private roomService:RoomService, private router: Router) {
+  constructor(private machineryService:MachineryService, private branchService:BranchService, private roomService:RoomService, private logService:LogService, private router: Router) {
   }
 
   //On init
@@ -82,6 +83,7 @@ export class MachineriesListComponent {
       if (this.statusCode == 0){
         this.reloadPage()
         window.alert("Machinery deleted!");
+        this.logService.addLog("Deleted machinery with mserial: "+mserial)
       }else{
         window.alert("Error with status code: " + this.statusCode)
       }
@@ -190,6 +192,7 @@ export class MachineriesListComponent {
     if(this.machineriesFiltered){
       const csvData = this.convertToCSV(this.machineriesFiltered);
       this.downloadCSV(csvData, "Machinery_List");
+      this.logService.addLog("Machineries list exported in CSV")
     }
   }
 

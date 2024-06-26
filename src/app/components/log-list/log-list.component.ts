@@ -1,22 +1,20 @@
 import { Component } from '@angular/core';
-import { MachineryData } from '../../models/machinery-data';
-import { MachineryDataService } from '../../services/machinery-data.service';
-import { Router } from '@angular/router';
+import { Log } from '../../models/log';
 import { LogService } from '../../services/log.service';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-data-list',
-  templateUrl: './data-list.component.html',
-  styleUrl: './data-list.component.scss'
+  selector: 'app-log-list',
+  templateUrl: './log-list.component.html',
+  styleUrl: './log-list.component.scss'
 })
-export class DataListComponent {
+export class LogListComponent {
 
-  dataArray: MachineryData[] | null = [];
+  logs: Log[] | null = [];
 
-  dataArrayFiltered: MachineryData[] | null = [];
+  logsFiltered: Log[] | null = [];
 
-  searchedMserial: string = ""
-  searchedType: string = "all types"
+  searchedText: string = ""
   startDate: string = ""
   endDate: string = ""
 
@@ -26,18 +24,18 @@ export class DataListComponent {
   itemsPerPage = 10;
   totalPages = false;
 
-  constructor(private machineryDataService: MachineryDataService, private logService:LogService, private router: Router) {
+  constructor(private logService: LogService, private router: Router) {
   }
 
   //On init
   async ngOnInit() {
-    this.dataArray = await this.machineryDataService.getDataFromTo(1, this.itemsPerPage + 1, this.searchedMserial, this.searchedType, this.startDate, this.endDate);
+    this.logs = await this.logService.getLogsFromTo(1, this.itemsPerPage + 1, this.searchedText, this.startDate, this.endDate);
 
-    if(this.dataArray){
-      if(this.dataArray.length <= this.itemsPerPage){
+    if(this.logs){
+      if(this.logs.length <= this.itemsPerPage){
         this.totalPages = true;
       }else{
-        this.dataArray.pop();
+        this.logs.pop();
       }
     }
   }
@@ -57,13 +55,13 @@ export class DataListComponent {
       window.alert("Invalid data selection!");
     }
   
-    this.dataArray = await this.machineryDataService.getDataFromTo(1, this.itemsPerPage + 1, this.searchedMserial, this.searchedType, this.startDate, this.endDate);
+    this.logs = await this.logService.getLogsFromTo(1, this.itemsPerPage + 1, this.searchedText, this.startDate, this.endDate);
     
-    if(this.dataArray){
-      if(this.dataArray.length <= this.itemsPerPage){
+    if(this.logs){
+      if(this.logs.length <= this.itemsPerPage){
         this.totalPages = true;
       }else{
-        this.dataArray.pop();
+        this.logs.pop();
       }
     }
   }
@@ -96,7 +94,7 @@ export class DataListComponent {
     if (this.currentPage > 1) {
       this.currentPage--;
       let startIndex = (this.currentPage - 1) * this.itemsPerPage;
-      this.dataArray = await this.machineryDataService.getDataFromTo(startIndex + 1, startIndex + this.itemsPerPage, this.searchedMserial, this.searchedType, this.startDate, this.endDate);
+      this.logs = await this.logService.getLogsFromTo(startIndex + 1, startIndex + this.itemsPerPage, this.searchedText, this.startDate, this.endDate);
       this.totalPages = false
     }
   }
@@ -106,19 +104,20 @@ export class DataListComponent {
       this.currentPage++;
       let startIndex = (this.currentPage - 1) * this.itemsPerPage;
 
-      this.dataArray = await this.machineryDataService.getDataFromTo(startIndex + 1, startIndex + this.itemsPerPage + 1, this.searchedMserial, this.searchedType, this.startDate, this.endDate);
+      this.logs = await this.logService.getLogsFromTo(startIndex + 1, startIndex + this.itemsPerPage + 1, this.searchedText, this.startDate, this.endDate);
 
-      if(this.dataArray){
-        if(this.dataArray?.length <= this.itemsPerPage){
+      if(this.logs){
+        if(this.logs?.length <= this.itemsPerPage){
           this.totalPages = true
         }else{
-          this.dataArray.pop();
+          this.logs.pop();
         }
       }
     }
   }
 
-  // Funzioni per esportare gli elementi di dataArray in formato CSV
+
+  // Funzioni per esportare gli elementi di logs in formato CSV
   
   convertToCSV(objArray: any[]): string {
     const array = [Object.keys(objArray[0])].concat(objArray);
@@ -137,13 +136,12 @@ export class DataListComponent {
   }
 
   async exportToCSV(){
-    this.dataArrayFiltered = await this.machineryDataService.getDataFiltered(this.searchedMserial, this.searchedType, this.startDate, this.endDate);
-    if(this.dataArrayFiltered){
-      const csvData = this.convertToCSV(this.dataArrayFiltered);
-      this.downloadCSV(csvData, "Machinery_Data");
-      this.logService.addLog("Machinery data exported in CSV")
+    this.logsFiltered = await this.logService.getLogsFiltered(this.searchedText, this.startDate, this.endDate);
+    if(this.logsFiltered){
+      const csvData = this.convertToCSV(this.logsFiltered);
+      this.downloadCSV(csvData, "Logs");
+      this.logService.addLog("Logs list exported in CSV")
     }
   }
-
 
 }

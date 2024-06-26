@@ -36,6 +36,7 @@ import { MachineryBarComponent } from './components/machinery-bar/machinery-bar.
 import { EditAccountComponent } from './components/edit-account/edit-account.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LogListComponent } from './components/log-list/log-list.component';
 
 export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   hostname: 'test.mosquitto.org',
@@ -73,7 +74,8 @@ export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     DataListComponent,
     SendMessagesComponent,
     MachineryBarComponent,
-    EditAccountComponent
+    EditAccountComponent,
+    LogListComponent
   ],
   imports: [
     BrowserModule,

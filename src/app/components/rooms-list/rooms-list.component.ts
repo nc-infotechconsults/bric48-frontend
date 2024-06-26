@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Room } from '../../models/room';
 import { RoomService } from '../../services/room.service';
 import { Router } from '@angular/router';
+import { LogService } from '../../services/log.service';
 
 @Component({
   selector: 'app-rooms-list',
@@ -21,7 +22,7 @@ export class RoomsListComponent {
   itemsPerPage = 10;
   totalPages = false;
 
-  constructor(private roomService:RoomService, private router: Router) {
+  constructor(private roomService:RoomService, private logService:LogService, private router: Router) {
   }
 
   //On init
@@ -55,6 +56,7 @@ export class RoomsListComponent {
       if (this.statusCode == 0){
         this.reloadPage()
         window.alert("Room deleted!");
+        this.logService.addLog("Deleted room "+room.name)
       }else{
         window.alert("Error with status code: " + this.statusCode)
       }
@@ -121,6 +123,7 @@ export class RoomsListComponent {
     if(this.rooms){
       const csvData = this.convertToCSV(this.rooms);
       this.downloadCSV(csvData, "Rooms_List_Of_Branch_"+this.branchName);
+      this.logService.addLog("Rooms list of branch "+this.branchName+" exported in CSV")
     }
   }
 

@@ -4,6 +4,7 @@ import { Machinery } from '../../models/machinery';
 import { SensorService } from '../../services/sensor.service';
 import { Router } from '@angular/router';
 import { MachineryService } from '../../services/machinery.service';
+import { LogService } from '../../services/log.service';
 
 @Component({
   selector: 'app-new-sensor',
@@ -20,7 +21,7 @@ export class NewSensorComponent {
 
   btnDisabled: boolean = false;
 
-  constructor(private sensorService:SensorService, private machineryService:MachineryService, private router: Router) {
+  constructor(private sensorService:SensorService, private machineryService:MachineryService, private logService:LogService, private router: Router) {
   }
 
   async ngOnInit(){
@@ -45,6 +46,13 @@ export class NewSensorComponent {
   
       if (this.statusCode == 0){
         window.alert("New sensor added!");
+
+        if(this.sensor.mserial == ""){
+          this.logService.addLog("Added sensor with MAC "+this.sensor.mac+" and no machinery associated")
+        }else{
+          this.logService.addLog("Added sensor with MAC "+this.sensor.mac+" associated with machinery "+this.sensor.mserial)
+        }
+        
         this.router.navigate(['/home/sensors'])
       }
     }

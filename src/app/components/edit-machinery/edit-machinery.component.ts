@@ -5,6 +5,7 @@ import { MachineryService } from '../../services/machinery.service';
 import { BranchService } from '../../services/branch.service';
 import { Router } from '@angular/router';
 import { RoomService } from '../../services/room.service';
+import { LogService } from '../../services/log.service';
 
 @Component({
   selector: 'app-edit-machinery',
@@ -23,7 +24,7 @@ export class EditMachineryComponent {
 
   btnDisabled: boolean = false;
 
-  constructor(private machineryService:MachineryService, private branchService:BranchService, private roomService:RoomService, private router: Router) {
+  constructor(private machineryService:MachineryService, private branchService:BranchService, private roomService:RoomService, private logService:LogService, private router: Router) {
   }
 
    //On init
@@ -47,6 +48,7 @@ export class EditMachineryComponent {
 
     if (this.statusCode == 0){
       window.alert("Machinery edited!");
+      this.logService.addLog("Edited machinery with mserial: "+this.machinery.mserial)
       this.router.navigate(['/home/machineries'])
     }
 

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Sensor } from '../../models/sensor';
 import { SensorService } from '../../services/sensor.service';
 import { Router } from '@angular/router';
+import { LogService } from '../../services/log.service';
 
 @Component({
   selector: 'app-sensors-list',
@@ -17,7 +18,7 @@ export class SensorsListComponent {
   itemsPerPage = 10;
   totalPages = false;
 
-  constructor(private sensorService:SensorService, private router: Router) {
+  constructor(private sensorService:SensorService, private logService:LogService, private router: Router) {
   }
 
   //On init
@@ -50,6 +51,7 @@ export class SensorsListComponent {
       if (this.statusCode == 0){
         this.reloadPage()
         window.alert("Sensor deleted!");
+        this.logService.addLog("Deleted sensor with MAC: "+mac)
       }else{
         window.alert("Error with status code: " + this.statusCode)
       }
@@ -116,6 +118,7 @@ export class SensorsListComponent {
     if(this.sensorsArray){
       const csvData = this.convertToCSV(this.sensorsArray);
       this.downloadCSV(csvData, "Sensors_List");
+      this.logService.addLog("Sensors list exported in CSV")
     }
   }
 

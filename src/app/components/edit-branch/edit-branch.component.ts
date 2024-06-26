@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { BranchService } from '../../services/branch.service';
 import { Router } from '@angular/router';
+import { LogService } from '../../services/log.service';
 
 @Component({
   selector: 'app-edit-branch',
@@ -17,7 +18,7 @@ export class EditBranchComponent {
 
   btnDisabled: boolean = false;
 
-  constructor( private branchService:BranchService, private router: Router) {
+  constructor( private branchService:BranchService, private logService:LogService, private router: Router) {
   }
 
    //On init
@@ -34,6 +35,7 @@ export class EditBranchComponent {
 
     if (this.statusCode == 0){
       window.alert("Branch edited!");
+      this.logService.addLog("Edited branch "+this.branch.name)
       this.router.navigate(['/home/branches'])
     }
 

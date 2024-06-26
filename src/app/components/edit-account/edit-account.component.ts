@@ -3,6 +3,7 @@ import { AdminService } from '../../services/admin.service';
 import { Router } from '@angular/router';
 import { Admin } from '../../models/admin';
 import { WorkerService } from '../../services/worker.service';
+import { LogService } from '../../services/log.service';
 
 @Component({
   selector: 'app-edit-account',
@@ -21,7 +22,7 @@ export class EditAccountComponent {
 
   btnDisabled: boolean = false;
 
-  constructor(private adminService:AdminService, private router: Router) {
+  constructor(private adminService:AdminService, private logService:LogService, private router: Router) {
   }
 
   //On init
@@ -40,6 +41,9 @@ export class EditAccountComponent {
 
     if (this.statusCode == 0){
       window.alert("Account edited!");
+
+      this.logService.addLog("Edited account of "+this.role+" with email: "+this.admin?.email)
+
       this.router.navigate(['/home/branch'])
     }
 

@@ -5,6 +5,7 @@ import { Worker } from '../../models/worker';
 import { HeadphonesService } from '../../services/headphones.service';
 import { Headphones } from '../../models/headphones';
 import { PathLocationStrategy } from '@angular/common';
+import { LogService } from '../../services/log.service';
 
 @Component({
   selector: 'app-edit-worker',
@@ -27,7 +28,7 @@ export class EditWorkerComponent {
   btnDisabled: boolean = false;
   isAdmin: boolean = false;
 
-  constructor(private workerService:WorkerService, private headphonesService:HeadphonesService, private router: Router) {
+  constructor(private workerService:WorkerService, private headphonesService:HeadphonesService, private logService:LogService, private router: Router) {
   }
 
   //On init
@@ -68,9 +69,11 @@ export class EditWorkerComponent {
 
       if(sessionStorage.getItem('role') == 'ADMIN'){
         window.alert("Worker edited!");
+        this.logService.addLog("Edited worker "+this.worker.name+" "+this.worker.surname+" ["+this.worker.role+"]")
         this.router.navigate(['/home/workers'])
       }else{
         window.alert("Account edited!");
+        this.logService.addLog("Edited account of "+this.worker.role+" with email: "+this.worker.email)
         this.router.navigate(['/home/branch'])
       }
       

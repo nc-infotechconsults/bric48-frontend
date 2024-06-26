@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Room } from '../../models/room';
 import { RoomService } from '../../services/room.service';
 import { Router } from '@angular/router';
+import { LogService } from '../../services/log.service';
 
 @Component({
   selector: 'app-new-room',
@@ -18,7 +19,7 @@ export class NewRoomComponent {
 
   btnDisabled: boolean = false;
 
-  constructor( private roomService:RoomService, private router: Router) {
+  constructor( private roomService:RoomService, private logService:LogService, private router: Router) {
   }
 
   async ngOnInit(){
@@ -34,6 +35,7 @@ export class NewRoomComponent {
 
     if (this.statusCode == 0){
       window.alert("New room added!");
+      this.logService.addLog("Added room "+this.room.name)
       this.router.navigate(['/home/rooms'])
     }
 

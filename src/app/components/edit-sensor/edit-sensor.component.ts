@@ -3,6 +3,7 @@ import { Machinery } from '../../models/machinery';
 import { SensorService } from '../../services/sensor.service';
 import { MachineryService } from '../../services/machinery.service';
 import { Router } from '@angular/router';
+import { LogService } from '../../services/log.service';
 
 @Component({
   selector: 'app-edit-sensor',
@@ -21,7 +22,7 @@ export class EditSensorComponent {
 
   btnDisabled: boolean = false;
 
-  constructor(private sensorService:SensorService, private machineryService:MachineryService, private router: Router) {
+  constructor(private sensorService:SensorService, private machineryService:MachineryService, private logService:LogService, private router: Router) {
   }
 
   //On init
@@ -42,6 +43,7 @@ export class EditSensorComponent {
 
     if (this.statusCode == 0){
       window.alert("Sensor edited!");
+      this.logService.addLog("Edited sensor with MAC: "+this.sensor.mac)
       this.router.navigate(['/home/sensors'])
     }
 

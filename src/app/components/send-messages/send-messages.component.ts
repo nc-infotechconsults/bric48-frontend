@@ -3,6 +3,7 @@ import { MqttService } from 'ngx-mqtt';
 import { WorkerService } from '../../services/worker.service';
 import { Worker } from '../../models/worker';
 import { Router } from '@angular/router';
+import { LogService } from '../../services/log.service';
 
 @Component({
   selector: 'app-send-messages',
@@ -26,7 +27,7 @@ export class SendMessagesComponent {
 
   index : number = 0
 
-  constructor(private mqttService: MqttService, private workerService:WorkerService, private router: Router) {
+  constructor(private mqttService: MqttService, private workerService:WorkerService, private logService:LogService, private router: Router) {
 
   }
 
@@ -98,12 +99,19 @@ export class SendMessagesComponent {
   // Invio del messaggio mqtt
   sendMessage(message: string){
 
-    if(this.checked_workers != null){
-      for(const worker of this.checked_workers){
-        this.mqttService.unsafePublish('/'+worker.idHeadphones, message, { qos: 0, retain: false });
+    if (this.checked_workers != null) {
+      for (const worker of this.checked_workers) {
+        this.mqttService.unsafePublish('/' + worker.idHeadphones, message, { qos: 0, retain: false });
       }
-      window.alert("Message sent!")
+      window.alert("Message sent!");
+    
+      // Creare una lista di nomi e cognomi dei worker
+      const workerNames = this.checked_workers.map(worker => `${worker.name} ${worker.surname}`).join('-');
+    
+      // Aggiungere la lista alla stringa di log
+      this.logService.addLog("Message \""+message+"\" sent to " + workerNames);
     }
+    
     this.reloadPage()
     
   }

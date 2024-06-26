@@ -6,6 +6,7 @@ import { BranchService } from '../../services/branch.service';
 import { Router } from '@angular/router';
 import { Room } from '../../models/room';
 import { RoomService } from '../../services/room.service';
+import { LogService } from '../../services/log.service';
 
 @Component({
   selector: 'app-new-machinery',
@@ -23,7 +24,7 @@ export class NewMachineryComponent {
 
   btnDisabled: boolean = false;
 
-  constructor(private machineryService:MachineryService, private branchService:BranchService, private roomService:RoomService, private router: Router) {
+  constructor(private machineryService:MachineryService, private branchService:BranchService, private roomService:RoomService, private logService:LogService, private router: Router) {
   }
 
   async ngOnInit(){
@@ -49,10 +50,11 @@ export class NewMachineryComponent {
     }else{
       this.machinery.topic = "/"+this.machinery.mserial
 
-      this.statusCode = await this.machineryService.addMachinery(this.machinery);
+      this.statusCode = await this.machineryService.addMachinery(this.machinery)
 
       if (this.statusCode == 0){
-        window.alert("New machinery added!");
+        window.alert("New machinery added!")
+        this.logService.addLog("Added machinery \""+this.machinery.name+"\" with mserial: "+this.machinery.mserial)
         this.router.navigate(['/home/machineries'])
       }
 

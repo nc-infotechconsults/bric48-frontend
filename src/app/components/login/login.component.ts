@@ -3,6 +3,7 @@ import { Admin } from '../../models/admin';
 import { AdminService } from '../../services/admin.service';
 import { Router } from '@angular/router';
 import { WorkerService } from '../../services/worker.service';
+import { LogService } from '../../services/log.service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,7 @@ export class LoginComponent {
 
   btnDisabled: boolean = false;
 
-  constructor(private adminService:AdminService, private workerService:WorkerService, private router: Router) {
+  constructor(private adminService:AdminService, private workerService:WorkerService, private logService:LogService, private router: Router) {
   }
 
   ngOnInit(){
@@ -31,11 +32,13 @@ export class LoginComponent {
     this.statusCode = await this.adminService.loginAdmin(this.admin.email, this.admin.password);
 
     if (this.statusCode == 0){
+      this.logService.addLog("Login ADMIN with email: "+this.admin.email)
       this.router.navigate(['/home/branch'])
     }else{
       this.statusCode = await this.workerService.loginWorker(this.admin.email, this.admin.password);
 
       if (this.statusCode == 0){
+        this.logService.addLog("Login SECURITY MANAGER with email: "+this.admin.email)
         this.router.navigate(['/home/branch'])
       }
     }

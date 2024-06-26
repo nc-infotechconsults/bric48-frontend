@@ -10,6 +10,7 @@ import { MachineryDataService } from '../../services/machinery-data.service';
 import { MachineryData } from '../../models/machinery-data';
 
 import { IMqttMessage, MqttService } from 'ngx-mqtt';
+import { LogService } from '../../services/log.service';
 
 @Component({
   selector: 'app-machinery-details',
@@ -34,7 +35,7 @@ export class MachineryDetailsComponent {
   isInAlarm: boolean = false;
 
   
-  constructor(private mqttService: MqttService, private nearbyHeadphonesService:NearbyHeadphonesService, private machineryService:MachineryService, private workerService:WorkerService, private machineryDataService:MachineryDataService, private router: Router) {
+  constructor(private mqttService: MqttService, private nearbyHeadphonesService:NearbyHeadphonesService, private machineryService:MachineryService, private workerService:WorkerService, private machineryDataService:MachineryDataService, private logService:LogService, private router: Router) {
 
   }
 
@@ -133,6 +134,7 @@ export class MachineryDetailsComponent {
         const message = this.machineryAlarms[0].description;
         this.mqttService.unsafePublish('/'+this.mserial, message, { qos: 0, retain: false });
         window.alert("Alarm sent!")
+        this.logService.addLog("Alarm sent from machinery with mserial: "+this.mserial)
       }
 
     }
@@ -142,6 +144,7 @@ export class MachineryDetailsComponent {
   // Solve alarm
   async solveAlarm(id: string) {
     await this.machineryDataService.solveAlarm(id);
+    this.logService.addLog("Alarm solved from machinery with mserial: "+this.mserial)
   }
 
   // Send message to all
