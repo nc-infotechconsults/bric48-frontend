@@ -9,16 +9,16 @@
     <!-- Search Filters -->
     <div class="search-filters mb-3">
 
-        <input [(ngModel)] = "searchedRoll" name="searchedRoll"
-        #inputRoll = "ngModel"
+        <input [(ngModel)]="searchedRoll" name="searchedRoll"
+        #inputRoll="ngModel"
         type="text" class="form-control" id="roll" placeholder="Roll number"/>
 
-        <input [(ngModel)] = "searchedName" name="searchedName"
-        #inputName = "ngModel"
+        <input [(ngModel)]="searchedName" name="searchedName"
+        #inputName="ngModel"
         type="text" class="form-control" id="name" placeholder="Name"/>
 
-        <input [(ngModel)] = "searchedSurname" name="searchedSurname"
-        #inputSurname = "ngModel"
+        <input [(ngModel)]="searchedSurname" name="searchedSurname"
+        #inputSurname="ngModel"
         type="text" class="form-control" id="surname" placeholder="Surname"/>
 
 
@@ -85,16 +85,17 @@
         <div style="display: flex; justify-content: space-between; align-items: center;">
             <select (change)="handleSelectChange($event)" style="width: 20vw; height: 4vh;" name="message" id="message">
                 <option value="" disabled selected>Select a message</option>
-                <option value="Message A">Message A</option>
-                <option value="Message B">Message B</option>
-              </select>         
-          
+                <option *ngFor="let message of messages" [value]="message.message">{{ message.message }}</option>
+            </select>
+        
             <input style="width: 30vw; height: 4vh;" type="text" [(ngModel)]="messageText" value="{{ messageText }}">
         </div>
+        
 
         <br>
 
-        <div class="d-grid gap-2" style="display: flex; justify-content: center; align-items: center;">
+        <div class="d-grid gap-2" style="display: flex; justify-content: space-between; align-items: center;">
+            <button type="button" class="btn btn-primary" (click)="goToManageMessages()">MANAGE MESSAGES</button>
             <button type="button" class="btn btn-primary" [disabled]="number_checked_workers === 0 || messageText.trim() == '' " (click)="sendMessage(messageText)">SEND</button>
         </div>
 

@@ -1,4 +1,4 @@
-<h1 class="sensors-title">Sensors List</h1>
+<h1 class="messages-title">Messages List</h1>
 
 <br>
 <br>
@@ -8,20 +8,15 @@
         <table class="table table-striped">
         <thead>
             <tr>
-            <th>MAC</th>
-            <th>Threshold</th>
-            <th>Associated machinery (mserial)</th>
+            <th>Message</th>
             <th></th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let sensor of sensorsArray">
-            <td>{{ sensor.mac }}</td>
-            <td>{{ sensor.threshold }}</td>
-            <td>{{ sensor.mserial }}</td>
+            <tr *ngFor="let message of messages">
+            <td>{{ message.message }}</td>
             <td>
-                <button class="btn btn-primary mx-1" (click)="editSensor(sensor.mac)">Edit</button>
-                <button class="btn btn-primary mx-1" (click)="deleteSensor(sensor.mac)">Delete</button></td>
+                <button class="btn btn-primary mx-1" (click)="deleteMessage(message.id!)">Delete</button></td>
             </tr>
         </tbody>
         </table>
@@ -44,9 +39,8 @@
 
     <div class="container mt-3" style="text-align: center;">
         <div class="button-wrapper">
-            <button class="btn btn-primary mx-1" (click)="goToNewSensorPage()">Add Sensor</button>
+            <button class="btn btn-primary mx-1" (click)="goToNewMessagePage()">Add Message</button>
         </div>
     </div>
-
 
 </div>

@@ -4,6 +4,8 @@ import { WorkerService } from '../../services/worker.service';
 import { Worker } from '../../models/worker';
 import { Router } from '@angular/router';
 import { LogService } from '../../services/log.service';
+import { Message } from '../../models/message';
+import { MessageService } from '../../services/message.service';
 
 @Component({
   selector: 'app-send-messages',
@@ -16,6 +18,8 @@ export class SendMessagesComponent {
   checked_workers : Worker[] | null = [];
   workers_from_machinery_details : Worker[] | null = [];
 
+  messages : Message[] | null = [];
+
   number_checked_workers : number = 0
 
   messageText: string = '';
@@ -27,7 +31,7 @@ export class SendMessagesComponent {
 
   index : number = 0
 
-  constructor(private mqttService: MqttService, private workerService:WorkerService, private logService:LogService, private router: Router) {
+  constructor(private mqttService: MqttService, private workerService:WorkerService, private messageService:MessageService, private logService:LogService, private router: Router) {
 
   }
 
@@ -35,6 +39,8 @@ export class SendMessagesComponent {
   async ngOnInit() {
 
     this.workers = await this.workerService.getAll();
+
+    this.messages = await this.messageService.getAll();
 
     const checked_workersJSON = sessionStorage.getItem('workers');
     sessionStorage.removeItem('workers');
@@ -114,6 +120,10 @@ export class SendMessagesComponent {
     
     this.reloadPage()
     
+  }
+
+  goToManageMessages(){
+    this.router.navigate(['/home/messages/edit']);
   }
 
   // Salvo il messaggio dalla tendina

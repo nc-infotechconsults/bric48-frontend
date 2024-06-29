@@ -59,6 +59,12 @@
       <br>
       <div><button type="button" class="btn btn-primary button-sidebar" (click)="goToMachineriesDataList()">CHECK MACHINERIES DATA</button></div>
       <br>
+      <div><button type="button" class="btn btn-primary button-sidebar" (click)="goToSendMessages()">SEND MESSAGES</button></div>
+      <br>
+      <div><button type="button" class="btn btn-primary button-sidebar"(click)="goToCheckLogs()">CHECK LOGS</button></div>
+      <br>
+      <hr *ngIf="isAdmin" style="border: 1px solid gray; width: 100%; margin: 0 auto;">
+      <br *ngIf="isAdmin">
       <div *ngIf="isAdmin"><button type="button" class="btn btn-primary button-sidebar" (click)="goToHeadphonesList()">MANAGE HEADPHONES</button></div>
       <br *ngIf="isAdmin">
       <div *ngIf="isAdmin"><button type="button" class="btn btn-primary button-sidebar" (click)="goToWorkersList()">MANAGE WORKERS</button></div>
@@ -68,10 +74,6 @@
       <div *ngIf="isAdmin"><button type="button" class="btn btn-primary button-sidebar" (click)="goToMachineriesList()">MANAGE MACHINERIES</button></div>
       <br *ngIf="isAdmin">
       <div *ngIf="isAdmin"><button type="button" class="btn btn-primary button-sidebar" (click)="goToBranchesList()">MANAGE BRANCHES/ROOMS</button></div>
-      <br *ngIf="isAdmin">
-      <div><button type="button" class="btn btn-primary button-sidebar" (click)="goToSendMessages()">SEND MESSAGES</button></div>
-      <br>
-      <div><button type="button" class="btn btn-primary button-sidebar"(click)="goToCheckLogs()">CHECK LOGS</button></div>
   
     </div>
   </div>

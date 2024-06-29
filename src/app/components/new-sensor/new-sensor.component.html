@@ -21,6 +21,22 @@
                                     type="text" class="form-control" id="mac" placeholder="Enter MAC">
                                 </div>
 
+                                <div class="mb-3">
+                                    <label for="threshold" class="form-label"><strong>Threshold [0-100]</strong><small> (greater threshold means that it's easier for a worker to be considered near to that sensor)</small></label>
+                                    <input
+                                        [(ngModel)]="sensor.threshold"
+                                        name="threshold"
+                                        required
+                                        min="0"
+                                        max="100"
+                                        type="number"
+                                        class="form-control"
+                                        id="threshold"
+                                        placeholder="Enter threshold"
+                                    >
+                                </div>
+                                
+
                                 
                                 <div class="mb-3">
                                     <label for="machinery" class="form-label"><strong>Mserial</strong></label>

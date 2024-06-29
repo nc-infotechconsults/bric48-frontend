@@ -52,7 +52,7 @@ export class SensorService {
   // Add a new sensor
   async addSensor(sensor:Sensor): Promise<number> {
     try {
-      const data = {mac: sensor.mac, mserial:sensor.mserial};
+      const data = {mac: sensor.mac, mserial:sensor.mserial, threshold: sensor.threshold};
       var token = JSON.parse(sessionStorage.getItem('token')!)
       const response = await axios.post('http://localhost:8080/beacon/add', data, {
         headers: {
@@ -121,7 +121,7 @@ export class SensorService {
 
     try {
       var token = JSON.parse(sessionStorage.getItem('token')!)
-      const data = {id: sensor.id, mac: sensor.mac, mserial: sensor.mserial};
+      const data = {id: sensor.id, mac: sensor.mac, mserial: sensor.mserial, threshold: sensor.threshold};
       const response = await axios.put(apiUrl, data, {
         headers: {
           'Authorization': `Bearer `+token.jwt,

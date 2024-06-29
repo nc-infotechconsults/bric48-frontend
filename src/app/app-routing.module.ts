@@ -27,6 +27,8 @@ import { DataListComponent } from './components/data-list/data-list.component';
 import { SendMessagesComponent } from './components/send-messages/send-messages.component';
 import { EditAccountComponent } from './components/edit-account/edit-account.component';
 import { LogListComponent } from './components/log-list/log-list.component';
+import { MessagesListComponent } from './components/messages-list/messages-list.component';
+import { NewMessageComponent } from './components/new-message/new-message.component';
 
 const routes: Routes = [
   {
@@ -61,7 +63,9 @@ const routes: Routes = [
       {path:'data', component: DataListComponent},
       {path:'messages', component: SendMessagesComponent},
       {path:'account', component: EditAccountComponent},
-      {path:'logs', component: LogListComponent}
+      {path:'logs', component: LogListComponent},
+      {path:'messages/edit', component: MessagesListComponent},
+      {path:'messages/new', component: NewMessageComponent}
       /*{path: 'charts', component : ChartsComponent, children: [ {path: 'saw', component:SawChartComponent}, {path: 'lathe', component:LatheChartComponent}]},
       {path: 'info', component : InfoSearchBarComponent, children: [{path: '', component:AllInfoComponent}, {path: 'saw', component:InfoSawComponent}, {path: 'lathe', component:InfoLatheComponent}]},
       {path:'alarms', component: AlarmsSearchBarComponent},*/
