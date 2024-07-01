@@ -39,6 +39,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LogListComponent } from './components/log-list/log-list.component';
 import { MessagesListComponent } from './components/messages-list/messages-list.component';
 import { NewMessageComponent } from './components/new-message/new-message.component';
+import { MachineryGraphComponent } from './components/machinery-graph/machinery-graph.component';
 
 export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   hostname: 'test.mosquitto.org',
@@ -79,7 +80,8 @@ export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     EditAccountComponent,
     LogListComponent,
     MessagesListComponent,
-    NewMessageComponent
+    NewMessageComponent,
+    MachineryGraphComponent
   ],
   imports: [
     BrowserModule,

@@ -8,12 +8,12 @@
 
     <div style="display: flex; justify-content: space-between;">
 
-        <div class="container" style="border-radius: 10px; border: 2px solid gray; height: 40vh; width: 20vw; overflow-y: auto;">
+        <div class="container" style="border-radius: 10px; border: 2px solid gray; height: 50vh; width: 25vw; overflow-y: auto;">
             <br>
             <h2 class="title">NEARBY WORKERS</h2>
             <br>
 
-            <button class="btn btn-primary" (click)="sendMessage()" [ngClass]="{'bg-danger text-white': isInAlarm}">
+            <button class="btn btn-primary" (click)="sendMessage()" [ngClass]="{'bg-danger text-white': isInAlarm}" [disabled]="!workers || workers.length === 0">
                 {{ isInAlarm ? 'SEND ALARM' : 'SEND MESSAGE TO ALL' }}
             </button>
 
@@ -27,10 +27,10 @@
             </div>
         </div>
 
-        <img src="/assets/grafico.png" alt="Grafico" style="border-radius: 10px; border: 2px solid gray; height: 40vh; width: 50vw;">
+        <app-machinery-graph style="border-radius: 10px; height: 50vh; width: 40vw;"></app-machinery-graph>
 
     </div>
-    
+
     <br>
     <br>
 

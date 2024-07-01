@@ -12,7 +12,7 @@ export class MachineryDataService {
 
   // Get machineryData by type and mserial and isSolved
   async getMachineryDataByTypeAndMserialAndIsSolved(type: string, mserial: string, isSolved: string)  : Promise<MachineryData[]|null> {
-    const apiUrl = 'http://localhost:8080/data/find/machinery?type='+type+'&mserial='+mserial+'&isSolved=False'
+    const apiUrl = 'http://localhost:8080/data/find/machinery?type='+type+'&mserial='+mserial+'&isSolved='+isSolved
 
     try {
       var token = JSON.parse(sessionStorage.getItem('token')!)
