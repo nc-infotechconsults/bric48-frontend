@@ -35,102 +35,116 @@ export class SendMessagesComponent {
 
   }
 
-  //On init
+  // on init
   async ngOnInit() {
 
+    // ottenimento dei lavoratori
     this.workers = await this.workerService.getAll();
 
+    // ottenimento dei messaggi
     this.messages = await this.messageService.getAll();
 
+    // ottenimento dei lavoratori selezionati per l'invio dei messaggi
     const checked_workersJSON = sessionStorage.getItem('workers');
     sessionStorage.removeItem('workers');
 
     if (checked_workersJSON) {
+      // analizza la stringa JSON per ottenere un array di oggetti Worker o un singolo oggetto Worker
       const workers_gotten: Worker[] | Worker = JSON.parse(checked_workersJSON);
 
-      if (Array.isArray(workers_gotten)) {
+      if (Array.isArray(workers_gotten)) { // se il JSON analizzato è un array allora il messaggio deve essere inviatto a più lavoratori
 
         if(this.workers != null){
-          this.workers.forEach(worker => {
-            // Controlla se workers_gotten contiene un worker con lo stesso id
+          this.workers.forEach(worker => { // per ogni lavoratore
+            // controlla se workers_gotten contiene un lavoratore con lo stesso id del lavoratore corrente
             if (workers_gotten.some(gottenWorker => gottenWorker.id === worker.id)) {
-              worker.checked = true; // Imposta l'attributo checked a true
-              this.number_checked_workers = this.number_checked_workers + 1
-              this.checked_workers?.push(worker)
+              worker.checked = true; // imposta l'attributo checked a true
+              this.number_checked_workers = this.number_checked_workers + 1; // incrementa il conteggio dei lavoratori selezionati
+              this.checked_workers?.push(worker); // aggiungi il lavoratore selezionato alla lista checked_workers
             }
           });
         }
 
-      } else {
+      } else { // se il JSON analizzato non è un array il messaggio deve essere inviato ad un solo lavoratore
 
         if(this.workers != null){
-          this.workers.forEach(worker => {
-            if (worker.id === workers_gotten.id) {
-              worker.checked = true; // Imposta l'attributo checked a true
-              this.number_checked_workers = this.number_checked_workers + 1
-              this.checked_workers?.push(worker)
+          this.workers.forEach(worker => { // per ogni lavoratore
+            if (worker.id === workers_gotten.id) { // controlla se l'id del lavoratore corrisponde all'id di workers_gotten
+              worker.checked = true; // imposta l'attributo checked a true
+              this.number_checked_workers = this.number_checked_workers + 1; // incrementa il conteggio dei lavoratori selezionati
+              this.checked_workers?.push(worker); // aggiungi il lavoratore selezionato alla lista checked_workers
             }
           });
         }
 
       }
-    
+
     }
 
   }
 
-  //On destroy
+  // on destroy
   ngOnDestroy() {
   }
 
-  // Funzione che si attiva al cambio di stato di una checkbox
+  // funzione che si attiva al cambio di stato di una checkbox
   toggleWorker(worker: Worker, event: any) {
+
+    // se la checkbox del lavoratore viene selezionata
     if (event.target.checked) {
       worker.checked = true;
+
+      // aggiunta del lavoratore nella lista checked_workers
       this.checked_workers?.push(worker)
+
+      // incrementa il conteggio dei lavoratori selezionati
       this.number_checked_workers = this.number_checked_workers + 1
-    }else{
+    }else{ // se la checkbox del lavoratore viene deselezionata
       worker.checked = false;
 
-      //this.checked_workers?.splice(this.checked_workers.indexOf(worker),1)
       if(this.checked_workers != null){
+        // rimozione del lavoratore dalla lista checked_workers
         this.checked_workers = this.checked_workers.filter(data => data.id !== worker.id);
       }
 
+      // decremento il conteggio dei lavoratori selezionati
       this.number_checked_workers = this.number_checked_workers - 1
     }
 
   }
 
-  // Invio del messaggio mqtt
+  // funzione per l'invio del messaggio mqtt
   sendMessage(message: string){
 
     if (this.checked_workers != null) {
+      // per ogni lavoratore selezionato
       for (const worker of this.checked_workers) {
+        // publich del messaggio MQTT sul topic relativo al singolo lavoratore
         this.mqttService.unsafePublish('/' + worker.idHeadphones, message, { qos: 0, retain: false });
       }
       window.alert("Message sent!");
     
-      // Creare una lista di nomi e cognomi dei worker
+      // creazione di una lista di nomi e cognomi dei lavoratori
       const workerNames = this.checked_workers.map(worker => `${worker.name} ${worker.surname}`).join('-');
     
-      // Aggiungere la lista alla stringa di log
+      // aggiunta del log
       this.logService.addLog("Message \""+message+"\" sent to " + workerNames);
     }
     
+    // aggiorna la pagina
     this.reloadPage()
     
   }
 
+  // routing verso la pagina di modifica dei messaggi
   goToManageMessages(){
     this.router.navigate(['/home/messages/edit']);
   }
 
-  // Salvo il messaggio dalla tendina
+  // funzione per salvare il messaggio dalla tendina
   handleSelectChange(event: any) {
     this.messageText = event.target.value;
   }
-
 
   reloadPage() {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
@@ -138,23 +152,24 @@ export class SendMessagesComponent {
     this.router.navigate([this.router.url]);
   }
 
-  // Filters
+  // funzione per la ricerca
   async search(){
 
+    // ottenimento dei lavoratori
     this.workers = await this.workerService.getAll();
 
     if(this.workers != null){
         this.workers.forEach(worker => {
-          // Controlla se checked_workers contiene un worker con lo stesso id
+          // controlla se checked_workers contiene un lavoratore con lo stesso id
           if(this.checked_workers != null){
             if (this.checked_workers.some(checkedWorker => checkedWorker.id === worker.id)) {
-              worker.checked = true; // Imposta l'attributo checked a true
+              worker.checked = true; // imposta l'attributo checked a true
             }
           }
         });
     }
   
-  
+    // applico i filtri selezionati alla lista dei lavoratori
     if(this.workers != null){
       this.workers = this.workers.filter(worker => {
         if(this.searchedRoll != "" && !worker.rollNumber.toLowerCase().includes(this.searchedRoll.toLowerCase())){

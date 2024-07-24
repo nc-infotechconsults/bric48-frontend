@@ -29,10 +29,14 @@ export class DataListComponent {
   constructor(private machineryDataService: MachineryDataService, private logService:LogService, private router: Router) {
   }
 
-  //On init
+  // on init
   async ngOnInit() {
-    this.dataArray = await this.machineryDataService.getDataFromTo(1, this.itemsPerPage + 1, this.searchedMserial, this.searchedType, this.startDate, this.endDate);
 
+    // ottenimento dei primi itemsPerPage + 1 dati dai macchinari
+    this.dataArray = await this.machineryDataService.getDataFromTo(1, this.itemsPerPage + 1, this.searchedMserial, this.searchedType, this.startDate, this.endDate);
+    
+    // se il numero di dati è <= al numero di item visualizzabili nella pagina, si imposta il flag totalPages a true
+    // altrimenti si elimina l'undicesimo elemento dall'array che serve solo a vedere se esistono pagine successive a quella corrente
     if(this.dataArray){
       if(this.dataArray.length <= this.itemsPerPage){
         this.totalPages = true;
@@ -42,21 +46,24 @@ export class DataListComponent {
     }
   }
 
-  //On destroy
+  // on destroy
   ngOnDestroy() {
   }
 
-  // Search
+  // funzione per la ricerca
   async search() {
 
     this.currentPage = 1;
     this.totalPages = false;
 
+    // se le date inserite non sono valide
     if(this.compareDate(this.startDate, this.endDate) == 1){
+      // ricarica la pagina
       this.reloadPage()
       window.alert("Invalid data selection!");
     }
-  
+    
+    // ottenimento dei dati filtrati
     this.dataArray = await this.machineryDataService.getDataFromTo(1, this.itemsPerPage + 1, this.searchedMserial, this.searchedType, this.startDate, this.endDate);
     
     if(this.dataArray){
@@ -68,6 +75,7 @@ export class DataListComponent {
     }
   }
 
+  // funzione per confrontare due date
   compareDate(firstDate: string, secondDate: string): number {
     // Converti le date in formato 'gg/mm/aaaa' in oggetti Date
     let [year1, month1, day1] = firstDate.split("-");
@@ -75,13 +83,12 @@ export class DataListComponent {
     let date1 = new Date(Number(year1), Number(month1) - 1, Number(day1));
     let date2 = new Date(Number(year2), Number(month2) - 1, Number(day2));
 
-    // Confronta le due date
     if (date1 > date2) {
-        return 1;
+        return 1; // se la prima data è successiva alla seconda
     } else if (date1 < date2){
-        return -1;
+        return -1; // se la prima data è precedente alla prima
     } else {
-      return 0;
+      return 0; // se le date sono uguali
     }
   }
 
@@ -91,7 +98,7 @@ export class DataListComponent {
     this.router.navigate([this.router.url]);
   }
 
-
+  // funzione per ottenere gli item per la precedente pagina da visualizzare
   async goToPreviousPage() {
     if (this.currentPage > 1) {
       this.currentPage--;
@@ -101,6 +108,7 @@ export class DataListComponent {
     }
   }
 
+  // funzione per ottenere gli item per la prossima pagina da visualizzare
   async goToNextPage() {
     if (!this.totalPages) {
       this.currentPage++;
@@ -118,7 +126,7 @@ export class DataListComponent {
     }
   }
 
-  // Funzioni per esportare gli elementi di dataArray in formato CSV
+  // funzioni per esportare gli elementi di dataArray in formato CSV
   
   convertToCSV(objArray: any[]): string {
     const array = [Object.keys(objArray[0])].concat(objArray);

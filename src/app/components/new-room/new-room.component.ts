@@ -22,20 +22,27 @@ export class NewRoomComponent {
   constructor( private roomService:RoomService, private logService:LogService, private router: Router) {
   }
 
+  // on init
   async ngOnInit(){
     this.btnDisabled = false;
   }
 
+  // on submit
   async onSubmit(form: any) {
     this.btnDisabled = true;
 
     this.room.idBranch = sessionStorage.getItem('idBranch')!
 
+    // aggiunta della stanza
     this.statusCode = await this.roomService.addRoom(this.room);
 
     if (this.statusCode == 0){
       window.alert("New room added!");
+
+      // aggiunta del log
       this.logService.addLog("Added room "+this.room.name)
+
+      // routing verso la pagina di visualizzazione delle room
       this.router.navigate(['/home/rooms'])
     }
 

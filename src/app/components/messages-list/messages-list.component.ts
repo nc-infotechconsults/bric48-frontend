@@ -21,10 +21,14 @@ export class MessagesListComponent {
   constructor(private messageService:MessageService, private logService:LogService, private router: Router) {
   }
 
-  //On init
-  async ngOnInit() {
+  // on init
+  async ngOnInit() { 
+
+    // ottenimento dei primi itemsPerPage + 1 messaggi
     this.messages = await this.messageService.getMessagesFromTo(1, this.itemsPerPage + 1);
 
+    // se il numero di messaggi è <= al numero di item visualizzabili nella pagina, si imposta il flag totalPages a true
+    // altrimenti si elimina l'undicesimo elemento dall'array che serve solo a vedere se esistono pagine successive a quella corrente
     if(this.messages){
       if(this.messages.length <= this.itemsPerPage){
         this.totalPages = true;
@@ -34,21 +38,26 @@ export class MessagesListComponent {
     }
   }
 
-  //On destroy
+  // on destroy
   ngOnDestroy() {
   }
 
-
+  // funzione per l'eliminazione di un messaggio
   async deleteMessage(id: string) {
 
     if (window.confirm('Are you sure you want to delete this message?')) {
 
+      // eliminazione del messaggio se è stata confermata la scelta
       this.statusCode = await this.messageService.deleteMessage(id);
 
       if (this.statusCode == 0){
 
         window.alert("Message deleted!");
+
+        // aggiunta del log
         this.logService.addLog("Message deleted")
+
+        // aggiorno la pagina
         this.reloadPage()
 
       }else{
@@ -59,6 +68,7 @@ export class MessagesListComponent {
     
   }
 
+  // routing verso la pagina di creazione di un nuovo messaggio
   goToNewMessagePage(){
     this.router.navigate(['/home/messages/new']);
   }
@@ -69,6 +79,7 @@ export class MessagesListComponent {
     this.router.navigate([this.router.url]);
   }
 
+  // funzione per ottenere gli item per la precedente pagina da visualizzare
   async goToPreviousPage() {
     if (this.currentPage > 1) {
       this.currentPage--;
@@ -77,7 +88,8 @@ export class MessagesListComponent {
       this.totalPages = false
     }
   }
-
+  
+  // funzione per ottenere gli item per la prossima pagina da visualizzare
   async goToNextPage() {
     if (!this.totalPages) {
       this.currentPage++;
@@ -95,7 +107,7 @@ export class MessagesListComponent {
   }
 
 
-  // Funzioni per esportare gli elementi di dataArray in formato CSV
+  // funzioni per esportare gli elementi di dataArray in formato CSV
   
   convertToCSV(objArray: any[]): string {
     const array = [Object.keys(objArray[0])].concat(objArray);

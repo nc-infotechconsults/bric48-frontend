@@ -31,11 +31,15 @@ export class MachineryBarComponent {
 
   visible: boolean = false;
 
+  // funzione che si esegue quando si clicca sull'icona della sidebar
   toggle() {
     this.visible = !this.visible;
   }
 
+  // on init
   async ngOnInit(){
+
+    // ottenimento dei macchinari con allarmi non risolti
     this.machineries = await this.machineryService.getMachineriesByAlarmIsSolved("False");
     if(this.machineries){
       sessionStorage.setItem('alarms_length', this.machineries?.length.toString())
@@ -43,17 +47,20 @@ export class MachineryBarComponent {
       sessionStorage.setItem('alarms_length', '0')
     }
     
+    // inizio del polling
     this.startPolling()
   }
 
-  //On destroy
+  // on destroy
   ngOnDestroy() {
     this.stopPolling();
   }
 
+  // polling
   startPolling() {
     this.intervalId = setInterval(async () => {
-
+      
+      // ottenimento dei macchinari con allarmi non risolti
       this.machineries = await this.machineryService.getMachineriesByAlarmIsSolved("False");
       if(this.machineries){
         sessionStorage.setItem('alarms_length', this.machineries?.length.toString())
@@ -62,10 +69,12 @@ export class MachineryBarComponent {
     }, 1000); // Esegui ogni secondo
   }
 
+  // fine del polling
   stopPolling() {
     clearInterval(this.intervalId);
   }
 
+  // routing verso la pagina di dettagli del macchinario
   goToMachineryDetails(mserial: any) {
     sessionStorage.setItem('mserial', mserial)
     

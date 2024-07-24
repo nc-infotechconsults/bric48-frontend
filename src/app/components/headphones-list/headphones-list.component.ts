@@ -22,10 +22,14 @@ export class HeadphonesListComponent {
   constructor(private headphonesService:HeadphonesService, private workerService:WorkerService, private logService:LogService, private router: Router) {
   }
 
-  //On init
+  // on init
   async ngOnInit() {
+
+    // ottenimento delle prime itemsPerPage + 1 cuffie
     this.headphonesArray = await this.headphonesService.getHeadphonesFromTo(1, this.itemsPerPage + 1);
 
+    // se il numero di cuffie è <= al numero di item visualizzabili nella pagina, si imposta il flag totalPages a true
+    // altrimenti si elimina l'undicesimo elemento dall'array che serve solo a vedere se esistono pagine successive a quella corrente
     if(this.headphonesArray){
       if(this.headphonesArray.length <= this.itemsPerPage){
         this.totalPages = true;
@@ -35,29 +39,35 @@ export class HeadphonesListComponent {
     }
   }
 
-  //On destroy
+  // on destroy
   ngOnDestroy() {
   }
 
+  // routing verso la pagina di aggiunta di una nuova cuffia
   goToNewHeadphonesPage(): void {
     this.router.navigate(['/home/headphones/new']);
   }
 
-  // Delete headphones by serial
+  // eliminazione di una cuffia
   async deleteHeadphones(serial: string) {
 
     if (window.confirm('Are you sure you want to delete the headphones ' + serial + '?')) {
 
+      // eliminazione della cuffia se si conferma la scelta
       this.statusCode = await this.headphonesService.deleteHeadphones(serial);
 
       if (this.statusCode == 0){
 
-        // Aggionrna il campo idHeadphones del Worker impostandolo a stringa vuota
+        // aggiornna il campo idHeadphones del lavoratore impostandolo a stringa vuota
         this.statusCode = await this.workerService.updateIdHeadphones(serial, "");
 
         if (this.statusCode == 0){
           window.alert("Headphones deleted!");
+
+          // aggiunta del log
           this.logService.addLog("Deleted headphones with serial: "+serial)
+
+          // aggiorna la pagina
           this.reloadPage()
         }else{
           window.alert("Error with status code: " + this.statusCode)
@@ -77,6 +87,7 @@ export class HeadphonesListComponent {
     this.router.navigate([this.router.url]);
   }
 
+  // funzione per ottenere gli item per la precedente pagina da visualizzare
   async goToPreviousPage() {
     if (this.currentPage > 1) {
       this.currentPage--;
@@ -86,6 +97,7 @@ export class HeadphonesListComponent {
     }
   }
 
+  // funzione per ottenere gli item per la prossima pagina da visualizzare
   async goToNextPage() {
     if (!this.totalPages) {
       this.currentPage++;
@@ -103,7 +115,7 @@ export class HeadphonesListComponent {
   }
 
 
-  // Funzioni per esportare gli elementi di dataArray in formato CSV
+  // funzioni per esportare gli elementi di dataArray in formato CSV
   
   convertToCSV(objArray: any[]): string {
     const array = [Object.keys(objArray[0])].concat(objArray);

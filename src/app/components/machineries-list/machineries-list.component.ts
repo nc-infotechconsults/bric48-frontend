@@ -17,7 +17,6 @@ export class MachineriesListComponent {
 
   machineries: Machinery[] | null = [];
   machineriesFiltered: Machinery[] | null = [];
-  branches: Branch[] | null = [];
   rooms: Room[] | null = [];
 
   searchedMserial: string = ""
@@ -34,11 +33,14 @@ export class MachineriesListComponent {
   constructor(private machineryService:MachineryService, private branchService:BranchService, private roomService:RoomService, private logService:LogService, private router: Router) {
   }
 
-  //On init
+  // on init
   async ngOnInit() {
 
+    // ottenimento dei primi itemsPerPage + 1 macchinari
     this.machineries = await this.machineryService.getMachineriesFromTo(1, this.itemsPerPage + 1, this.searchedMserial, this.searchedName, this.searchedBranch, this.searchedRoom);
 
+    // se il numero di macchinari è <= al numero di item visualizzabili nella pagina, si imposta il flag totalPages a true
+    // altrimenti si elimina l'undicesimo elemento dall'array che serve solo a vedere se esistono pagine successive a quella corrente
     if(this.machineries){
       if(this.machineries.length <= this.itemsPerPage){
         this.totalPages = true;
@@ -47,16 +49,18 @@ export class MachineriesListComponent {
       }
     }
 
-    this.branches = await this.branchService.getAll();
-
     if(this.machineries != null){
+
+      // per ogni macchinario
       for (let machinery of this.machineries) {
 
+        // ottenimento del branch del macchinario
         let branch = await this.branchService.getById(machinery.idBranch)
         if(branch != null){
           machinery.branchName = branch.name
         }
 
+        // ottenimento della room del macchinario
         let room = await this.roomService.getById(machinery.idRoom)
         if(room != null){
           machinery.roomName = room.name
@@ -66,23 +70,31 @@ export class MachineriesListComponent {
     }
   }
 
-  //On destroy
+  // on destroy
   ngOnDestroy() {
   }
 
+  // routing verso la pagina di aggiunta nuovo macchinario
   goToNewMachineryPage(): void {
     this.router.navigate(['/home/machineries/new']);
   }
 
-  // Delete machinery by mserial
+  // eliminazione del macchinario
   async deleteMachinery(mserial: any) {
 
     if (window.confirm('Are you sure you want to delete the machinery ' + mserial + '?')) {
+
+      // elimino il macchinario se la scelta è confermata
       this.statusCode = await this.machineryService.deleteMachinery(mserial);
 
       if (this.statusCode == 0){
+
+        // aggiorno la pagina
         this.reloadPage()
+
         window.alert("Machinery deleted!");
+
+        // aggiunta del log
         this.logService.addLog("Deleted machinery with mserial: "+mserial)
       }else{
         window.alert("Error with status code: " + this.statusCode)
@@ -91,9 +103,11 @@ export class MachineriesListComponent {
   }
   
 
-  // Edit machinery by maserial
+  // modifica del macchinario
   async editMachinery(mserial: any) {
     sessionStorage.setItem('mserial', mserial)
+
+    // routing verso la pagina per la modifica del macchiario
     this.router.navigate(['/home/machineries/edit'])
   }
 
@@ -103,14 +117,16 @@ export class MachineriesListComponent {
     this.router.navigate([this.router.url]);
   }
 
-  // Search
+  // funzione per la ricerca
   async search() {
 
     this.currentPage = 1;
     this.totalPages = false;
 
+    // ottenimento dei primi itemsPerPage + 1 macchinari
     this.machineries = await this.machineryService.getMachineriesFromTo(1, this.itemsPerPage + 1, this.searchedMserial, this.searchedName, this.searchedBranch, this.searchedRoom);
-  
+    
+    // riempiamo i campi branchName e roomName di ogni macchinario
     if(this.machineries != null){
       this.machineries = await Promise.all(this.machineries.map(async (machinery) => {
         let branch = await this.branchService.getById(machinery.idBranch)
@@ -126,6 +142,8 @@ export class MachineriesListComponent {
         return machinery;
       }));
 
+      // se il numero di macchinari è <= al numero di item visualizzabili nella pagina, si imposta il flag totalPages a true
+      // altrimenti si elimina l'undicesimo elemento dall'array che serve solo a vedere se esistono pagine successive a quella corrente
       if(this.machineries){
         if(this.machineries.length <= this.itemsPerPage){
           this.totalPages = true;
@@ -133,17 +151,20 @@ export class MachineriesListComponent {
           this.machineries.pop();
         }
       }
-  
-
     }
   }
 
+  // funzione che si esegue quando si seleziona una branch dal menù a tendina
   async onBranchChange(event: Event) {
+
+    // ottenimento delle room del branch selezionato
     this.rooms = await this.roomService.getRoomsByIdBranch(this.searchedBranch);
+
+    // valore di default della tendina
     this.searchedRoom = "all rooms"
   }
 
-
+  // funzione per ottenere gli item per la precedente pagina da visualizzare
   async goToPreviousPage() {
     if (this.currentPage > 1) {
       this.currentPage--;
@@ -152,7 +173,8 @@ export class MachineriesListComponent {
       this.totalPages = false
     }
   }
-
+  
+  // funzione per ottenere gli item per la prossima pagina da visualizzare
   async goToNextPage() {
     if (!this.totalPages) {
       this.currentPage++;
@@ -169,7 +191,7 @@ export class MachineriesListComponent {
     }
   }
 
-  // Funzioni per esportare gli elementi di dataArray in formato CSV
+  // funzioni per esportare gli elementi di dataArray in formato CSV
   
   convertToCSV(objArray: any[]): string {
     const array = [Object.keys(objArray[0])].concat(objArray);

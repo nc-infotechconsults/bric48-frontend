@@ -66,9 +66,6 @@ const routes: Routes = [
       {path:'logs', component: LogListComponent},
       {path:'messages/edit', component: MessagesListComponent},
       {path:'messages/new', component: NewMessageComponent}
-      /*{path: 'charts', component : ChartsComponent, children: [ {path: 'saw', component:SawChartComponent}, {path: 'lathe', component:LatheChartComponent}]},
-      {path: 'info', component : InfoSearchBarComponent, children: [{path: '', component:AllInfoComponent}, {path: 'saw', component:InfoSawComponent}, {path: 'lathe', component:InfoLatheComponent}]},
-      {path:'alarms', component: AlarmsSearchBarComponent},*/
     ]
   }
 ];

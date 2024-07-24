@@ -16,6 +16,7 @@ export class EditSensorComponent {
 
   machineries: Machinery[] | null = [];
 
+  // indirizzo mac del beacon che voliamo modificare
   mac: any = sessionStorage.getItem('macSensor');
 
   statusCode: number = 0;
@@ -25,25 +26,36 @@ export class EditSensorComponent {
   constructor(private sensorService:SensorService, private machineryService:MachineryService, private logService:LogService, private router: Router) {
   }
 
-  //On init
+  // on init
   async ngOnInit() {
     this.btnDisabled = false;
+
+    // ottenimento del beacon
     this.sensor = await this.sensorService.getSensorByMac(this.mac);
+
+    // ottenimento di tutti i macchinari
     this.machineries = await this.machineryService.getAll();
   }
 
+  // on submit
   async onSubmit(form: any) {
     this.btnDisabled = true;
 
+    // se dal menù a tendina si seleziona "No machinery associated", si imposta il campo mserial del beacon a stringa vuota
     if(this.sensor.mserial == "No machinery associated"){
       this.sensor.mserial = ""
     }
     
+    // modifica del beacon
     this.statusCode = await this.sensorService.editSensor(this.sensor);
 
     if (this.statusCode == 0){
       window.alert("Sensor edited!");
+
+      // aggiunta del log
       this.logService.addLog("Edited sensor with MAC: "+this.sensor.mac)
+
+      // routing verso la pagina di visualizzazione dei beacon
       this.router.navigate(['/home/sensors'])
     }
 

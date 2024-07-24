@@ -14,6 +14,7 @@ export class MachineryGraphComponent {
   machineryAlarms : MachineryData[] | null = [];
   alarmOccurrences: { [description: string]: number } = {};
 
+  // mseial del macchinario per il quale dobbiamo disegnare il grafico
   mserial = sessionStorage.getItem("mserial")
 
   startDate: string = ""
@@ -23,18 +24,22 @@ export class MachineryGraphComponent {
 
   constructor(private machineryDataService:MachineryDataService, private router: Router) { }
 
+  // on init
   async ngOnInit(){
 
+    // ottenimento degli allarmi del macchinario
     this.machineryAlarms = await this.machineryDataService.getDataFiltered(this.mserial!, "alarm", this.startDate, this.endDate)
 
-    // Raggruppa gli allarmi per 'description' e conta il numero di occorrenze
+    // raggruppa gli allarmi per 'description' e conta il numero di occorrenze
     if(this.machineryAlarms){
       this.alarmOccurrences = this.calculateAlarmOccurrences(this.machineryAlarms);
     }
 
+    // creazione del grafico
     this.createChart();
   }
 
+  // funzione per la creazione del grafico
   createChart() {
     const labels = Object.keys(this.alarmOccurrences);
     const values = Object.values(this.alarmOccurrences);
@@ -98,7 +103,7 @@ export class MachineryGraphComponent {
     });
   }
   
-  
+  // funzione per il calcolo delle occorrenze per ogni singola tipologia di allarme
   calculateAlarmOccurrences(alarms: MachineryData[]): { [description: string]: number } {
     return alarms.reduce((acc, alarm) => {
       acc[alarm.description] = (acc[alarm.description] || 0) + 1;
@@ -106,6 +111,7 @@ export class MachineryGraphComponent {
     }, {} as { [description: string]: number });
   }
 
+  // funzione per confrontare due date
   compareDate(firstDate: string, secondDate: string): number {
     // Converti le date in formato 'gg/mm/aaaa' in oggetti Date
     let [year1, month1, day1] = firstDate.split("-");
@@ -113,35 +119,39 @@ export class MachineryGraphComponent {
     let date1 = new Date(Number(year1), Number(month1) - 1, Number(day1));
     let date2 = new Date(Number(year2), Number(month2) - 1, Number(day2));
 
-    // Confronta le due date
     if (date1 > date2) {
-        return 1;
+        return 1; // se la prima data è successiva alla seconda
     } else if (date1 < date2){
-        return -1;
+        return -1; // se la prima data è precedente alla prima
     } else {
-      return 0;
+      return 0; // se le date sono uguali
     }
   }
 
-  // Search
+  // funzione per la ricerca
   async search() {
 
+    // se le date inserite non sono valide
     if(this.compareDate(this.startDate, this.endDate) == 1){
+      // aggiorna la pagina
       this.reloadPage()
       window.alert("Invalid data selection!");
     }
-  
+    
+    // ottenimento degli allarmi
     this.machineryAlarms = await this.machineryDataService.getDataFiltered(this.mserial!, "alarm", this.startDate, this.endDate)
 
+    // cancellazione del grafico
     if (this.myChart) {
       this.myChart.destroy();
     }
     
-    // Raggruppa gli allarmi per 'description' e conta il numero di occorrenze
+    // raggruppa gli allarmi per 'description' e conta il numero di occorrenze
     if(this.machineryAlarms){
       this.alarmOccurrences = this.calculateAlarmOccurrences(this.machineryAlarms);
     }
 
+    // creazione del grafico aggiornato in base ai filtri
     this.createChart();
   }
 

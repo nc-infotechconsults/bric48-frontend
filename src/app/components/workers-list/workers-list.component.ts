@@ -21,10 +21,14 @@ export class WorkersListComponent {
   constructor(private workerService:WorkerService, private logService:LogService, private router: Router) {
   }
 
-  //On init
+  // on init
   async ngOnInit() {
+
+    // ottenimento dei primi itemsPerPage + 1 lavoratori
     this.workersArray = await this.workerService.getWorkersFromTo(1, this.itemsPerPage + 1);
 
+    // se il numero di lavoratori è <= al numero di item visualizzabili nella pagina, si imposta il flag totalPages a true
+    // altrimenti si elimina l'undicesimo elemento dall'array che serve solo a vedere se esistono pagine successive a quella corrente
     if(this.workersArray){
       if(this.workersArray.length <= this.itemsPerPage){
         this.totalPages = true;
@@ -34,24 +38,31 @@ export class WorkersListComponent {
     }
   }
 
-  //On destroy
+  // on destroy
   ngOnDestroy() {
   }
 
+  // routing verso la pagina di aggiunta di un nuovo lavoratore
   goToNewWorkerPage(): void {
     this.router.navigate(['/home/workers/new']);
   }
 
-  // Delete worker by id
+  // eliminazione di un lavoratore
   async deleteWorker(worker: Worker) {
 
     if (window.confirm('Are you sure you want to delete the worker ' + worker.rollNumber + '?')) {
 
+      // eliminazione di un lavoratore se la scelta è stata confermata
       this.statusCode = await this.workerService.deleteWorker(worker.id, worker.idHeadphones);
 
       if (this.statusCode == 0){
+
+        // aggiorna la pagina
         this.reloadPage()
+
         window.alert("Worker deleted!");
+
+        // aggiunta del log
         this.logService.addLog("Deleted worker "+worker.name+" "+worker.surname+" ["+worker.role+"]")
       }else{
         window.alert("Error with status code: " + this.statusCode)
@@ -59,7 +70,7 @@ export class WorkersListComponent {
     }
   }
 
-  // Edit worker by id
+  // routing verso la pagina di modifica del lavotatore
   async editWorker(id: any) {
     sessionStorage.setItem('idWorker', id)
     this.router.navigate(['/home/workers/edit'])
@@ -71,7 +82,7 @@ export class WorkersListComponent {
     this.router.navigate([this.router.url]);
   }
 
-
+  // funzione per ottenere gli item per la precedente pagina da visualizzare
   async goToPreviousPage() {
     if (this.currentPage > 1) {
       this.currentPage--;
@@ -81,6 +92,7 @@ export class WorkersListComponent {
     }
   }
 
+  // funzione per ottenere gli item per la prossima pagina da visualizzare
   async goToNextPage() {
     if (!this.totalPages) {
       this.currentPage++;
@@ -98,7 +110,7 @@ export class WorkersListComponent {
   }
 
 
-  // Funzioni per esportare gli elementi di dataArray in formato CSV
+  // funzioni per esportare gli elementi di dataArray in formato CSV
   
   convertToCSV(objArray: any[]): string {
     const array = [Object.keys(objArray[0])].concat(objArray);

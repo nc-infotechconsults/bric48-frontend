@@ -21,10 +21,14 @@ export class SensorsListComponent {
   constructor(private sensorService:SensorService, private logService:LogService, private router: Router) {
   }
 
-  //On init
+  // on init
   async ngOnInit() {
+
+    // ottenimento dei primi itemsPerPage + 1 beacon
     this.sensorsArray = await this.sensorService.getSensorsFromTo(1, this.itemsPerPage + 1);
 
+    // se il numero di beacon è <= al numero di item visualizzabili nella pagina, si imposta il flag totalPages a true
+    // altrimenti si elimina l'undicesimo elemento dall'array che serve solo a vedere se esistono pagine successive a quella corrente
     if(this.sensorsArray){
       if(this.sensorsArray.length <= this.itemsPerPage){
         this.totalPages = true;
@@ -34,23 +38,30 @@ export class SensorsListComponent {
     }
   }
 
-  //On destroy
+  // on destroy
   ngOnDestroy() {
   }
 
+  // routing verso la pagina di aggiunta di un nuovo beacon
   goToNewSensorPage(): void {
     this.router.navigate(['/home/sensors/new']);
   }
 
-  // Delete sensor by mac
+  // eliminazione del beacon
   async deleteSensor(mac: any) {
 
     if (window.confirm('Are you sure you want to delete the sensor ' + mac + '?')) {
+
+      // eliminazione del beacon se la scelta è stata confermata
       this.statusCode = await this.sensorService.deleteSensor(mac);
 
       if (this.statusCode == 0){
+
+        // aggiorna la pagina
         this.reloadPage()
         window.alert("Sensor deleted!");
+
+        // aggiunta del log
         this.logService.addLog("Deleted sensor with MAC: "+mac)
       }else{
         window.alert("Error with status code: " + this.statusCode)
@@ -58,9 +69,11 @@ export class SensorsListComponent {
     }
   }
 
-  // Edit sensor by mac
+  // modifica del beacon
   async editSensor(mac: any) {
     sessionStorage.setItem('macSensor', mac)
+
+    // routing verso la pagina di modifica del beacon
     this.router.navigate(['/home/sensors/edit'])
   }
 
@@ -70,7 +83,7 @@ export class SensorsListComponent {
     this.router.navigate([this.router.url]);
   }
 
-
+  // funzione per ottenere gli item per la precedente pagina da visualizzare
   async goToPreviousPage() {
     if (this.currentPage > 1) {
       this.currentPage--;
@@ -80,6 +93,7 @@ export class SensorsListComponent {
     }
   }
 
+  // funzione per ottenere gli item per la prossima pagina da visualizzare
   async goToNextPage() {
     if (!this.totalPages) {
       this.currentPage++;
@@ -96,7 +110,7 @@ export class SensorsListComponent {
     }
   }
 
-  // Funzioni per esportare gli elementi di dataArray in formato CSV
+  // funzioni per esportare gli elementi di dataArray in formato CSV
   
   convertToCSV(objArray: any[]): string {
     const array = [Object.keys(objArray[0])].concat(objArray);

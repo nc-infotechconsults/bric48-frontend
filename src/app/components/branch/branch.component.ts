@@ -29,9 +29,13 @@ export class BranchComponent {
   constructor(private branchService:BranchService, private machineryService:MachineryService, private machineryDataService:MachineryDataService, private nearbyHeadphonesService:NearbyHeadphonesService, private router: Router) {
   }
 
+  // on init
   async ngOnInit() {
+
+    // branches_view contiene i branch che vengono visualizzati
     this.branches_view = await this.branchService.getAll();
 
+    // si inizializza il parametro dangerousness di ogni branch a ZERO
     if (this.branches_view) {
       for (const branch of this.branches_view) {
           branch.dangerousness = "ZERO"
@@ -40,11 +44,13 @@ export class BranchComponent {
 
     this.machineries = await this.machineryService.getAll();
 
+    // per ogni macchinario si ottengono gli allarmi non risolti e i lavoratori nelle vicinanze
     if (this.machineries) {
       for (const machinery of this.machineries) {
         this.alarms = await this.machineryDataService.getMachineryDataByTypeAndMserialAndIsSolved("alarm", machinery.mserial, "False");
         this.nearbyHeadphones = await this.nearbyHeadphonesService.getNearbyHeadphonesByMserial(machinery.mserial);
 
+        // il parametro dangerousness del branch viene impostato ad HIGH se ci sono allarmi e se ci sono lavoratori vicini al macchinario
         if(this.alarms?.length != 0 && this.nearbyHeadphones?.length != 0){
           if (this.branches_view) {
             for (const branch of this.branches_view) {
@@ -58,17 +64,21 @@ export class BranchComponent {
       }
     }
 
+    // inizia il polling
     this.startPolling()
     
   }
-
+  
+  // polling
   startPolling() {
     this.intervalId = setInterval(async () => {
 
       this.dataChanged = false;
-
+      
+      // branches contiene i branch
       this.branches = await this.branchService.getAll();
-
+      
+      // si inizializza il parametro dangerousness di ogni branch a ZERO
       if (this.branches) {
         for (const branch of this.branches) {
             branch.dangerousness = "ZERO"
@@ -76,12 +86,14 @@ export class BranchComponent {
       }
 
       this.machineries = await this.machineryService.getAll();
-
+      
+      // per ogni macchinario si ottengono gli allarmi non risolti e i lavoratori nelle vicinanze
       if (this.machineries) {
         for (const machinery of this.machineries) {
           this.alarms = await this.machineryDataService.getMachineryDataByTypeAndMserialAndIsSolved("alarm", machinery.mserial, "False");
           this.nearbyHeadphones = await this.nearbyHeadphonesService.getNearbyHeadphonesByMserial(machinery.mserial);
 
+          // il parametro dangerousness del branch viene impostato ad HIGH se ci sono allarmi e se ci sono lavoratori vicini al macchinario
           if(this.alarms?.length != 0 && this.nearbyHeadphones?.length != 0){
             if (this.branches) {
               for (const branch of this.branches) {
@@ -94,7 +106,8 @@ export class BranchComponent {
 
         }
       }
-
+      
+      // se branches_view e branches sono diversi, si aggiorna la visualizzazione
       if (!this.isEqual(this.branches_view, this.branches)){
         this.branches_view = this.branches
       }
@@ -102,20 +115,23 @@ export class BranchComponent {
     }, 1000); // Esegui ogni secondo
   }
 
+  // stop polling
   stopPolling() {
     clearInterval(this.intervalId);
   }
 
+  // on destroy
   ngOnDestroy() {
     this.stopPolling();
   }
 
+  // routing verso la pagina delle room
   goToRoomsPage(idBranch: any) {
     sessionStorage.setItem('idBranch', idBranch);
     this.router.navigate(['home/room']);
   }
 
-  // Funzione per confrontare due array di oggetti
+  // funzione per confrontare due array di oggetti
   isEqual(a: object[] | any , b: object[] | any): boolean {
     if (a?.length !== b?.length) {
         return false;

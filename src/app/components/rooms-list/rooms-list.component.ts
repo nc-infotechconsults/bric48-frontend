@@ -25,10 +25,14 @@ export class RoomsListComponent {
   constructor(private roomService:RoomService, private logService:LogService, private router: Router) {
   }
 
-  //On init
+  // on init
   async ngOnInit() {
+
+    // ottenimento delle prime itemsPerPage + 1 room
     this.rooms = await this.roomService.getRoomsByIdBranchFromTo(this.idBranch, 1, this.itemsPerPage + 1);
 
+    // se il numero di room è <= al numero di item visualizzabili nella pagina, si imposta il flag totalPages a true
+    // altrimenti si elimina l'undicesimo elemento dall'array che serve solo a vedere se esistono pagine successive a quella corrente
     if(this.rooms){
       if(this.rooms.length <= this.itemsPerPage){
         this.totalPages = true;
@@ -38,24 +42,29 @@ export class RoomsListComponent {
     }
   }
 
-  //On destroy
+  // on destroy
   ngOnDestroy() {
   }
 
+  // routing verso la pagina di aggiunta di una nuova room
   goToNewRoomPage(): void {
     this.router.navigate(['/home/rooms/new']);
   }
 
-  // Delete room by id
+  // eliminazione della room
   async deleteRoom(room: Room) {
 
     if (window.confirm('Are you sure you want to delete the room ' + room.name + '?')) {
 
+      // eliminazione della room se è stata confermata la scelta
       this.statusCode = await this.roomService.deleteRoom(room.id);
 
       if (this.statusCode == 0){
+        // aggiorna la pagina
         this.reloadPage()
         window.alert("Room deleted!");
+
+        // aggiunta del log
         this.logService.addLog("Deleted room "+room.name)
       }else{
         window.alert("Error with status code: " + this.statusCode)
@@ -63,10 +72,11 @@ export class RoomsListComponent {
     }
   }
   
-
-  // Edit room by id
+  // modifica della room
   async editRoom(id: any) {
     sessionStorage.setItem('idRoom', id)
+
+    // routing verso la pagina di modifica della room
     this.router.navigate(['/home/rooms/edit'])
   }
 
@@ -75,7 +85,8 @@ export class RoomsListComponent {
     this.router.onSameUrlNavigation = 'reload';
     this.router.navigate([this.router.url]);
   }
-
+  
+  // funzione per ottenere gli item per la precedente pagina da visualizzare
   async goToPreviousPage() {
     if (this.currentPage > 1) {
       this.currentPage--;
@@ -85,6 +96,7 @@ export class RoomsListComponent {
     }
   }
 
+  // funzione per ottenere gli item per la prossima pagina da visualizzare
   async goToNextPage() {
     if (!this.totalPages) {
       this.currentPage++;
@@ -101,7 +113,7 @@ export class RoomsListComponent {
     }
   }
 
-  // Funzioni per esportare gli elementi di dataArray in formato CSV
+  // funzioni per esportare gli elementi di dataArray in formato CSV
   
   convertToCSV(objArray: any[]): string {
     const array = [Object.keys(objArray[0])].concat(objArray);

@@ -21,10 +21,14 @@ export class BranchesListComponent {
   constructor(private branchService:BranchService, private logService:LogService, private router: Router) {
   }
 
-  //On init
+  // on init
   async ngOnInit() {
+
+    // ottenimento dei primi itemsPerPage + 1 branch
     this.branches = await this.branchService.getBranchesFromTo(1, this.itemsPerPage + 1);
 
+    // se il numero di branch è <= al numero di item visualizzabili nella pagina, si imposta il flag totalPages a true
+    // altrimenti si elimina l'undicesimo elemento dall'array che serve solo a vedere se esistono pagine successive a quella corrente
     if(this.branches){
       if(this.branches.length <= this.itemsPerPage){
         this.totalPages = true;
@@ -34,29 +38,37 @@ export class BranchesListComponent {
     }
   }
 
-  //On destroy
+  // on destroy
   ngOnDestroy() {
   }
 
+  // routing verso la pagina di aggiunta branch
   goToNewBranchPage(): void {
     this.router.navigate(['/home/branches/new']);
   }
 
+  // routing verso la pagina di visualizzazione delle room
   goToRoomsPage(id: any, name: string): void {
     sessionStorage.setItem('idBranch', id)
     sessionStorage.setItem('branchName', name)
     this.router.navigate(['/home/rooms']);
   }
 
-  // Delete branch by id
+  // eliminazione di un branch
   async deleteBranch(branch: Branch) {
 
     if (window.confirm('Are you sure you want to delete the branch ' + branch.name + '?')) {
+
+      // elimina il branch se si conferma la scelta
       this.statusCode = await this.branchService.deleteBranch(branch.id);
 
       if (this.statusCode == 0){
+
+        // aggiorna la pagina
         this.reloadPage()
         window.alert("Branch deleted!");
+
+        // aggiunta log
         this.logService.addLog("Deleted branch "+branch.name)
       }else{
         window.alert("Error with status code: " + this.statusCode)
@@ -65,7 +77,7 @@ export class BranchesListComponent {
   }
   
 
-  // Edit branch by id
+  // routing verso la pagina di modifica del branch
   async editBranch(id: any) {
     sessionStorage.setItem('idBranch', id)
     this.router.navigate(['/home/branches/edit'])
@@ -77,7 +89,7 @@ export class BranchesListComponent {
     this.router.navigate([this.router.url]);
   }
 
-
+  // funzione per ottenere gli item per la precedente pagina da visualizzare
   async goToPreviousPage() {
     if (this.currentPage > 1) {
       this.currentPage--;
@@ -87,6 +99,7 @@ export class BranchesListComponent {
     }
   }
 
+  // funzione per ottenere gli item per la prossima pagina da visualizzare
   async goToNextPage() {
     if (!this.totalPages) {
       this.currentPage++;
@@ -103,7 +116,8 @@ export class BranchesListComponent {
     }
   }
 
-  // Funzioni per esportare gli elementi di dataArray in formato CSV
+
+  // funzioni per esportare gli elementi di dataArray in formato CSV
   
   convertToCSV(objArray: any[]): string {
     const array = [Object.keys(objArray[0])].concat(objArray);

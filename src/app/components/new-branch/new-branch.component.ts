@@ -20,18 +20,25 @@ export class NewBranchComponent {
   constructor( private branchService:BranchService, private logService:LogService, private router: Router) {
   }
 
+  // on init
   async ngOnInit(){
     this.btnDisabled = false;
   }
 
+  // on submit
   async onSubmit(form: any) {
     this.btnDisabled = true;
 
+    // aggiunta del branch
     this.statusCode = await this.branchService.addBranch(this.branch);
 
     if (this.statusCode == 0){
       window.alert("New branch added!");
+
+      // aggiunta del log
       this.logService.addLog("Added branch "+this.branch.name)
+
+      // routing verso la pagina di visualizzazione dei branch
       this.router.navigate(['/home/branches'])
     }
 

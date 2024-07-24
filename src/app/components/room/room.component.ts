@@ -29,16 +29,32 @@ export class RoomComponent {
   constructor(private roomService:RoomService, private machineryService:MachineryService, private machineryDataService:MachineryDataService, private nearbyHeadphonesService:NearbyHeadphonesService, private router: Router) {
   }
 
+  // on init
   async ngOnInit() {
+
+    // ottenimento delle room da visualizzare
     this.rooms_view = await this.roomService.getRoomsByIdBranch(this.idBranch);
 
+    if (this.rooms_view) {
+      for (const room of this.rooms_view) {
+          room.dangerousness = "ZERO"
+      }
+    }
+
+    // ottenimento dei macchinari appartenenti ad un branch
     this.machineries = await this.machineryService.getMachineryByIdBranch(this.idBranch);
 
     if (this.machineries) {
+      // per ogni macchinario
       for (const machinery of this.machineries) {
+
+        // ottenimento degli allarmi non risolti per quel macchianario
         this.alarms = await this.machineryDataService.getMachineryDataByTypeAndMserialAndIsSolved("alarm", machinery.mserial, "False");
+
+        // ottenimento dei lavoratori nelle vicinanze del macchinario
         this.nearbyHeadphones = await this.nearbyHeadphonesService.getNearbyHeadphonesByMserial(machinery.mserial);
 
+        // se ci sono allarmi e lavoratori nelle vicinanze, imposto il parametro dangerousness a HIGH
         if(this.alarms?.length != 0 && this.nearbyHeadphones?.length != 0){
           if (this.rooms_view) {
             for (const room of this.rooms_view) {
@@ -52,14 +68,15 @@ export class RoomComponent {
       }
     }
 
-    
-
+    // inizio del polling
     this.startPolling()
   }
 
+  // polling
   startPolling() {
     this.intervalId = setInterval(async () => {
 
+      // ottenimento delle room
       this.rooms = await this.roomService.getRoomsByIdBranch(this.idBranch);
 
       if (this.rooms) {
@@ -68,13 +85,20 @@ export class RoomComponent {
         }
       }
 
+      // ottenimento dei macchinari appartenenti ad un branch
       this.machineries = await this.machineryService.getMachineryByIdBranch(this.idBranch);
 
       if (this.machineries) {
+        // per ogni macchinario
         for (const machinery of this.machineries) {
+
+          // ottenimento degli allarmi non risolti per quel macchianario
           this.alarms = await this.machineryDataService.getMachineryDataByTypeAndMserialAndIsSolved("alarm", machinery.mserial, "False");
+
+          // ottenimento dei lavoratori nelle vicinanze del macchinario
           this.nearbyHeadphones = await this.nearbyHeadphonesService.getNearbyHeadphonesByMserial(machinery.mserial);
 
+          // se ci sono allarmi e lavoratori nelle vicinanze, imposto il parametro dangerousness a HIGH
           if(this.alarms?.length != 0 && this.nearbyHeadphones?.length != 0){
             if (this.rooms) {
               for (const room of this.rooms) {
@@ -87,6 +111,7 @@ export class RoomComponent {
         }
       }
 
+      // se rooms_view è diversa da rooms, aggiorno le room da visualizzare
       if (!this.isEqual(this.rooms_view, this.rooms)){
         this.rooms_view = this.rooms
       }
@@ -94,21 +119,23 @@ export class RoomComponent {
     }, 1000); // Esegui ogni secondo
   }
 
+  // fine del polling
   stopPolling() {
     clearInterval(this.intervalId);
   }
 
-
+  // on destroy
   ngOnDestroy() {
     this.stopPolling();
   }
 
+  // routing verso la pagina di visualizzazione dei macchinari
   goToMachineriesPage(idRoom: any) {
     sessionStorage.setItem('idRoom', idRoom)
     this.router.navigate(['home/machinery']);
   }
 
-  // Funzione per confrontare due array di oggetti
+  // funzione per confrontare due array di oggetti
   isEqual(a: object[] | any , b: object[] | any): boolean {
     if (a?.length !== b?.length) {
         return false;
