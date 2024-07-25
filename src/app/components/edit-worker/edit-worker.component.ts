@@ -27,12 +27,17 @@ export class EditWorkerComponent {
   statusCode: number = 0;
 
   btnDisabled: boolean = false;
+  isAdmin: boolean = false;
 
   constructor(private workerService:WorkerService, private headphonesService:HeadphonesService, private logService:LogService, private router: Router) {
   }
 
   // on init
   async ngOnInit() {
+
+    if(sessionStorage.getItem('role') == 'ADMIN'){
+      this.isAdmin = true;
+    }
 
     this.btnDisabled = false;
 

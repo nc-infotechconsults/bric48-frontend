@@ -17,6 +17,7 @@ export class MachineriesListComponent {
 
   machineries: Machinery[] | null = [];
   machineriesFiltered: Machinery[] | null = [];
+  branches: Branch[] | null = [];
   rooms: Room[] | null = [];
 
   searchedMserial: string = ""
@@ -48,6 +49,9 @@ export class MachineriesListComponent {
         this.machineries.pop();
       }
     }
+
+    // ottenimento di tutti i branch
+    this.branches = await this.branchService.getAll();
 
     if(this.machineries != null){
 
