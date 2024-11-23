@@ -1,1 +1,115 @@
-<p>table works!</p>
+<div class="grid">
+    <div class="col-12">
+        <div class="card px-6 py-6">
+            @if (showToolbar) {
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <!-- <div class="my-2">
+                        <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger"
+                            (click)="deleteSelectedProducts()"
+                            [disabled]="!selectedProducts || !selectedProducts.length"></button>
+                    </div> -->
+                </ng-template>
+
+                <ng-template pTemplate="right">
+                    <button pButton pRipple [label]="'shared.table.actions.new' | translate" icon="pi pi-plus"
+                        class="p-button-success mr-2" (click)="openNew()"></button>
+                    <!-- <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import"
+                        chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
+                    <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"
+                        (click)="dt.exportCSV()"></button> -->
+                </ng-template>
+            </p-toolbar>
+            }
+
+            <p-table #dt [value]="values" [columns]="headers" responsiveLayout="scroll" [rows]="page.size"
+                [first]="page.page * page.size" [totalRecords]="totalRecords" sortMode="multiple"
+                [multiSortMeta]="multiSortMeta" (onLazyLoad)="lazyLoad($event)" [paginator]="paginator"
+                [globalFilterFields]="globalFieldFilters" [rowsPerPageOptions]="rowsPerPageOptions"
+                [showCurrentPageReport]="showCurrentPageReport" [lazy]="lazy"
+                [currentPageReportTemplate]="'shared.table.currentPageReport' | translate" [rowHover]="true">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0">{{ title | translate }}</h5>
+                        @if(globalFieldFilters.length > 0){
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                [placeholder]="'shared.table.searchPlaceholder' | translate" class="w-full sm:w-auto" />
+                        </span>
+                        }
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td class="text-center" [colSpan]="showAction ? headers.length + 1 : headers.length">{{ 'shared.table.emptyMessage' | translate}}</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        @for(col of headers; track col){
+                        @if(col.sortable){
+                        <th [pSortableColumn]="col.field">{{ col.title | translate }} <p-sortIcon
+                                [field]="col.field"></p-sortIcon></th>
+                        }@else{
+                        <th>{{ col.title | translate }}</th>
+                        }
+                        }
+                        @if(showAction){
+                        <th>{{ 'shared.table.actions.title' | translate}}</th>
+                        }
+                    </tr>
+                    <tr>
+                        @for(col of headers; track col){
+                        @if(col.filter && col.filter.type !== 'none'){
+                        <th>
+                            @switch (col.filter.type) {
+                            @case("text"){
+                            <p-columnFilter type="text" [field]="col.field" [showMenu]="col.filter.showMenu"
+                                [matchMode]="col.filter.matchMode"
+                                [placeholder]="(col.filter.placeholder ?? 'shared.table.searchPlaceholder' ) | translate"
+                                [ariaLabel]="col.filter.ariaLabel | translate" />
+                            }
+                            @case("boolean") {
+                            <p-columnFilter type="boolean" [field]="col.field" />
+                            }
+                            @case("dropdown"){
+
+                            }
+                            @case("multiselect"){
+
+                            }
+                            }
+                        </th>
+                        }@else{
+                        <th></th>
+                        }
+                        }
+                        @if(showAction){
+                        <th></th>
+                        }
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+                    <tr>
+                        <ng-container
+                            *ngTemplateOutlet=" tableBody; context: { $implicit: rowData, rowIndex, columns }"></ng-container>
+                        @if(showAction){
+                        <td>
+                            <span class="p-buttonset">
+                                <button pButton pRipple size="small" icon="pi pi-pencil" class="p-button-outlined"
+                                    [label]="'shared.table.actions.edit' | translate"
+                                    (click)="editItem(rowData)"></button>
+                                <button pButton pRipple size="small" icon="pi pi-trash"
+                                    class="p-button-outlined p-button-danger"
+                                    [label]="'shared.table.actions.delete' | translate"
+                                    (click)="deleteItem(rowData)"></button>
+                            </span>
+                        </td>
+                        }
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>

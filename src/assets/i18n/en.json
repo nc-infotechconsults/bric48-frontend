@@ -1,0 +1,46 @@
+{
+    "pages": {
+        "auth": {
+            "login": {
+                "welcome": {
+                    "msg1": "Welcome, User!",
+                    "msg2": "Sign in to continue"
+                },
+                "signIn": "Sign in", 
+                "badCredentials": {
+                    "summary": "Bad Credentials",
+                    "detail": "Email and/or password are invalid"
+                }
+            }
+        },
+        "area": {
+            "table": {
+                "name": "Name",
+                "structureName": "Strcture name"
+            }
+        }
+    },
+    "shared": {
+        "errors": {
+            "genericError": {
+                "summary": "Error happen",
+                "detail": "An error happend during the request. "
+            }
+        },
+        "validators": {
+            "required": "The field must not be empty",
+            "email": "The field must be a valid email"
+        },
+        "table": {
+            "emptyMessage": "No data available",
+            "actions": {
+                "title": "Actions",
+                "new": "New",
+                "edit": "Edit",
+                "delete": "Delete"
+            },
+            "currentPageReport": "Showing {first} to {last} of {totalRecords} entries",
+            "searchPlaceholder": "Search..."
+        }
+    }
+}

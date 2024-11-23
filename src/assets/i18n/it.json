@@ -1,0 +1,16 @@
+{
+    "pages": {
+        "area": {
+            "table": {
+                "name": "Nome"
+            }
+        }
+    },
+    "shared": {
+        "table": {
+            "actions": {
+                "new": "Nuovo"
+            }
+        }
+    }
+}

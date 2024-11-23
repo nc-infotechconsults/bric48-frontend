@@ -7,13 +7,13 @@ import { catchError, ObservableInput, retry, take } from 'rxjs';
   providedIn: 'root',
 })
 export class AbstractBaseService {
-  baseUrl = '/';
-  resource: string = '';
+  protected baseUrl = '/';
+  protected resource: string = '';
 
   private router = inject(Router);
   private http = inject(HttpClient);
 
-  handleError = (err: any, caught: ObservableInput<any>): ObservableInput<any> => {
+  protected handleError = (err: any, caught: ObservableInput<any>): ObservableInput<any> => {
     console.error("Error happen: ", err);
     // this.toastService.show('Si è verificato un errore: ' + err.message, new ToastOptions('alert alert-danger', 'danger', 10000));
     if (err.status == 401) {
@@ -22,14 +22,14 @@ export class AbstractBaseService {
     throw err;
   };
 
-  httpOptions = {
+  protected httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
     }),
   };
 
-  buildEndpoint(apiPath: string | undefined): string {
+  protected buildEndpoint(apiPath: string | undefined): string {
     if (apiPath?.startsWith('/')) {
       apiPath = apiPath.replace('/', '');
     }
@@ -40,7 +40,7 @@ export class AbstractBaseService {
     }
   }
 
-  public makePostRequest(
+  protected makePostRequest(
     apiPath: string = '',
     body?: any,
     params?: any,
@@ -56,7 +56,7 @@ export class AbstractBaseService {
       return op.pipe(retry(1), take(1));
   }
 
-  public makeGetRequest(
+  protected makeGetRequest(
     apiPath: string = '',
     params?: any,
     catchErrorEnable: boolean = true
@@ -69,7 +69,7 @@ export class AbstractBaseService {
       return op.pipe(retry(1), take(1));
   }
 
-  public makePutRequest(
+  protected makePutRequest(
     apiPath: string = '',
     body?: any,
     params?: any,
@@ -83,7 +83,7 @@ export class AbstractBaseService {
       return op.pipe(retry(1), take(1));
   }
 
-  public makePatchRequest(
+  protected makePatchRequest(
     apiPath: string = '',
     body?: any,
     params?: any,
@@ -97,7 +97,7 @@ export class AbstractBaseService {
       return op.pipe(retry(1), take(1));
   }
 
-  public makeDeleteRequest(
+  protected makeDeleteRequest(
     apiPath: string | undefined,
     params?: any,
     catchErrorEnable: boolean = true

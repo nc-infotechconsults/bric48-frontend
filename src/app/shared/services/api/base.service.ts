@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { AbstractBaseService } from './abstract.base.service';
 
 import { Observable } from 'rxjs';
-import { FiltersDTO } from 'src/app/model/api/filters-dto';
-import { Page } from 'src/app/model/api/page';
-import { Pageable } from 'src/app/model/api/pageable';
+import { FiltersDTO } from 'src/app/shared/model/api/filters-dto';
+import { Page } from 'src/app/shared/model/api/page';
+import { Pageable } from 'src/app/shared/model/api/pageable';
 
 
 @Injectable({
@@ -13,7 +13,7 @@ import { Pageable } from 'src/app/model/api/pageable';
 })
 export class BaseService<ENTITY, DTO> extends AbstractBaseService {
 
-  override baseUrl: string = '/api';
+  protected override baseUrl: string = '/api';
 
   delete(id: any): Observable<any> {
     return this.makeDeleteRequest(`/${id}`);

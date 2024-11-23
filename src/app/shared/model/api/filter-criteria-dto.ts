@@ -1,6 +1,6 @@
 import { QueryOperation } from "./query-operation";
 
-export interface FilterCriteriaDTO {
+export class FilterCriteriaDTO {
   operation?: QueryOperation;
   value?: any;
   field?: string;
