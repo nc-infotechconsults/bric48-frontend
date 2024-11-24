@@ -1,6 +1,6 @@
 <div table [headers]="headers" [values]="values" [globalFieldFilters]="globalFieldFilters"
     [totalRecords]="totalRecords"
-    (lazyLoadEmitter)="loadData($event)">
+    (onLazyLoad)="loadData($event)">
     <ng-template #tableBody let-rowData let-i="rowIndex">
         <td>{{rowData.name}}</td>
         <td>{{rowData.structure.name}}</td>

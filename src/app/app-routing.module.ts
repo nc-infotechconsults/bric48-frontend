@@ -14,6 +14,7 @@ import { AppLayoutComponent } from "./layout/app.layout.component";
                 children: [
                     { path: '', loadChildren: () => import('./components/dashboard/dashboard.module').then(m => m.DashboardModule) },
                     { path: 'area', loadChildren: () => import('./pages/area/area.module').then(m => m.AreaModule) },
+                    { path: 'structure', loadChildren: () => import('./pages/structure/structure.module').then(m => m.StructureModule) },
                     { path: 'uikit', loadChildren: () => import('./components/uikit/uikit.module').then(m => m.UIkitModule) },
                     { path: 'utilities', loadChildren: () => import('./components/utilities/utilities.module').then(m => m.UtilitiesModule) },
                     { path: 'documentation', loadChildren: () => import('./components/documentation/documentation.module').then(m => m.DocumentationModule) },

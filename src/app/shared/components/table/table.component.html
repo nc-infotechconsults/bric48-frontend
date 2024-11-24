@@ -1,29 +1,22 @@
 <div class="grid">
+    <p-toast></p-toast>
     <div class="col-12">
         <div class="card px-6 py-6">
             @if (showToolbar) {
             <p-toolbar styleClass="mb-4">
                 <ng-template pTemplate="left">
-                    <!-- <div class="my-2">
-                        <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger"
-                            (click)="deleteSelectedProducts()"
-                            [disabled]="!selectedProducts || !selectedProducts.length"></button>
-                    </div> -->
                 </ng-template>
 
                 <ng-template pTemplate="right">
                     <button pButton pRipple [label]="'shared.table.actions.new' | translate" icon="pi pi-plus"
-                        class="p-button-success mr-2" (click)="openNew()"></button>
-                    <!-- <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import"
-                        chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
-                    <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"
-                        (click)="dt.exportCSV()"></button> -->
+                        class="p-button-success mr-2" (click)="onNew.emit()"></button>
                 </ng-template>
             </p-toolbar>
             }
-
+            <p-contextMenu #cm [model]="menuItems" (onHide)="onContextMenuSelection.emit($event)" />
             <p-table #dt [value]="values" [columns]="headers" responsiveLayout="scroll" [rows]="page.size"
                 [first]="page.page * page.size" [totalRecords]="totalRecords" sortMode="multiple"
+                (onContextMenuSelect)="onContextMenuSelection.emit($event)" [contextMenu]="cm" [dataKey]="dataKey"
                 [multiSortMeta]="multiSortMeta" (onLazyLoad)="lazyLoad($event)" [paginator]="paginator"
                 [globalFilterFields]="globalFieldFilters" [rowsPerPageOptions]="rowsPerPageOptions"
                 [showCurrentPageReport]="showCurrentPageReport" [lazy]="lazy"
@@ -42,7 +35,8 @@
                 </ng-template>
                 <ng-template pTemplate="emptymessage">
                     <tr>
-                        <td class="text-center" [colSpan]="showAction ? headers.length + 1 : headers.length">{{ 'shared.table.emptyMessage' | translate}}</td>
+                        <td class="text-center" [colSpan]="headers.length">{{
+                            'shared.table.emptyMessage' | translate}}</td>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="header">
@@ -54,9 +48,6 @@
                         }@else{
                         <th>{{ col.title | translate }}</th>
                         }
-                        }
-                        @if(showAction){
-                        <th>{{ 'shared.table.actions.title' | translate}}</th>
                         }
                     </tr>
                     <tr>
@@ -85,28 +76,13 @@
                         <th></th>
                         }
                         }
-                        @if(showAction){
-                        <th></th>
-                        }
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
-                    <tr>
+                    <tr [pContextMenuRow]="rowData"
+                        [ngClass]="{ 'bg-primary': (highlightRow && selectedItem?.id === rowData.id) }">
                         <ng-container
                             *ngTemplateOutlet=" tableBody; context: { $implicit: rowData, rowIndex, columns }"></ng-container>
-                        @if(showAction){
-                        <td>
-                            <span class="p-buttonset">
-                                <button pButton pRipple size="small" icon="pi pi-pencil" class="p-button-outlined"
-                                    [label]="'shared.table.actions.edit' | translate"
-                                    (click)="editItem(rowData)"></button>
-                                <button pButton pRipple size="small" icon="pi pi-trash"
-                                    class="p-button-outlined p-button-danger"
-                                    [label]="'shared.table.actions.delete' | translate"
-                                    (click)="deleteItem(rowData)"></button>
-                            </span>
-                        </td>
-                        }
                     </tr>
                 </ng-template>
             </p-table>

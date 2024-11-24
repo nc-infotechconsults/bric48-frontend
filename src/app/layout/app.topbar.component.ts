@@ -1,5 +1,6 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { AppConfigService } from '../shared/services/app-config.service';
 import { LayoutService } from "./service/app.layout.service";
 
 @Component({
@@ -16,5 +17,8 @@ export class AppTopBarComponent {
 
     @ViewChild('topbarmenu') menu!: ElementRef;
 
-    constructor(public layoutService: LayoutService) { }
+    layoutService = inject(LayoutService)
+
+    private appConfigService = inject(AppConfigService)
+
 }

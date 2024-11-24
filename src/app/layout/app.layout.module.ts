@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { BadgeModule } from 'primeng/badge';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { InputTextModule } from 'primeng/inputtext';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { RippleModule } from 'primeng/ripple';
 import { SidebarModule } from 'primeng/sidebar';
@@ -18,6 +19,7 @@ import { AppMenuitemComponent } from './app.menuitem.component';
 import { AppSidebarComponent } from "./app.sidebar.component";
 import { AppTopBarComponent } from './app.topbar.component';
 import { AppConfigModule } from './config/config.module';
+
 
 @NgModule({
     declarations: [
@@ -41,7 +43,8 @@ import { AppConfigModule } from './config/config.module';
         RippleModule,
         RouterModule,
         ToastModule,
-        AppConfigModule
+        AppConfigModule,
+        ProgressSpinnerModule
     ],
     exports: [AppLayoutComponent]
 })

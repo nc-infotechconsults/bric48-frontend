@@ -1,1 +1,11 @@
-<p>delete-dialog works!</p>
+<p-dialog [visible]="show" (visibleChange)="updateShow($event)" [header]="'shared.modal.titles.delete' | translate" [modal]="true" [style]="{width:'450px'}">
+    <div class="flex align-items-center justify-content-center">
+        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+        <ng-content></ng-content>
+    </div>
+    <ng-template pTemplate="footer">
+        <button pButton pRipple icon="pi pi-times" class="p-button-text" [label]="'shared.modal.actions.close' | translate"
+            (click)="updateShow(false)"></button>
+        <button pButton pRipple icon="pi pi-check" class="p-button-danger" [label]="'shared.modal.actions.delete' | translate" (click)="onConfirm.emit()"></button>
+    </ng-template>
+</p-dialog>

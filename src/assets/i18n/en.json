@@ -18,6 +18,16 @@
                 "name": "Name",
                 "structureName": "Strcture name"
             }
+        },
+        "structure": {
+            "modal": {
+                "name": "Name",
+                "description": "Description"
+            },
+            "table": {
+                "name": "Name",
+                "description": "Description"
+            }
         }
     },
     "shared": {
@@ -27,14 +37,43 @@
                 "detail": "An error happend during the request. "
             }
         },
+        "messages": {
+            "deleteSuccess": {
+                "summary": "Operation completed",
+                "detail": "Item deleted correctly"
+            },
+            "createSuccess": {
+                "summary": "Operation completed",
+                "detail": "Item created correctly"
+            },
+            "updateSuccess": {
+                "summary": "Operation completed",
+                "detail": "Item updated correctly"
+            }
+        },
         "validators": {
             "required": "The field must not be empty",
             "email": "The field must be a valid email"
         },
+        "modal": {
+            "titles": {
+                "delete": "Confirm delete",
+                "create": "Create new item",
+                "update": "Update item"
+            },
+            "delete": {
+                "baseMessage": "Are you sure you want to delete"
+            },
+            "actions": {
+                "close": "Close",
+                "delete": "Delete",
+                "save": "Save"
+            }
+        },
         "table": {
             "emptyMessage": "No data available",
             "actions": {
-                "title": "Actions",
+                "empty": "No actions available",
                 "new": "New",
                 "edit": "Edit",
                 "delete": "Delete"

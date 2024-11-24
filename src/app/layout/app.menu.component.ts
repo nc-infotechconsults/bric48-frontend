@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { LayoutService } from './service/app.layout.service';
 
 @Component({
@@ -8,8 +8,7 @@ import { LayoutService } from './service/app.layout.service';
 export class AppMenuComponent implements OnInit {
 
     model: any[] = [];
-
-    constructor(public layoutService: LayoutService) { }
+    layoutService = inject(LayoutService);
 
     ngOnInit() {
         this.model = [
@@ -17,7 +16,8 @@ export class AppMenuComponent implements OnInit {
                 label: 'Home',
                 items: [
                     { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/app/'] },
-                    { label: 'Area', icon: 'pi pi-fw pi-home', routerLink: ['/app/area'] }
+                    { label: 'Area', icon: 'pi pi-fw pi-home', routerLink: ['/app/area'] },
+                    { label: 'Structure', icon: 'pi pi-fw pi-home', routerLink: ['/app/structure'] }
                 ]
             },
             {

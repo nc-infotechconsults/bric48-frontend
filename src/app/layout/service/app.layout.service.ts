@@ -33,6 +33,7 @@ export class LayoutService {
     };
 
     config = signal<AppConfig>(this._config);
+    isLoading = signal<boolean>(false);
 
     state: LayoutState = {
         staticMenuDesktopInactive: false,

@@ -59,9 +59,9 @@ export class LoginComponent {
                     })
                 else
                     this.messageService.add({
-                        severity: 'danger',
-                        summary: this.translateService.instant('pages.auth.login.genericError.summary'),
-                        detail: this.translateService.instant('pages.auth.login.genericError.detail'),
+                        severity: 'error',
+                        summary: this.translateService.instant('shared.errors.genericError.summary'),
+                        detail: this.translateService.instant('shared.errors.genericError.detail'),
                     });
 
             }

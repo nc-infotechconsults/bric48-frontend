@@ -1,1 +1,15 @@
-<p>detail-modal works!</p>
+<p-dialog [visible]="show" (visibleChange)="updateShow($event)" [style]="{width: '75vw'}"
+    [header]="editMode ? ('shared.modal.titles.update' | translate) : ('shared.modal.titles.create' | translate)"
+    [modal]="true" class="p-fluid">
+    
+    <ng-template pTemplate="content">
+        <ng-content></ng-content>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple icon="pi pi-times" class="p-button-text"
+            [label]="'shared.modal.actions.close' | translate" (click)="updateShow(false)"></button>
+        <button pButton pRipple icon="pi pi-check" class="p-button-success" [disabled]="disableConfirm"
+            [label]="'shared.modal.actions.save' | translate" (click)="onConfirm.emit()"></button>
+    </ng-template>
+</p-dialog>

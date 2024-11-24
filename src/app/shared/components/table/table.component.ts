@@ -1,5 +1,8 @@
-import { Component, ContentChild, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
-import { LazyLoadEvent, SortMeta } from 'primeng/api';
+import { Component, ContentChild, EventEmitter, inject, Input, Output, TemplateRef } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { LazyLoadEvent, MenuItem, SortMeta } from 'primeng/api';
+import { TableContextMenuSelectEvent } from 'primeng/table';
+import { LayoutService } from 'src/app/layout/service/app.layout.service';
 import { FilterCriteriaDTO } from '../../model/api/filter-criteria-dto';
 import { FilterGroupDTO } from '../../model/api/filter-group-dto';
 import { FiltersDTO } from '../../model/api/filters-dto';
@@ -17,11 +20,11 @@ import { LazyLoadEmitterEvent } from '../../model/ui/lazy-load-emitter-event';
 })
 export class TableComponent<T> {
 
-  @Input()
-  showToolbar: boolean = true;
+  protected translate = inject(TranslateService);
+  protected layout = inject(LayoutService);
 
   @Input()
-  showAction: boolean = true;
+  showToolbar: boolean = true;
 
   @Input()
   showCurrentPageReport: boolean = true;
@@ -56,20 +59,51 @@ export class TableComponent<T> {
   @Input()
   title: string = '';
 
+  @Input()
+  menuItems: MenuItem[] = [
+    { label: this.translate.instant('shared.table.actions.empty'), icon: 'pi pi-fw pi-ban' }
+  ];
+
   @ContentChild('tableBody', { read: TemplateRef })
   tableBody?: TemplateRef<any>;
 
   @Output()
-  lazyLoadEmitter: EventEmitter<LazyLoadEmitterEvent> = new EventEmitter<LazyLoadEmitterEvent>();
+  onLazyLoad: EventEmitter<LazyLoadEmitterEvent> = new EventEmitter<LazyLoadEmitterEvent>();
 
-  protected loadData(event: LazyLoadEmitterEvent): void { };
+  @Output()
+  onNew: EventEmitter<void> = new EventEmitter<void>();
+
+  @Output()
+  onContextMenuSelection: EventEmitter<any> = new EventEmitter<any>();
+
+  @Input()
+  selectedItem?: T;
+
+  @Input()
+  dataKey: string = 'id';
+
+  @Input()
+  highlightRow: boolean = false;
+
+  protected lastLazyLoadEmitterEvent?: LazyLoadEmitterEvent;
+
+  protected loadData(event: LazyLoadEmitterEvent): void { 
+    this.lastLazyLoadEmitterEvent = event;
+  };
+  protected handleNew(): void { };
+
+  protected updateSelectedItem(event: TableContextMenuSelectEvent) {
+    if(event)
+      this.selectedItem = event?.data;
+    this.highlightRow = event !== undefined ? true : false;
+  }
 
   lazyLoad(event: LazyLoadEvent) {
     const lazyLoadEmitterEvent = new LazyLoadEmitterEvent();
     lazyLoadEmitterEvent.originalEvent = event;
     lazyLoadEmitterEvent.filters = this.buildFilters(event);
     lazyLoadEmitterEvent.page = this.buildPage(event);
-    this.lazyLoadEmitter.emit(lazyLoadEmitterEvent);
+    this.onLazyLoad.emit(lazyLoadEmitterEvent);
   }
 
   private buildFilters(event: LazyLoadEvent): FiltersDTO {
@@ -102,7 +136,7 @@ export class TableComponent<T> {
     filters.criterias = singleFilters.map(([key, value]) => {
       const criteria = new FilterCriteriaDTO();
       criteria.field = key;
-      switch(value.matchMode){
+      switch (value.matchMode) {
         case 'contains':
           criteria.operation = QueryOperation.ILIKE;
           break;

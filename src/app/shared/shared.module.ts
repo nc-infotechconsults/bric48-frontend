@@ -2,7 +2,9 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
+import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
+import { ContextMenuModule } from 'primeng/contextmenu';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { FileUploadModule } from 'primeng/fileupload';
@@ -41,7 +43,11 @@ import { TableComponent } from './components/table/table.component';
     RadioButtonModule,
     InputNumberModule,
     DialogModule,
-    TranslateModule
+    TranslateModule,
+    ContextMenuModule
+  ],
+  providers: [
+    MessageService
   ],
   exports: [
     TableComponent,

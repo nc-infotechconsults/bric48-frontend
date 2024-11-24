@@ -5,6 +5,7 @@
     </div>
     <div class="layout-main-container">
         <div class="layout-main">
+            <p-toast></p-toast>
             <router-outlet></router-outlet>
         </div>
         <app-footer></app-footer>
@@ -12,3 +13,9 @@
     <app-config></app-config>
     <div class="layout-mask"></div>
 </div>
+@if(layoutService.isLoading()){
+<div class="fixed bg-black-alpha-30 top-0 bottom-0 right-0 left-0 flex align-items-center justify-content-center"
+    style="z-index: 10001">
+    <p-progressSpinner styleClass="w-5rem h-5rem" strokeWidth="8" animationDuration=".5s" />
+</div>
+}

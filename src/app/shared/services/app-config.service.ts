@@ -1,4 +1,6 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { User } from '../model/domain/user';
 import { AccessTokenDTO } from '../model/dto/access-token-dto';
 
 @Injectable({
@@ -7,6 +9,8 @@ import { AccessTokenDTO } from '../model/dto/access-token-dto';
 export class AppConfigService {
 
   private accessToken?: AccessTokenDTO;
+  private loggedUser?: User;
+  private router = inject(Router);
 
   constructor() { 
     const json = localStorage.getItem('accessToken');
@@ -22,6 +26,12 @@ export class AppConfigService {
 
   getAccessToken() {
     return this.accessToken;
+  }
+
+  cleanAccessToken() {
+    this.accessToken = null;
+    localStorage.removeItem('accessToken');
+    this.router.navigateByUrl("/auth/login");
   }
 
 }

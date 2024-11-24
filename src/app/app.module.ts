@@ -3,6 +3,7 @@ import { HttpClient, provideHttpClient, withFetch, withInterceptors, withInterce
 import { NgModule } from '@angular/core';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { MessageService } from 'primeng/api';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
@@ -34,6 +35,7 @@ const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: Http
     ],
     providers: [
         { provide: LocationStrategy, useClass: PathLocationStrategy },
+        MessageService,
         provideHttpClient(withInterceptors([authInterceptor]), withFetch(), withInterceptorsFromDi()),
         CountryService, CustomerService, EventService, IconService, NodeService,
         PhotoService, ProductService

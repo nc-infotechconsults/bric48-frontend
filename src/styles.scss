@@ -12,3 +12,20 @@ $gutter: 1rem; //for primeflex grid system
 @import "assets/demo/styles/flags/flags.css";
 @import "assets/demo/styles/badges.scss";
 @import "assets/demo/styles/code.scss";
+
+.menu-item-danger {
+    & span {
+        color: red;
+    }
+}
+
+.p-progress-spinner-circle {
+    stroke: var(--primary-color);
+    animation: p-progress-spinner-dash 1.5s ease-in-out infinite, p-progress-spinner-primary 6s ease-in-out infinite;
+}
+
+@keyframes p-progress-spinner-primary {
+    100% {
+        stroke: var(--primary-color);
+    }   
+}
