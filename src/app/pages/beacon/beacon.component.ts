@@ -2,22 +2,22 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MenuItem, MessageService } from 'primeng/api';
 import { TableComponent } from 'src/app/shared/components/table/table.component';
-import { Structure } from 'src/app/shared/model/domain/structure';
+import { Beacon } from 'src/app/shared/model/domain/beacon';
 import { HeaderItem } from 'src/app/shared/model/ui/header-item';
 import { LazyLoadEmitterEvent } from 'src/app/shared/model/ui/lazy-load-emitter-event';
-import { StructureService } from 'src/app/shared/services/api/structure.service';
+import { BeaconService } from 'src/app/shared/services/api/beacon.service';
 
 @Component({
-  selector: 'app-structure',
-  templateUrl: './structure.component.html',
-  styleUrl: './structure.component.scss'
+  selector: 'app-beacon',
+  templateUrl: './beacon.component.html',
+  styleUrl: './beacon.component.scss'
 })
-export class StructureComponent extends TableComponent<Structure> {
+export class BeaconComponent extends TableComponent<Beacon> {
 
   showDelete = false;
   showDetail = false;
 
-  private service = inject(StructureService);
+  private service = inject(BeaconService);
   private fb = inject(FormBuilder);
   private messageService = inject(MessageService);
 

@@ -14,8 +14,14 @@
             }
         },
         "area": {
+            "modal": {
+                "name": "Name",
+                "description": "Description",
+                "structure": "Structure"
+            },
             "table": {
                 "name": "Name",
+                "description": "Description",
                 "structureName": "Strcture name"
             }
         },

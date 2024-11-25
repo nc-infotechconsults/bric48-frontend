@@ -2,22 +2,22 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MenuItem, MessageService } from 'primeng/api';
 import { TableComponent } from 'src/app/shared/components/table/table.component';
-import { Structure } from 'src/app/shared/model/domain/structure';
+import { Headphone } from 'src/app/shared/model/domain/headphone';
 import { HeaderItem } from 'src/app/shared/model/ui/header-item';
 import { LazyLoadEmitterEvent } from 'src/app/shared/model/ui/lazy-load-emitter-event';
-import { StructureService } from 'src/app/shared/services/api/structure.service';
+import { HeadphoneService } from 'src/app/shared/services/api/headphone.service';
 
 @Component({
-  selector: 'app-structure',
-  templateUrl: './structure.component.html',
-  styleUrl: './structure.component.scss'
+  selector: 'app-headphone',
+  templateUrl: './headphone.component.html',
+  styleUrl: './headphone.component.scss'
 })
-export class StructureComponent extends TableComponent<Structure> {
+export class HeadphoneComponent extends TableComponent<Headphone> {
 
   showDelete = false;
   showDetail = false;
 
-  private service = inject(StructureService);
+  private service = inject(HeadphoneService);
   private fb = inject(FormBuilder);
   private messageService = inject(MessageService);
 

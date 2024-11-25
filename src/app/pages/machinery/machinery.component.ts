@@ -2,22 +2,22 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MenuItem, MessageService } from 'primeng/api';
 import { TableComponent } from 'src/app/shared/components/table/table.component';
-import { Structure } from 'src/app/shared/model/domain/structure';
+import { Machinery } from 'src/app/shared/model/domain/machinery';
 import { HeaderItem } from 'src/app/shared/model/ui/header-item';
 import { LazyLoadEmitterEvent } from 'src/app/shared/model/ui/lazy-load-emitter-event';
-import { StructureService } from 'src/app/shared/services/api/structure.service';
+import { MachineryService } from 'src/app/shared/services/api/machinery.service';
 
 @Component({
-  selector: 'app-structure',
-  templateUrl: './structure.component.html',
-  styleUrl: './structure.component.scss'
+  selector: 'app-machinery',
+  templateUrl: './machinery.component.html',
+  styleUrl: './machinery.component.scss'
 })
-export class StructureComponent extends TableComponent<Structure> {
+export class MachineryComponent extends TableComponent<Machinery> {
 
   showDelete = false;
   showDetail = false;
 
-  private service = inject(StructureService);
+  private service = inject(MachineryService);
   private fb = inject(FormBuilder);
   private messageService = inject(MessageService);
 
