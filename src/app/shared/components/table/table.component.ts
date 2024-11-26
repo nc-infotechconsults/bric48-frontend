@@ -10,7 +10,7 @@ import { LogicOperator } from '../../model/api/logic-operator';
 import { Pageable } from '../../model/api/pageable';
 import { QueryOperation } from '../../model/api/query-operation';
 import { Sort } from '../../model/api/sort ';
-import { HeaderItem } from '../../model/ui/header-item';
+import { DropdownFilter, HeaderItem } from '../../model/ui/header-item';
 import { LazyLoadEmitterEvent } from '../../model/ui/lazy-load-emitter-event';
 
 @Component({
@@ -134,17 +134,46 @@ export class TableComponent<T> {
     // single filter
     const singleFilters = Object.entries(event.filters).filter(([key, value]) => value.value !== null && key !== 'global');
     filters.criterias = singleFilters.map(([key, value]) => {
+      const header = this.headers.find(x => x.field === key);
       const criteria = new FilterCriteriaDTO();
       criteria.field = key;
-      switch (value.matchMode) {
-        case 'contains':
-          criteria.operation = QueryOperation.ILIKE;
-          break;
-      }
-      criteria.value = value.value;
-      return criteria;
-    })
 
+      switch(header.filter.type){
+        case "text": {
+          switch (value.matchMode) {
+            case 'contains':
+              criteria.operation = QueryOperation.ILIKE;
+              break;
+          }
+          criteria.value = value.value;
+          break;
+        }
+        case 'dropdown': {
+          criteria.operation = QueryOperation.EQUAL;
+          criteria.value = value.value;
+          break;
+        }
+        case 'multiselect': {
+          break;
+        }
+        case 'boolean': {
+          break;
+        }
+      }
+      
+      return criteria;
+    });
+
+    const selectableHeader = this.headers.filter(x => x.filter.type === 'dropdown' || x.filter.type === 'multiselect');
+    if(selectableHeader.length > 0){
+      selectableHeader.forEach(x => {
+        if(!filters.criterias.find(f => f.field === x.field)){
+          if(x.filter.type === 'dropdown'){
+            (x.filter as DropdownFilter).selectedValue = undefined;
+          }
+        }
+      })
+    }
 
     return filters;
   }

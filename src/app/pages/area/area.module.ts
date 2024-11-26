@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { MessageService } from 'primeng/api';
+import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ToastModule } from 'primeng/toast';
@@ -16,6 +17,7 @@ import { AreaComponent } from './area.component';
     CommonModule,
     SharedModule,
     InputTextModule,
+    DropdownModule,
     InputTextareaModule,
     ReactiveFormsModule,
     TranslateModule,

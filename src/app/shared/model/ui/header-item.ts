@@ -8,6 +8,11 @@ export class HeaderFilter {
     placeholder?: string = '';
 }
 
+export class DropdownFilter extends HeaderFilter {
+    values: { value: string, label: string}[];
+    selectedValue: string;
+}
+
 export class HeaderItem {
     title?: string;
     field?: string;

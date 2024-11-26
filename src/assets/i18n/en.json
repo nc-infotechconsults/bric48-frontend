@@ -85,7 +85,8 @@
                 "delete": "Delete"
             },
             "currentPageReport": "Showing {first} to {last} of {totalRecords} entries",
-            "searchPlaceholder": "Search..."
+            "searchPlaceholder": "Search...",
+            "dropdownPlaceholder": "Select one..."
         }
     }
 }
