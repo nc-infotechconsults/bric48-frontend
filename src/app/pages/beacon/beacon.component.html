@@ -1,24 +1,23 @@
 <div table [headers]="headers" [values]="values" [globalFieldFilters]="globalFieldFilters" [totalRecords]="totalRecords"
-    [menuItems]="menuItems" [selectedItem]="selectedItem" [highlightRow]="highlightRow"
-    (onNew)="handleNew()" (onLazyLoad)="loadData($event)"
-    (onContextMenuSelection)="updateSelectedItem($event)">
+    [menuItems]="menuItems" [selectedItem]="selectedItem" [highlightRow]="highlightRow" (onNew)="handleNew()"
+    (onLazyLoad)="loadData($event)" (onContextMenuSelection)="updateSelectedItem($event)">
     <ng-template #tableBody let-rowData let-i="rowIndex">
         <td>{{rowData.name}}</td>
-        <td>{{rowData.description}}</td>
+        <td>{{rowData.serial}}</td>
     </ng-template>
 </div>
 
 <div delete-dialog [(show)]="showDelete" (onConfirm)="handleDelete()">
-    <span>{{ 'shared.modal.delete.baseMessage' | translate }} <b>{{selectedItem?.name}}</b>?</span>
+    <span>{{ 'shared.modal.delete.baseMessage' | translate }} <b>{{selectedItem?.name}} ({{selectedItem?.serial}})</b>?</span>
 </div>
 
-<div detail-dialog [(show)]="showDetail" [editMode]="selectedItem !== null" [disableConfirm]="fg.invalid" (onConfirm)="handleSave()">
+<div detail-dialog [(show)]="showDetail" [editMode]="selectedItem !== null" [disableConfirm]="fg.invalid"
+    (onConfirm)="handleSave()">
     <form [formGroup]="fg">
         <div class="field p-fluid">
-            <label htmlFor="name">{{ 'pages.structure.modal.name' | translate }}</label>
+            <label htmlFor="name">{{ 'pages.beacon.modal.name' | translate }}</label>
             <input pInputText formControlName="name" id="name" type="text"
-                [class.ng-invalid]="fg.controls['name'].invalid"
-                [class.ng-dirty]="fg.controls['name'].invalid" />
+                [class.ng-invalid]="fg.controls['name'].invalid" [class.ng-dirty]="fg.controls['name'].invalid" />
             @if(fg.controls['name'].errors?.['required']){
             <small class="text-red-600">
                 {{ 'shared.validators.required' | translate }}
@@ -26,8 +25,24 @@
             }
         </div>
         <div class="field p-fluid">
-            <label htmlFor="description">{{ 'pages.structure.modal.description' | translate }}</label>
-            <textarea rows="5" cols="30" formControlName="description" id="description" pInputTextarea></textarea>
+            <label htmlFor="serial">{{ 'pages.beacon.modal.serial' | translate }}</label>
+            <input pInputText formControlName="serial" id="serial" type="text"
+                [class.ng-invalid]="fg.controls['serial'].invalid" [class.ng-dirty]="fg.controls['serial'].invalid" />
+            @if(fg.controls['serial'].errors?.['required']){
+            <small class="text-red-600">
+                {{ 'shared.validators.required' | translate }}
+            </small>
+            }
+        </div>
+        <div class="field p-fluid">
+            <label htmlFor="threshold">{{ 'pages.beacon.modal.threshold' | translate }}</label>
+            <input pInputText formControlName="threshold" id="threshold" type="number"
+                [class.ng-invalid]="fg.controls['threshold'].invalid" [class.ng-dirty]="fg.controls['threshold'].invalid" />
+            @if(fg.controls['threshold'].errors?.['required']){
+            <small class="text-red-600">
+                {{ 'shared.validators.required' | translate }}
+            </small>
+            }
         </div>
     </form>
 </div>

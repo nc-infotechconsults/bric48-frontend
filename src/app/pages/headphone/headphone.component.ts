@@ -24,18 +24,18 @@ export class HeadphoneComponent extends TableComponent<Headphone> {
   fg = this.fb.group({
     id: [null],
     name: [null, Validators.required],
-    description: ['']
+    serial: [null, Validators.required]
   });
 
-  override globalFieldFilters: string[] = ['name'];
+  override globalFieldFilters: string[] = ['name', 'serial'];
   override headers: HeaderItem[] = [
     {
-      title: 'pages.structure.table.name', field: 'name', sortable: true, filter: {
+      title: 'pages.headphone.table.name', field: 'name', sortable: true, filter: {
         type: 'text', showMenu: false, matchMode: 'contains'
       }
     },
     {
-      title: 'pages.structure.table.description', field: 'description', sortable: true, filter: {
+      title: 'pages.headphone.table.serial', field: 'serial', sortable: true, filter: {
         type: 'text', showMenu: false, matchMode: 'contains'
       }
     }
@@ -96,9 +96,13 @@ export class HeadphoneComponent extends TableComponent<Headphone> {
             detail: this.translate.instant('shared.messages.updateSuccess.detail'),
           });
           this.loadData(this.lastLazyLoadEmitterEvent);
+        },
+        error: (err) => {
+          if (err.error && err.error.type.includes('ResourceAlreadyExists'))
+            this.messageService.add({ severity: 'warn', summary: this.translate.instant('pages.headphone.messages.resourceAlreadyExists.summary'), detail: this.translate.instant('pages.headphone.messages.resourceAlreadyExists.detail') })
         }
       });
-    }else{
+    } else {
       this.service.save(dto).subscribe({
         next: (v) => {
           this.layout.isLoading.set(false);
@@ -109,10 +113,14 @@ export class HeadphoneComponent extends TableComponent<Headphone> {
             detail: this.translate.instant('shared.messages.createSuccess.detail'),
           });
           this.loadData(this.lastLazyLoadEmitterEvent);
+        },
+        error: (err) => {
+          if (err.error && err.error.type.includes('ResourceAlreadyExists'))
+            this.messageService.add({ severity: 'warn', summary: this.translate.instant('pages.headphone.messages.resourceAlreadyExists.summary'), detail: this.translate.instant('pages.headphone.messages.resourceAlreadyExists.detail') })
         }
       });
     }
-    
+
   }
 
   handleDelete(): void {

@@ -6,7 +6,7 @@
                     "msg1": "Welcome, User!",
                     "msg2": "Sign in to continue"
                 },
-                "signIn": "Sign in", 
+                "signIn": "Sign in",
                 "badCredentials": {
                     "summary": "Bad Credentials",
                     "detail": "Email and/or password are invalid"
@@ -23,6 +23,39 @@
                 "name": "Name",
                 "description": "Description",
                 "structureName": "Strcture name"
+            }
+        },
+        "beacon": {
+            "modal": {
+                "name": "Name",
+                "serial": "Serial",
+                "threshold": "Threshold"
+            },
+            "messages": {
+                "resourceAlreadyExists": {
+                    "summary": "Resource already exists",
+                    "detail": "Already exists another beacon with the same serial"
+                }
+            },
+            "table": {
+                "name": "Name",
+                "serial": "Serial"
+            }
+        },
+        "headphone": {
+            "modal": {
+                "name": "Name",
+                "serial": "Serial"
+            },
+            "messages": {
+                "resourceAlreadyExists": {
+                    "summary": "Resource already exists",
+                    "detail": "Already exists another headphone with the same serial"
+                }
+            },
+            "table": {
+                "name": "Name",
+                "serial": "Serial"
             }
         },
         "structure": {
