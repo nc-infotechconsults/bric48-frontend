@@ -58,6 +58,27 @@
                 "serial": "Serial"
             }
         },
+        "machinery": {
+            "modal": {
+                "name": "Name",
+                "serial": "Serial",
+                "description": "Description",
+                "area": "Area",
+                "beacons": "Beacons"
+            },
+            "messages": {
+                "resourceAlreadyExists": {
+                    "summary": "Resource already exists",
+                    "detail": "Already exists another machinery with the same serial"
+                }
+            },
+            "table": {
+                "name": "Name",
+                "serial": "Serial",
+                "areaName": "Area",
+                "structureName": "Structure"
+            }
+        },
         "structure": {
             "modal": {
                 "name": "Name",
