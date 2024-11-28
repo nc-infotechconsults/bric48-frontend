@@ -79,6 +79,31 @@
                 "structureName": "Structure"
             }
         },
+        "user": {
+            "modal": {
+                "name": "Name",
+                "surname": "Surname",
+                "email": "Email",
+                "regNumber": "Registration number",
+                "password": "Password",
+                "confirmPassword": "Confirm password",
+                "role": "Role",
+                "headphone": "Headphone",
+                "machineries": "Machineries"
+            },
+            "messages": {
+                "resourceAlreadyExists": {
+                    "summary": "Resource already exists",
+                    "detail": "Already exists another user with the same email"
+                }
+            },
+            "table": {
+                "name": "Name",
+                "surname": "Surname",
+                "email": "Email",
+                "roleName": "Role"
+            }
+        },
         "structure": {
             "modal": {
                 "name": "Name",
@@ -113,7 +138,9 @@
         },
         "validators": {
             "required": "The field must not be empty",
-            "email": "The field must be a valid email"
+            "email": "The field must be a valid email",
+            "minLength": "The field must have at least {{count}} digits",
+            "passwordMismatch": "The password must be equals"
         },
         "modal": {
             "titles": {

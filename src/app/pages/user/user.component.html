@@ -1,0 +1,135 @@
+<div table [headers]="headers" [values]="values" [globalFieldFilters]="globalFieldFilters" [totalRecords]="totalRecords"
+    [menuItems]="menuItems" [selectedItem]="selectedItem" [highlightRow]="highlightRow" (onNew)="handleNew()"
+    (onLazyLoad)="loadData($event)" (onContextMenuSelection)="updateSelectedItem($event)">
+    <ng-template #tableBody let-rowData let-i="rowIndex">
+        <td>{{rowData.name}}</td>
+        <td>{{rowData.surname}}</td>
+        <td>{{rowData.email}}</td>
+        <td>{{rowData.role?.name ?? ''}}</td>
+    </ng-template>
+</div>
+
+<div delete-dialog [(show)]="showDelete" (onConfirm)="handleDelete()">
+    <span>{{ 'shared.modal.delete.baseMessage' | translate }} <b>{{selectedItem?.name}} {{selectedItem?.surname}}
+            ({{selectedItem?.email}})</b>?</span>
+</div>
+
+<div detail-dialog [(show)]="showDetail" [editMode]="selectedItem !== null" [disableConfirm]="fg.invalid"
+    (onConfirm)="handleSave()">
+    <form [formGroup]="fg">
+        <div class="field p-fluid">
+            <label htmlFor="name">{{ 'pages.user.modal.name' | translate }}</label>
+            <input pInputText formControlName="name" id="name" type="text"
+                [class.ng-invalid]="fg.controls['name'].invalid" [class.ng-dirty]="fg.controls['name'].invalid" />
+            @if(fg.controls['name'].errors?.['required']){
+            <small class="text-red-600">
+                {{ 'shared.validators.required' | translate }}
+            </small>
+            }
+        </div>
+        <div class="field p-fluid">
+            <label htmlFor="surname">{{ 'pages.user.modal.surname' | translate }}</label>
+            <input pInputText formControlName="surname" id="surname" type="text"
+                [class.ng-invalid]="fg.controls['surname'].invalid" [class.ng-dirty]="fg.controls['surname'].invalid" />
+            @if(fg.controls['surname'].errors?.['required']){
+            <small class="text-red-600">
+                {{ 'shared.validators.required' | translate }}
+            </small>
+            }
+        </div>
+        <div class="field p-fluid">
+            <label htmlFor="email">{{ 'pages.user.modal.email' | translate }}</label>
+            <input pInputText formControlName="email" id="email" type="email"
+                [class.ng-invalid]="fg.controls['email'].invalid" [class.ng-dirty]="fg.controls['email'].invalid" />
+            @if(fg.controls['email'].errors?.['required']){
+            <small class="text-red-600">
+                {{ 'shared.validators.required' | translate }}
+            </small>
+            }
+            @if(fg.controls['email'].errors?.['email']){
+            <small class="text-red-600">
+                {{ 'shared.validators.email' | translate }}
+            </small>
+            }
+        </div>
+        @if(fg.value.roleId && fg.value.roleId !== 'ADMINISTRATOR'){
+        <div class="field p-fluid">
+            <label htmlFor="regNumber">{{ 'pages.user.modal.regNumber' | translate }}</label>
+            <input pInputText formControlName="regNumber" id="regNumber" type="text"
+                [class.ng-invalid]="fg.controls['regNumber'].invalid"
+                [class.ng-dirty]="fg.controls['regNumber'].invalid" />
+            @if(fg.controls['regNumber'].errors?.['required']){
+            <small class="text-red-600">
+                {{ 'shared.validators.required' | translate }}
+            </small>
+            }
+        </div>
+        }
+        <div class="field p-fluid">
+            <label htmlFor="name">{{ 'pages.user.modal.password' | translate }}</label>
+            <p-password formControlName="password" id="name" [feedback]="true" [toggleMask]="true"
+                [class.ng-invalid]="fg.controls['password'].invalid"
+                [class.ng-dirty]="fg.controls['password'].invalid" />
+            @if(fg.controls['password'].errors?.['required']){
+            <small class="text-red-600">
+                {{ 'shared.validators.required' | translate }}
+            </small>
+            }
+            @if(fg.controls['password'].errors?.['minlength']){
+            <small class="text-red-600">
+                {{ 'shared.validators.minLength' | translate:{count:
+                fg.controls['password'].errors?.['minlength']['requiredLength']} }}
+            </small>
+            }
+        </div>
+        <div class="field p-fluid">
+            <label htmlFor="confirmPassword">{{ 'pages.user.modal.confirmPassword' | translate }}</label>
+            <p-password formControlName="confirmPassword" id="name" [feedback]="false" [toggleMask]="true"
+                [class.ng-invalid]="fg.controls['confirmPassword'].invalid"
+                [class.ng-dirty]="fg.controls['confirmPassword'].invalid" />
+            @if(fg.controls['confirmPassword'].errors?.['required']){
+            <small class="text-red-600">
+                {{ 'shared.validators.required' | translate }}
+            </small>
+            }
+            @if(fg.controls['confirmPassword'].errors?.['passwordMismatch']){
+            <small class="text-red-600">
+                {{ 'shared.validators.passwordMismatch' | translate }}
+            </small>
+            }
+        </div>
+        <div class="field p-fluid">
+            <label htmlFor="roleId">{{ 'pages.user.modal.role' | translate }}</label>
+            <p-dropdown id="roleId" [options]="roles" [showClear]="true" appendTo="body" formControlName="roleId"
+                optionValue="id" optionLabel="name" [class.ng-invalid]="fg.controls['roleId'].invalid"
+                [class.ng-dirty]="fg.controls['roleId'].invalid">
+            </p-dropdown>
+            @if(fg.controls['roleId'].errors?.['required']){
+            <small class="text-red-600">
+                {{ 'shared.validators.required' | translate }}
+            </small>
+            }
+        </div>
+        <div class="field p-fluid">
+            <label htmlFor="headphoneId">{{ 'pages.user.modal.headphone' | translate }}</label>
+            <p-dropdown id="headphoneId" [options]="headphones" [showClear]="true" appendTo="body"
+                formControlName="headphoneId" optionValue="id" optionLabel="name"
+                [class.ng-invalid]="fg.controls['headphoneId'].invalid"
+                [class.ng-dirty]="fg.controls['headphoneId'].invalid">
+            </p-dropdown>
+            @if(fg.controls['headphoneId'].errors?.['required']){
+            <small class="text-red-600">
+                {{ 'shared.validators.required' | translate }}
+            </small>
+            }
+        </div>
+        <div class="field p-fluid">
+            <label htmlFor="machineriesId">{{ 'pages.user.modal.machineries' | translate }}</label>
+            <p-multiSelect id="machineriesId" [options]="machineries" [showClear]="true" appendTo="body"
+                formControlName="machineriesId" optionValue="id" optionLabel="name"
+                [class.ng-invalid]="fg.controls['machineriesId'].invalid"
+                [class.ng-dirty]="fg.controls['machineriesId'].invalid">
+            </p-multiSelect>
+        </div>
+    </form>
+</div>
