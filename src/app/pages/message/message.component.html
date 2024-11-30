@@ -1,0 +1,49 @@
+<div table [headers]="headers" [values]="values" [globalFieldFilters]="globalFieldFilters" [totalRecords]="totalRecords"
+    [menuItems]="menuItems" [selectedItem]="selectedItem" [highlightRow]="highlightRow" (onNew)="handleNew()"
+    (onLazyLoad)="loadData($event)" (onContextMenuSelection)="updateSelectedItem($event)">
+    <ng-template #tableBody let-rowData let-i="rowIndex">
+        <td>{{rowData.sentAt | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
+        <td>{{rowData.receiver.name}} {{rowData.receiver.surname}}</td>
+        <td>{{rowData.sender.name}} {{rowData.sender.surname}}</td>
+        <td>{{rowData.message}}</td>
+    </ng-template>
+</div>
+
+<div detail-dialog [(show)]="showDetail" [editMode]="selectedItem !== null" [disableConfirm]="fg.invalid"
+    (onConfirm)="handleSave()">
+    <form [formGroup]="fg">
+        <div class="field p-fluid">
+            <label htmlFor="receiversId">{{ 'pages.message.modal.receivers' | translate }}</label>
+            <p-multiSelect id="receiversId" [options]="receivers" [showClear]="true" appendTo="body"
+                formControlName="receiversId" optionValue="id" optionLabel="label"
+                [class.ng-invalid]="fg.controls['receiversId'].invalid"
+                [class.ng-dirty]="fg.controls['receiversId'].invalid">
+            </p-multiSelect>
+            @if(fg.controls['receiversId'].errors?.['required']){
+            <small class="text-red-600">
+                {{ 'shared.validators.required' | translate }}
+            </small>
+            }
+        </div>
+
+        <div class="field p-fluid">
+            <label htmlFor="defaultMessage">{{ 'pages.message.modal.defaultMessage' | translate }}</label>
+            <p-dropdown id="defaultMessage" [options]="defaultMessages" appendTo="body" optionLabel="title" (onChange)="updateMessage($event)"></p-dropdown>
+            <small>
+                {{ 'pages.message.modal.defaultMessageHint' | translate }}
+            </small>
+        </div>
+
+        <div class="field p-fluid">
+            <label htmlFor="message">{{ 'pages.defaultMessage.modal.message' | translate }}</label>
+            <textarea rows="5" cols="30" formControlName="message" id="message" pInputTextarea
+                [class.ng-invalid]="fg.controls['message'].invalid"
+                [class.ng-dirty]="fg.controls['message'].invalid"></textarea>
+            @if(fg.controls['message'].errors?.['required']){
+            <small class="text-red-600">
+                {{ 'shared.validators.required' | translate }}
+            </small>
+            }
+        </div>
+    </form>
+</div>

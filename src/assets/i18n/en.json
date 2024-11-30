@@ -89,6 +89,20 @@
                 "structureName": "Structure"
             }
         },
+        "message": {
+            "modal": {
+                "message": "Message",
+                "defaultMessage": "Default message",
+                "defaultMessageHint": "You can select a default message in order to valorize the message section and then send or edit it",
+                "receivers": "Receiver users"
+            },
+            "table": {
+                "sentAt": "Sent at",
+                "receiver": "Receiver user",
+                "sender": "Sender user",
+                "message": "Message"
+            }
+        },
         "user": {
             "modal": {
                 "name": "Name",

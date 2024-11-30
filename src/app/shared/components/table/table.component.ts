@@ -87,13 +87,13 @@ export class TableComponent<T> {
 
   protected lastLazyLoadEmitterEvent?: LazyLoadEmitterEvent;
 
-  protected loadData(event: LazyLoadEmitterEvent): void { 
+  protected loadData(event: LazyLoadEmitterEvent): void {
     this.lastLazyLoadEmitterEvent = event;
   };
   protected handleNew(): void { };
 
   protected updateSelectedItem(event: TableContextMenuSelectEvent) {
-    if(event)
+    if (event)
       this.selectedItem = event?.data;
     this.highlightRow = event !== undefined ? true : false;
   }
@@ -107,6 +107,7 @@ export class TableComponent<T> {
   }
 
   private buildFilters(event: LazyLoadEvent): FiltersDTO {
+    console.log(this.globalFieldFilters, event);
     const filtersKeys = Object.keys(event.filters);
 
     const filters = new FiltersDTO();
@@ -118,17 +119,14 @@ export class TableComponent<T> {
       group.operator = LogicOperator.OR;
       group.groups = [];
 
-      const filterEnable = this.headers.filter(x => x.filter);
-      if (filterEnable.length > 0) {
-        group.criterias = filterEnable.map(x => {
-          const criteria = new FilterCriteriaDTO();
-          criteria.field = x.field;
-          criteria.operation = QueryOperation.ILIKE;
-          criteria.value = event.filters['global'].value;
-          return criteria;
-        });
-        filters.groups = [group];
-      }
+      group.criterias = this.globalFieldFilters.map(x => {
+        const criteria = new FilterCriteriaDTO();
+        criteria.field = x;
+        criteria.operation = QueryOperation.ILIKE;
+        criteria.value = event.filters['global'].value;
+        return criteria;
+      });
+      filters.groups = [group];
     }
 
     // single filter
@@ -138,7 +136,7 @@ export class TableComponent<T> {
       const criteria = new FilterCriteriaDTO();
       criteria.field = key;
 
-      switch(header.filter.type){
+      switch (header.filter.type) {
         case "text": {
           switch (value.matchMode) {
             case 'contains':
@@ -160,15 +158,15 @@ export class TableComponent<T> {
           break;
         }
       }
-      
+
       return criteria;
     });
 
     const selectableHeader = this.headers.filter(x => x.filter.type === 'dropdown' || x.filter.type === 'multiselect');
-    if(selectableHeader.length > 0){
+    if (selectableHeader.length > 0) {
       selectableHeader.forEach(x => {
-        if(!filters.criterias.find(f => f.field === x.field)){
-          if(x.filter.type === 'dropdown'){
+        if (!filters.criterias.find(f => f.field === x.field)) {
+          if (x.filter.type === 'dropdown') {
             (x.filter as DropdownFilter).selectedValue = undefined;
           }
         }

@@ -77,8 +77,8 @@ export class UserComponent extends TableComponent<User> implements OnInit {
     password: [null],
     confirmPassword: [null],
     roleId: [null, Validators.required],
-    headphoneId: [null],
-    machineriesId: [null]
+    headphoneId: [''],
+    machineriesId: [[]]
   }, {
     validators: passwordConfirmationValidator("password", "confirmPassword")
   });
