@@ -42,6 +42,16 @@
                 "serial": "Serial"
             }
         },
+        "defaultMessage": {
+            "modal": {
+                "title": "Title",
+                "message": "Message"
+            },
+            "table": {
+                "title": "Title",
+                "message": "Message"
+            }
+        },
         "headphone": {
             "modal": {
                 "name": "Name",

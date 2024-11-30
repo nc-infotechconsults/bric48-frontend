@@ -18,6 +18,7 @@ import { AppLayoutComponent } from "./layout/app.layout.component";
                     { path: 'beacon', loadChildren: () => import('./pages/beacon/beacon.module').then(m => m.BeaconModule) },
                     { path: 'machinery', loadChildren: () => import('./pages/machinery/machinery.module').then(m => m.MachineryModule) },
                     { path: 'headphone', loadChildren: () => import('./pages/headphone/headphone.module').then(m => m.HeadphoneModule) },
+                    { path: 'default-message', loadChildren: () => import('./pages/default-message/default-message.module').then(m => m.DefaultMessageModule) },
                     { path: 'user', loadChildren: () => import('./pages/user/user.module').then(m => m.UserModule) },
                     { path: 'uikit', loadChildren: () => import('./components/uikit/uikit.module').then(m => m.UIkitModule) },
                     { path: 'utilities', loadChildren: () => import('./components/utilities/utilities.module').then(m => m.UtilitiesModule) },

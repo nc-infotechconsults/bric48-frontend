@@ -1,0 +1,39 @@
+<div table [headers]="headers" [values]="values" [globalFieldFilters]="globalFieldFilters" [totalRecords]="totalRecords"
+    [menuItems]="menuItems" [selectedItem]="selectedItem" [highlightRow]="highlightRow" (onNew)="handleNew()"
+    (onLazyLoad)="loadData($event)" (onContextMenuSelection)="updateSelectedItem($event)">
+    <ng-template #tableBody let-rowData let-i="rowIndex">
+        <td>{{rowData.title}}</td>
+        <td>{{rowData.message}}</td>
+    </ng-template>
+</div>
+
+<div delete-dialog [(show)]="showDelete" (onConfirm)="handleDelete()">
+    <span>{{ 'shared.modal.delete.baseMessage' | translate }} <b>{{selectedItem?.title}}</b>?</span>
+</div>
+
+<div detail-dialog [(show)]="showDetail" [editMode]="selectedItem !== null" [disableConfirm]="fg.invalid"
+    (onConfirm)="handleSave()">
+    <form [formGroup]="fg">
+        <div class="field p-fluid">
+            <label htmlFor="title">{{ 'pages.defaultMessage.modal.title' | translate }}</label>
+            <input pInputText formControlName="title" id="title" type="text"
+                [class.ng-invalid]="fg.controls['title'].invalid" [class.ng-dirty]="fg.controls['title'].invalid" />
+            @if(fg.controls['title'].errors?.['required']){
+            <small class="text-red-600">
+                {{ 'shared.validators.required' | translate }}
+            </small>
+            }
+        </div>
+        <div class="field p-fluid">
+            <label htmlFor="message">{{ 'pages.defaultMessage.modal.message' | translate }}</label>
+            <textarea rows="5" cols="30" formControlName="message" id="message" pInputTextarea
+                [class.ng-invalid]="fg.controls['message'].invalid"
+                [class.ng-dirty]="fg.controls['message'].invalid"></textarea>
+            @if(fg.controls['message'].errors?.['required']){
+            <small class="text-red-600">
+                {{ 'shared.validators.required' | translate }}
+            </small>
+            }
+        </div>
+    </form>
+</div>
