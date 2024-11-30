@@ -23,6 +23,7 @@ export class AppMenuComponent implements OnInit {
                     { label: 'Headphone', icon: 'pi pi-fw pi-home', routerLink: ['/app/headphone'] },
                     { label: 'Default message', icon: 'pi pi-fw pi-home', routerLink: ['/app/default-message'] },
                     { label: 'Message', icon: 'pi pi-fw pi-home', routerLink: ['/app/message'] },
+                    { label: 'Machinery Notification', icon: 'pi pi-fw pi-home', routerLink: ['/app/machinery-notification'] },
                     { label: 'User', icon: 'pi pi-fw pi-home', routerLink: ['/app/user'] }
                 ]
             },

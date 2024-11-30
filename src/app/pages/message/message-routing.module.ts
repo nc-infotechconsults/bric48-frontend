@@ -8,4 +8,4 @@ import { MessageComponent } from './message.component';
     ])],
     exports: [RouterModule]
 })
-export class DefaultMessageRoutingModule { }
+export class MessageRoutingModule { }

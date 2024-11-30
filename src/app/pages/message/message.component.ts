@@ -23,7 +23,6 @@ import { UserService } from 'src/app/shared/services/api/user.service';
 })
 export class MessageComponent extends TableComponent<Message> implements OnInit {
 
-  showDelete = false;
   showDetail = false;
 
   defaultMessages: DefaultMessage[] = [];

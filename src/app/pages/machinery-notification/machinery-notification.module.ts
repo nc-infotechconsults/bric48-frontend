@@ -9,11 +9,11 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { ToastModule } from 'primeng/toast';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { MessageRoutingModule } from './message-routing.module';
-import { MessageComponent } from './message.component';
+import { MachineryNotificationRoutingModule } from './machinery-notification-routing.module';
+import { MachineryNotificationComponent } from './machinery-notification.component';
 
 @NgModule({
-  declarations: [MessageComponent],
+  declarations: [MachineryNotificationComponent],
   imports: [
     CommonModule,
     SharedModule,
@@ -24,8 +24,8 @@ import { MessageComponent } from './message.component';
     MultiSelectModule,
     TranslateModule,
     ToastModule,
-    MessageRoutingModule
+    MachineryNotificationRoutingModule
   ],
   providers: [MessageService]
 })
-export class MessageModule { }
+export class MachineryNotificationModule { }

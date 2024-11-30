@@ -89,6 +89,16 @@
                 "structureName": "Structure"
             }
         },
+        "machineryNotification": {
+            "table": {
+                "createdAt": "Generated at",
+                "machinery": "Machinery",
+                "type": "Type",
+                "value": "Value",
+                "description": "Description",
+                "solved": "Solved"
+            }
+        },
         "message": {
             "modal": {
                 "message": "Message",
