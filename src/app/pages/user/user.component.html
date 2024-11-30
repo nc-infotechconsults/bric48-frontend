@@ -41,18 +41,23 @@
             <label htmlFor="email">{{ 'pages.user.modal.email' | translate }}</label>
             <input pInputText formControlName="email" id="email" type="email"
                 [class.ng-invalid]="fg.controls['email'].invalid" [class.ng-dirty]="fg.controls['email'].invalid" />
-            @if(fg.controls['email'].errors?.['required']){
-            <small class="text-red-600">
-                {{ 'shared.validators.required' | translate }}
-            </small>
+            @if(fg.controls['email'].errors){
+            <div class="flex flex-column">
+                @if(fg.controls['email'].errors?.['required']){
+                <small class="text-red-600">
+                    {{ 'shared.validators.required' | translate }}
+                </small>
+                }
+                @if(fg.controls['email'].errors?.['email']){
+                <small class="text-red-600">
+                    {{ 'shared.validators.email' | translate }}
+                </small>
+                }
+            </div>
             }
-            @if(fg.controls['email'].errors?.['email']){
-            <small class="text-red-600">
-                {{ 'shared.validators.email' | translate }}
-            </small>
-            }
+
         </div>
-        @if(fg.value.roleId && fg.value.roleId !== 'ADMINISTRATOR'){
+        @if(fg.value.roleId && fg.value.roleId !== Roles.ADMINISTRATOR){
         <div class="field p-fluid">
             <label htmlFor="regNumber">{{ 'pages.user.modal.regNumber' | translate }}</label>
             <input pInputText formControlName="regNumber" id="regNumber" type="text"
@@ -70,16 +75,20 @@
             <p-password formControlName="password" id="name" [feedback]="true" [toggleMask]="true"
                 [class.ng-invalid]="fg.controls['password'].invalid"
                 [class.ng-dirty]="fg.controls['password'].invalid" />
-            @if(fg.controls['password'].errors?.['required']){
-            <small class="text-red-600">
-                {{ 'shared.validators.required' | translate }}
-            </small>
-            }
-            @if(fg.controls['password'].errors?.['minlength']){
-            <small class="text-red-600">
-                {{ 'shared.validators.minLength' | translate:{count:
-                fg.controls['password'].errors?.['minlength']['requiredLength']} }}
-            </small>
+            @if(fg.controls['password'].errors){
+            <div class="flex flex-column">
+                @if(fg.controls['password'].errors?.['required']){
+                <small class="text-red-600">
+                    {{ 'shared.validators.required' | translate }}
+                </small>
+                }
+                @if(fg.controls['password'].errors?.['minlength']){
+                <small class="text-red-600">
+                    {{ 'shared.validators.minLength' | translate:{count:
+                    fg.controls['password'].errors?.['minlength']['requiredLength']} }}
+                </small>
+                }
+            </div>
             }
         </div>
         <div class="field p-fluid">
@@ -87,15 +96,19 @@
             <p-password formControlName="confirmPassword" id="name" [feedback]="false" [toggleMask]="true"
                 [class.ng-invalid]="fg.controls['confirmPassword'].invalid"
                 [class.ng-dirty]="fg.controls['confirmPassword'].invalid" />
-            @if(fg.controls['confirmPassword'].errors?.['required']){
-            <small class="text-red-600">
-                {{ 'shared.validators.required' | translate }}
-            </small>
-            }
-            @if(fg.controls['confirmPassword'].errors?.['passwordMismatch']){
-            <small class="text-red-600">
-                {{ 'shared.validators.passwordMismatch' | translate }}
-            </small>
+            @if(fg.controls['confirmPassword'].errors){
+            <div class="flex flex-column">
+                @if(fg.controls['confirmPassword'].errors?.['required']){
+                <small class="text-red-600">
+                    {{ 'shared.validators.required' | translate }}
+                </small>
+                }
+                @if(fg.controls['confirmPassword'].errors?.['passwordMismatch']){
+                <small class="text-red-600">
+                    {{ 'shared.validators.passwordMismatch' | translate }}
+                </small>
+                }
+            </div>
             }
         </div>
         <div class="field p-fluid">
@@ -110,6 +123,7 @@
             </small>
             }
         </div>
+        @if(fg.value.roleId && fg.value.roleId === Roles.WORKER){
         <div class="field p-fluid">
             <label htmlFor="headphoneId">{{ 'pages.user.modal.headphone' | translate }}</label>
             <p-dropdown id="headphoneId" [options]="headphones" [showClear]="true" appendTo="body"
@@ -123,6 +137,8 @@
             </small>
             }
         </div>
+        }
+        @if(fg.value.roleId && fg.value.roleId === Roles.SECURITY_MANAGER){
         <div class="field p-fluid">
             <label htmlFor="machineriesId">{{ 'pages.user.modal.machineries' | translate }}</label>
             <p-multiSelect id="machineriesId" [options]="machineries" [showClear]="true" appendTo="body"
@@ -131,5 +147,6 @@
                 [class.ng-dirty]="fg.controls['machineriesId'].invalid">
             </p-multiSelect>
         </div>
+        }
     </form>
 </div>

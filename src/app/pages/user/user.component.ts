@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MenuItem, MessageService } from 'primeng/api';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Subscription } from 'rxjs';
 import { TableComponent } from 'src/app/shared/components/table/table.component';
 import { LogicOperator } from 'src/app/shared/model/api/logic-operator';
 import { QueryOperation } from 'src/app/shared/model/api/query-operation';
@@ -9,6 +9,7 @@ import { Headphone } from 'src/app/shared/model/domain/headphone';
 import { Machinery } from 'src/app/shared/model/domain/machinery';
 import { Role } from 'src/app/shared/model/domain/role';
 import { User } from 'src/app/shared/model/domain/user';
+import { Roles } from 'src/app/shared/model/enums/role';
 import { DropdownFilter } from 'src/app/shared/model/ui/header-item';
 import { LazyLoadEmitterEvent } from 'src/app/shared/model/ui/lazy-load-emitter-event';
 import { HeadphoneService } from 'src/app/shared/services/api/headphone.service';
@@ -28,10 +29,13 @@ export function passwordConfirmationValidator(
       return null;
     }
 
-    if (passwordControl.value !== confirmPasswordControl.value) {
-      confirmPasswordControl.setErrors({ passwordMismatch: true });
+    if (passwordControl.value !== null && passwordControl.value !== '' && passwordControl.value !== confirmPasswordControl.value) {
+      confirmPasswordControl.setErrors({ ...confirmPasswordControl.errors, passwordMismatch: true });
     } else {
-      confirmPasswordControl.setErrors(null);
+      if(confirmPasswordControl.errors && confirmPasswordControl.errors['passwordMismatch'])
+        delete confirmPasswordControl.errors['passwordMismatch'];
+
+      confirmPasswordControl.setErrors(confirmPasswordControl.errors && Object.keys(confirmPasswordControl.errors).length > 0 ? { ...confirmPasswordControl.errors } : null);
     }
 
     return null;
@@ -45,12 +49,16 @@ export function passwordConfirmationValidator(
 })
 export class UserComponent extends TableComponent<User> implements OnInit {
 
+  readonly Roles = Roles;
+
   showDelete = false;
   showDetail = false;
 
   roles: Role[] = [];
   headphones: Headphone[] = [];
   machineries: Machinery[] = [];
+
+  private passwordChange?: Subscription; 
 
   private service = inject(UserService);
   private machineryService = inject(MachineryService);
@@ -66,13 +74,13 @@ export class UserComponent extends TableComponent<User> implements OnInit {
     surname: [null, Validators.required],
     email: [null, [Validators.required, Validators.email]],
     regNumber: [null],
-    password: [null, [Validators.required, Validators.minLength(8)]],
-    confirmPassword: [null, Validators.required],
+    password: [null],
+    confirmPassword: [null],
     roleId: [null, Validators.required],
     headphoneId: [null],
     machineriesId: [null]
   }, {
-    validator: passwordConfirmationValidator("password", "confirmPassword"),
+    validators: passwordConfirmationValidator("password", "confirmPassword")
   });
 
   override globalFieldFilters: string[] = ['name', 'surname', 'email'];
@@ -89,6 +97,23 @@ export class UserComponent extends TableComponent<User> implements OnInit {
           ],
           operator: LogicOperator.OR
         };
+
+        this.fg.get('password').removeValidators([Validators.required, Validators.minLength(8)]);
+        this.fg.get('password').updateValueAndValidity();
+        this.fg.get('confirmPassword').removeValidators(Validators.required);
+        this.fg.get('confirmPassword').updateValueAndValidity();
+
+        if(this.passwordChange)
+          this.passwordChange.unsubscribe();
+
+        this.passwordChange = this.fg.get('password').valueChanges.subscribe(v => {
+          if(v){
+            if(!this.fg.hasValidator(Validators.minLength(8)))
+              this.fg.get('password').addValidators(Validators.minLength(8));
+          }else{
+            this.fg.get('password').removeValidators(Validators.minLength(8));
+          }
+        });
 
         forkJoin({
           user: this.service.getById(this.selectedItem.id),
@@ -154,6 +179,15 @@ export class UserComponent extends TableComponent<User> implements OnInit {
       ],
       operator: LogicOperator.AND
     };
+
+    this.fg.get('password').setValidators([Validators.required, Validators.minLength(8)]);
+    this.fg.get('password').updateValueAndValidity();
+    this.fg.get('confirmPassword').setValidators(Validators.required);
+    this.fg.get('confirmPassword').updateValueAndValidity();
+
+    if(this.passwordChange)
+      this.passwordChange.unsubscribe();
+
     this.headphoneService.search(headphoneFilter, {}, true).subscribe((v) => {
       this.headphones = v.content.map(x => ({ ...x, name: `${x.name} (${x.serial})` }));
       this.layout.isLoading.set(false);
