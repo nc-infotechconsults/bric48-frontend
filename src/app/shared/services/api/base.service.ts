@@ -27,6 +27,10 @@ export class BaseService<ENTITY, DTO> extends AbstractBaseService {
     return this.makePutRequest(`/${id}`, data);
   }
 
+  patch(id: any, data: DTO): Observable<ENTITY> {
+    return this.makePatchRequest(`/${id}`, data);
+  }
+
   save(data: DTO): Observable<ENTITY> {
     return this.makePostRequest('', data);
   }

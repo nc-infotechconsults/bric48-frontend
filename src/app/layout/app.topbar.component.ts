@@ -21,4 +21,8 @@ export class AppTopBarComponent {
 
     private appConfigService = inject(AppConfigService)
 
+    logout() {
+        this.appConfigService.cleanAccessToken();
+    }
+
 }

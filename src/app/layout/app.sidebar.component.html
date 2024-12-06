@@ -1,1 +1,8 @@
- <app-menu></app-menu>
+@if(loggedUser){
+<div class="flex flex-column card justify-content-center align-items-center py-4 px-1">
+    <p-avatar [label]="loggedUser.name.charAt(0) + '' + loggedUser.surname.charAt(0)" styleClass="mr-2" size="xlarge" />
+    <h5 class="my-2">{{ loggedUser.name }} {{ loggedUser.surname }}</h5>
+    <h6 class="my-2">{{ 'layout.sidebar.roles.' + loggedUser.role.id | translate }}</h6>
+</div>
+}
+<app-menu></app-menu>

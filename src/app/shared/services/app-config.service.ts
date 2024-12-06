@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../model/domain/user';
 import { AccessTokenDTO } from '../model/dto/access-token-dto';
@@ -7,9 +7,10 @@ import { AccessTokenDTO } from '../model/dto/access-token-dto';
   providedIn: 'root'
 })
 export class AppConfigService {
+  
+  loggedUser = signal<User>(null);
 
   private accessToken?: AccessTokenDTO;
-  private loggedUser?: User;
   private router = inject(Router);
 
   constructor() { 

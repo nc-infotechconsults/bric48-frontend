@@ -1,4 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { LayoutService } from './service/app.layout.service';
 
 @Component({
@@ -9,162 +10,24 @@ export class AppMenuComponent implements OnInit {
 
     model: any[] = [];
     layoutService = inject(LayoutService);
+    
+    private translateService = inject(TranslateService);
 
     ngOnInit() {
         this.model = [
             {
-                label: 'Home',
+                label: this.translateService.instant('layout.sidebar.menu.title'),
                 items: [
-                    { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/app/'] },
-                    { label: 'Area', icon: 'pi pi-fw pi-home', routerLink: ['/app/area'] },
-                    { label: 'Structure', icon: 'pi pi-fw pi-home', routerLink: ['/app/structure'] },
-                    { label: 'Beacon', icon: 'pi pi-fw pi-home', routerLink: ['/app/beacon'] },
-                    { label: 'Machinery', icon: 'pi pi-fw pi-home', routerLink: ['/app/machinery'] },
-                    { label: 'Headphone', icon: 'pi pi-fw pi-home', routerLink: ['/app/headphone'] },
-                    { label: 'Default message', icon: 'pi pi-fw pi-home', routerLink: ['/app/default-message'] },
-                    { label: 'Message', icon: 'pi pi-fw pi-home', routerLink: ['/app/message'] },
-                    { label: 'Machinery Notification', icon: 'pi pi-fw pi-home', routerLink: ['/app/machinery-notification'] },
-                    { label: 'User', icon: 'pi pi-fw pi-home', routerLink: ['/app/user'] }
-                ]
-            },
-            {
-                label: 'UI Components',
-                items: [
-                    { label: 'Form Layout', icon: 'pi pi-fw pi-id-card', routerLink: ['/app/uikit/formlayout'] },
-                    { label: 'Input', icon: 'pi pi-fw pi-check-square', routerLink: ['/app/uikit/input'] },
-                    { label: 'Float Label', icon: 'pi pi-fw pi-bookmark', routerLink: ['/app/uikit/floatlabel'] },
-                    { label: 'Invalid State', icon: 'pi pi-fw pi-exclamation-circle', routerLink: ['/app/uikit/invalidstate'] },
-                    { label: 'Button', icon: 'pi pi-fw pi-box', routerLink: ['/app/uikit/button'] },
-                    { label: 'Table', icon: 'pi pi-fw pi-table', routerLink: ['/app/uikit/table'] },
-                    { label: 'List', icon: 'pi pi-fw pi-list', routerLink: ['/app/uikit/list'] },
-                    { label: 'Tree', icon: 'pi pi-fw pi-share-alt', routerLink: ['/app/uikit/tree'] },
-                    { label: 'Panel', icon: 'pi pi-fw pi-tablet', routerLink: ['/app/uikit/panel'] },
-                    { label: 'Overlay', icon: 'pi pi-fw pi-clone', routerLink: ['/app/uikit/overlay'] },
-                    { label: 'Media', icon: 'pi pi-fw pi-image', routerLink: ['/app/uikit/media'] },
-                    { label: 'Menu', icon: 'pi pi-fw pi-bars', routerLink: ['/app/uikit/menu'], routerLinkActiveOptions: { paths: 'subset', queryParams: 'ignored', matrixParams: 'ignored', fragment: 'ignored' } },
-                    { label: 'Message', icon: 'pi pi-fw pi-comment', routerLink: ['/app/uikit/message'] },
-                    { label: 'File', icon: 'pi pi-fw pi-file', routerLink: ['/app/uikit/file'] },
-                    { label: 'Chart', icon: 'pi pi-fw pi-chart-bar', routerLink: ['/app/uikit/charts'] },
-                    { label: 'Misc', icon: 'pi pi-fw pi-circle', routerLink: ['/app/uikit/misc'] }
-                ]
-            },
-            {
-                label: 'Prime Blocks',
-                items: [
-                    { label: 'Free Blocks', icon: 'pi pi-fw pi-eye', routerLink: ['/app/blocks'], badge: 'NEW' },
-                    { label: 'All Blocks', icon: 'pi pi-fw pi-globe', url: ['https://www.primefaces.org/primeblocks-ng'], target: '_blank' },
-                ]
-            },
-            {
-                label: 'Utilities',
-                items: [
-                    { label: 'PrimeIcons', icon: 'pi pi-fw pi-prime', routerLink: ['/app/utilities/icons'] },
-                    { label: 'PrimeFlex', icon: 'pi pi-fw pi-desktop', url: ['https://www.primefaces.org/primeflex/'], target: '_blank' },
-                ]
-            },
-            {
-                label: 'Pages',
-                icon: 'pi pi-fw pi-briefcase',
-                items: [
-                    {
-                        label: 'Landing',
-                        icon: 'pi pi-fw pi-globe',
-                        routerLink: ['/app/landing']
-                    },
-                    {
-                        label: 'Auth',
-                        icon: 'pi pi-fw pi-user',
-                        items: [
-                            {
-                                label: 'Login',
-                                icon: 'pi pi-fw pi-sign-in',
-                                routerLink: ['/auth/login']
-                            },
-                            {
-                                label: 'Error',
-                                icon: 'pi pi-fw pi-times-circle',
-                                routerLink: ['/auth/error']
-                            },
-                            {
-                                label: 'Access Denied',
-                                icon: 'pi pi-fw pi-lock',
-                                routerLink: ['/auth/access']
-                            }
-                        ]
-                    },
-                    {
-                        label: 'Crud',
-                        icon: 'pi pi-fw pi-pencil',
-                        routerLink: ['/app/pages/crud']
-                    },
-                    {
-                        label: 'Timeline',
-                        icon: 'pi pi-fw pi-calendar',
-                        routerLink: ['/app/pages/timeline']
-                    },
-                    {
-                        label: 'Not Found',
-                        icon: 'pi pi-fw pi-exclamation-circle',
-                        routerLink: ['/notfound']
-                    },
-                    {
-                        label: 'Empty',
-                        icon: 'pi pi-fw pi-circle-off',
-                        routerLink: ['/app/pages/empty']
-                    },
-                ]
-            },
-            {
-                label: 'Hierarchy',
-                items: [
-                    {
-                        label: 'Submenu 1', icon: 'pi pi-fw pi-bookmark',
-                        items: [
-                            {
-                                label: 'Submenu 1.1', icon: 'pi pi-fw pi-bookmark',
-                                items: [
-                                    { label: 'Submenu 1.1.1', icon: 'pi pi-fw pi-bookmark' },
-                                    { label: 'Submenu 1.1.2', icon: 'pi pi-fw pi-bookmark' },
-                                    { label: 'Submenu 1.1.3', icon: 'pi pi-fw pi-bookmark' },
-                                ]
-                            },
-                            {
-                                label: 'Submenu 1.2', icon: 'pi pi-fw pi-bookmark',
-                                items: [
-                                    { label: 'Submenu 1.2.1', icon: 'pi pi-fw pi-bookmark' }
-                                ]
-                            },
-                        ]
-                    },
-                    {
-                        label: 'Submenu 2', icon: 'pi pi-fw pi-bookmark',
-                        items: [
-                            {
-                                label: 'Submenu 2.1', icon: 'pi pi-fw pi-bookmark',
-                                items: [
-                                    { label: 'Submenu 2.1.1', icon: 'pi pi-fw pi-bookmark' },
-                                    { label: 'Submenu 2.1.2', icon: 'pi pi-fw pi-bookmark' },
-                                ]
-                            },
-                            {
-                                label: 'Submenu 2.2', icon: 'pi pi-fw pi-bookmark',
-                                items: [
-                                    { label: 'Submenu 2.2.1', icon: 'pi pi-fw pi-bookmark' },
-                                ]
-                            },
-                        ]
-                    }
-                ]
-            },
-            {
-                label: 'Get Started',
-                items: [
-                    {
-                        label: 'Documentation', icon: 'pi pi-fw pi-question', routerLink: ['/app/documentation']
-                    },
-                    {
-                        label: 'View Source', icon: 'pi pi-fw pi-search', url: ['https://github.com/primefaces/sakai-ng'], target: '_blank'
-                    }
+                    { label: this.translateService.instant('layout.sidebar.menu.dashboard'), icon: 'pi pi-fw pi-home', routerLink: ['/app/'] },
+                    { label: this.translateService.instant('layout.sidebar.menu.machineryNotification'), icon: 'pi pi-fw pi-bell', routerLink: ['/app/machinery-notification'] },
+                    { label: this.translateService.instant('layout.sidebar.menu.message'), icon: 'pi pi-fw pi-envelope', routerLink: ['/app/message'] },
+                    { label: this.translateService.instant('layout.sidebar.menu.beacon'), icon: 'pi pi-fw pi-circle-on', routerLink: ['/app/beacon'] },
+                    { label: this.translateService.instant('layout.sidebar.menu.headphone'), icon: 'pi pi-fw pi-volume-up', routerLink: ['/app/headphone'] },
+                    { label: this.translateService.instant('layout.sidebar.menu.structure'), icon: 'pi pi-fw pi-building', routerLink: ['/app/structure'] },
+                    { label: this.translateService.instant('layout.sidebar.menu.area'), icon: 'pi pi-fw pi-microsoft', routerLink: ['/app/area'] },
+                    { label: this.translateService.instant('layout.sidebar.menu.machinery'), icon: 'pi pi-fw pi-car', routerLink: ['/app/machinery'] },
+                    { label: this.translateService.instant('layout.sidebar.menu.defaultMessage'), icon: 'pi pi-fw pi-book', routerLink: ['/app/default-message'] },
+                    { label: this.translateService.instant('layout.sidebar.menu.user'), icon: 'pi pi-fw pi-users', routerLink: ['/app/user'] }
                 ]
             }
         ];

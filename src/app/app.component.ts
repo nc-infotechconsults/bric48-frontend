@@ -26,6 +26,7 @@ export class AppComponent implements OnInit {
         this.authService.session().subscribe({
             next: (v) => {
                 console.log(v);
+                this.appConfigService.loggedUser.set(v);
             },
             error: (err) => {
                 if(err.status === 401 || err.status === 403){

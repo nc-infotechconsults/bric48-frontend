@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
+import { AvatarModule } from 'primeng/avatar';
 import { BadgeModule } from 'primeng/badge';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { InputTextModule } from 'primeng/inputtext';
@@ -44,7 +46,9 @@ import { AppConfigModule } from './config/config.module';
         RouterModule,
         ToastModule,
         AppConfigModule,
-        ProgressSpinnerModule
+        ProgressSpinnerModule,
+        AvatarModule,
+        TranslateModule
     ],
     exports: [AppLayoutComponent]
 })

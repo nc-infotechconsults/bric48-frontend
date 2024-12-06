@@ -1,4 +1,32 @@
 {
+    "layout": {
+        "sidebar":{
+            "roles": {
+                "ADMINISTRATOR": "Administrator",
+                "SECURITY_MANAGER": "Security Manager",
+                "WORKER": "Worker"
+            },
+            "menu": {
+                "title": "Menu",
+                "dashboard": "Dashboard",
+                "message": "Messages",
+                "machineryNotification": "Machineries Notification",
+                "beacon": "Beacons",
+                "headphone": "Headphones",
+                "structure": "Structures",
+                "area": "Areas",
+                "machinery": "Machineries",
+                "defaultMessage": "Default Messages",
+                "user": "Users"
+            }
+        },
+        "topbar": {
+            "actions": {
+                "profile": "Profile",
+                "logout": "Logout"
+            }
+        }
+    },
     "pages": {
         "auth": {
             "login": {
@@ -119,6 +147,7 @@
                 "surname": "Surname",
                 "email": "Email",
                 "regNumber": "Registration number",
+                "phoneNumber": "Phone number",
                 "password": "Password",
                 "confirmPassword": "Confirm password",
                 "role": "Role",

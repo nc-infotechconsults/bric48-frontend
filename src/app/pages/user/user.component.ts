@@ -74,6 +74,7 @@ export class UserComponent extends TableComponent<User> implements OnInit {
     surname: [null, Validators.required],
     email: [null, [Validators.required, Validators.email]],
     regNumber: [null],
+    phoneNumber: [null],
     password: [null],
     confirmPassword: [null],
     roleId: [null, Validators.required],
