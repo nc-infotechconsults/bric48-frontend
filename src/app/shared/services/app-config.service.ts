@@ -1,5 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 import { User } from '../model/domain/user';
 import { AccessTokenDTO } from '../model/dto/access-token-dto';
 
@@ -9,6 +10,7 @@ import { AccessTokenDTO } from '../model/dto/access-token-dto';
 export class AppConfigService {
   
   loggedUser = signal<User>(null);
+  loggedUser$ = new BehaviorSubject<User>(null);
 
   private accessToken?: AccessTokenDTO;
   private router = inject(Router);
@@ -33,6 +35,11 @@ export class AppConfigService {
     this.accessToken = null;
     localStorage.removeItem('accessToken');
     this.router.navigateByUrl("/auth/login");
+  }
+
+  setLoggedUser(v: User){
+    this.loggedUser.set(v);
+    this.loggedUser$.next(v);
   }
 
 }

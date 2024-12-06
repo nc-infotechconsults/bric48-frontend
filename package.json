@@ -37,8 +37,7 @@
         "zone.js": "~0.14.0",
         "prismjs": "^1.29.0",
         "sockjs-client": "^1.6.1",
-        "@stomp/stompjs": "^7.0.0",
-        "@stomp/rx-stomp": "^2.0.0"
+        "@stomp/stompjs": "^7.0.0"
     },
     "devDependencies": {
         "@angular-devkit/build-angular": "^17.0.5",

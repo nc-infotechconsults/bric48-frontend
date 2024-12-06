@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { NotfoundComponent } from './components/notfound/notfound.component';
 import { AppLayoutComponent } from "./layout/app.layout.component";
+import { NotfoundComponent } from './pages/notfound/notfound.component';
 
 @NgModule({
     imports: [
@@ -12,7 +12,7 @@ import { AppLayoutComponent } from "./layout/app.layout.component";
             {
                 path: 'app', component: AppLayoutComponent,
                 children: [
-                    { path: '', loadChildren: () => import('./components/dashboard/dashboard.module').then(m => m.DashboardModule) },
+                    { path: '', loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardModule) },
                     { path: 'area', loadChildren: () => import('./pages/area/area.module').then(m => m.AreaModule) },
                     { path: 'structure', loadChildren: () => import('./pages/structure/structure.module').then(m => m.StructureModule) },
                     { path: 'beacon', loadChildren: () => import('./pages/beacon/beacon.module').then(m => m.BeaconModule) },

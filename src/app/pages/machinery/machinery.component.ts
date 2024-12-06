@@ -87,10 +87,10 @@ export class MachineryComponent extends TableComponent<Machinery> implements OnI
   ngOnInit(): void {
     this.layout.isLoading.set(true);
     forkJoin({
-      areas: this.areaService.search({ fields: ['id', 'name'], operator: LogicOperator.AND }, {}, true),
+      areas: this.areaService.search({ fields: ['id', 'name', 'structure.name'], operator: LogicOperator.AND }, {}, true),
       structures: this.structureService.search({ fields: ['id', 'name'], operator: LogicOperator.AND }, {}, true),
     }).subscribe((v) => {
-      this.areas = v.areas.content;
+      this.areas = v.areas.content.map(x => ({...x, name: `${x.structure.name} / ${x.name}`}));
       this.structures = v.structures.content;
       this.headers = [
         {
@@ -105,7 +105,7 @@ export class MachineryComponent extends TableComponent<Machinery> implements OnI
         },
         {
           title: 'pages.machinery.table.areaName', field: 'area.id', sortable: true, filter: {
-            type: 'dropdown', showMenu: false, matchMode: 'equals', values: v.areas.content.map(x => ({ value: x.id, label: x.name }))
+            type: 'dropdown', showMenu: false, matchMode: 'equals', values: v.areas.content.map(x => ({ value: x.id, label: `${x.structure.name} / ${x.name}` }))
           } as DropdownFilter
         },
         {
