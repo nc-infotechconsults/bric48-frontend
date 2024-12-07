@@ -1,7 +1,12 @@
 import { inject, Injectable } from "@angular/core";
-import { Client } from "@stomp/stompjs";
+import { Client, messageCallbackType } from "@stomp/stompjs";
 import SockJS from 'sockjs-client';
 import { AppConfigService } from "./app-config.service";
+
+export interface TopicTask {
+    topic: string;
+    callback: messageCallbackType
+}
 
 @Injectable({
     providedIn: 'root'
@@ -11,9 +16,9 @@ export class WebSocketService {
     private appConfigService = inject(AppConfigService);
 
     private stompClient: Client;
-    private serverUrl = 'http://localhost:4200/api/ws';
+    private serverUrl = '/api/ws';
 
-    connect() {
+    connect(id: string, tasks: TopicTask[]) {
         this.stompClient = new Client({
             brokerURL: undefined, // Important for SockJS
             webSocketFactory: () => new SockJS(this.serverUrl),
@@ -27,10 +32,11 @@ export class WebSocketService {
         this.stompClient.onConnect = (frame) => {
             console.log('Connected: ', frame);
 
-            // Subscribe to a topic
-            this.stompClient.subscribe('/topic/messages', (message) => {
-                console.log('Received: ', message.body);
-            });
+            tasks.forEach(x => {
+                // Subscribe to a topic
+                this.stompClient.subscribe(x.topic, x.callback, { id });
+            })
+
         };
 
         this.stompClient.onStompError = (error) => {

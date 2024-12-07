@@ -5,5 +5,5 @@ import { BaseService } from './base.service';
   providedIn: 'root',
 })
 export class MachineryNotificationService<MachineryNotification, MachineryNotificationDTO> extends BaseService<MachineryNotification, MachineryNotificationDTO> {
-  override resource = '/machineries';
+  override resource = '/machineryNotifications';
 }

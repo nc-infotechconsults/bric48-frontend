@@ -9,6 +9,7 @@ import { AvatarModule } from 'primeng/avatar';
 import { BadgeModule } from 'primeng/badge';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { InputTextModule } from 'primeng/inputtext';
+import { MessagesModule } from 'primeng/messages';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { RippleModule } from 'primeng/ripple';
@@ -48,6 +49,7 @@ import { AppConfigModule } from './config/config.module';
         AppConfigModule,
         ProgressSpinnerModule,
         AvatarModule,
+        MessagesModule,
         TranslateModule
     ],
     exports: [AppLayoutComponent]

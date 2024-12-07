@@ -22,6 +22,7 @@
         },
         "topbar": {
             "actions": {
+                "notification": "Notification",
                 "profile": "Profile",
                 "logout": "Logout"
             }
