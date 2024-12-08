@@ -2,7 +2,7 @@
     <a class="layout-topbar-logo" routerLink="">
         <img src="assets/layout/images/{{layoutService.config().colorScheme === 'light' ? 'logo-dark' : 'logo-white'}}.svg"
             alt="logo">
-        <span>SAKAI</span>
+        <span>BRIC48</span>
     </a>
 
     <button #menubutton class="p-link layout-menu-button layout-topbar-button" (click)="layoutService.onMenuToggle()">
@@ -11,27 +11,42 @@
 
     <button #topbarmenubutton class="p-link layout-topbar-menu-button layout-topbar-button"
         (click)="layoutService.showProfileSidebar()">
-        <i class="pi pi-ellipsis-v"></i>
+        <i class="pi pi-ellipsis-v" pBadge [value]="notifications.length"></i>
     </button>
 
     <div #topbarmenu class="layout-topbar-menu"
         [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
-        <button class="p-link layout-topbar-button" (click)="sidebarVisible = true">
+        <button class="p-link layout-topbar-button" (click)="sidebarVisible = true" pBadge
+            [value]="notifications.length">
             <i class="pi pi-bell"></i>
-            <span> {{ 'layout.topbar.actions.notification' | translate }} </span>
+            <span class="label"> {{ 'layout.topbar.actions.notification' | translate }} </span>
         </button>
         <button class="p-link layout-topbar-button" [routerLink]="'/app/profile'">
             <i class="pi pi-user"></i>
-            <span> {{ 'layout.topbar.actions.profile' | translate }} </span>
+            <span class="label"> {{ 'layout.topbar.actions.profile' | translate }} </span>
         </button>
         <button class="p-link layout-topbar-button" (click)="logout()">
             <i class="pi pi-sign-out"></i>
-            <span> {{ 'layout.topbar.actions.logout' | translate }} </span>
+            <span class="label"> {{ 'layout.topbar.actions.logout' | translate }} </span>
         </button>
     </div>
 </div>
 
 <p-sidebar [(visible)]="sidebarVisible" position="right">
     <h3>{{ 'layout.topbar.actions.notification' | translate }}</h3>
-    <p-messages [value]=""></p-messages>
+    @for(n of notifications; track n){
+    <p-messages [severity]="'error'">
+        <ng-template pTemplate>
+            <div class="flex flex-row gap-2">
+                <span class="pi pi-times-circle text-xl text-red-500"></span>
+                <div class="flex flex-column gap-2">
+                    <h5 class="m-0 text-bold text-red-500"> {{ n.machinery.name }} ({{ n.machinery.serial }})</h5>
+                    <h6 class="my-1">{{ 'layout.topbar.sidebar.alarm.type' | translate }} {{ n.type }}</h6>
+                    <h6 class="my-1">{{ 'layout.topbar.sidebar.alarm.value' | translate }} {{ n.value }}</h6>
+                    <span>{{ n.description }}</span>
+                </div>
+            </div>
+        </ng-template>
+    </p-messages>
+    }
 </p-sidebar>

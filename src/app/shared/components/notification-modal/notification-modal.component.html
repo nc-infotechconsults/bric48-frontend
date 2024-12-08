@@ -1,0 +1,79 @@
+<p-dialog [visible]="show" (visibleChange)="updateShow($event)" [style]="{width: '75vw'}"
+    [header]="'pages.dashboard.modal.title' | translate" [modal]="true" class="p-fluid">
+
+    <ng-template pTemplate="content">
+        <div class="card m-1">
+            <div class="flex justify-content-between mb-3">
+                <div>
+                    <span class="block text-500 font-medium mb-3">{{_machinery?.area.structure.name}} /
+                        {{_machinery?.area.name}}</span>
+                    <div class="text-900 font-medium text-xl">{{ _machinery?.name }} ({{_machinery?.serial}})</div>
+                </div>
+                <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
+                    [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
+                    <i class="pi pi-car text-blue-500 text-xl"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid m-2">
+            <div class="col-6">
+                <p-card [header]="'pages.dashboard.modal.notifications.header' | translate">
+                    @if(_machineryNotifications.length === 0){
+                    <div class="text-bold font-mediium">{{ 'pages.dashboard.modal.noData' | translate }}</div>
+                    }
+                    @for(n of _machineryNotifications; track n){
+                    <p-messages>
+                        <ng-template pTemplate>
+                            <div class="flex flex-row gap-2 w-full">
+                                <span class="pi pi-times-circle text-xl text-red-500"></span>
+                                <div class="flex flex-column gap-2 flex-grow-1">
+                                    <h5 class="m-0 text-bold font-small text-red-500"> {{
+                                        n.machinery.area.structure.name }} /
+                                        ({{n.machinery.area.name}})</h5>
+                                    <h5 class="m-0 text-bold text-red-500"> {{ n.machinery.name }} ({{
+                                        n.machinery.serial
+                                        }})</h5>
+                                    <h6 class="my-1">{{ 'layout.topbar.sidebar.alarm.type' | translate }} {{ n.type }}
+                                    </h6>
+                                    <h6 class="my-1">{{ 'layout.topbar.sidebar.alarm.value' | translate }} {{ n.value }}
+                                    </h6>
+                                    <span>{{ n.description }}</span>
+                                </div>
+                                <div class="flex flex-column gap-2">
+                                    <p-button [label]="'pages.dashboard.modal.notifications.actions.send' | translate"
+                                        [raised]="true" severity="warning" [disabled]="!thereAreUserSelected()" />
+                                    <p-button [label]="'pages.dashboard.modal.notifications.actions.solve' | translate"
+                                        [raised]="true" severity="success" (click)="solveNotification(n)" />
+                                </div>
+                            </div>
+                        </ng-template>
+                    </p-messages>
+                    }
+                </p-card>
+            </div>
+            <div class="col-6">
+                <p-card [header]="'pages.dashboard.modal.userNear.header' | translate">
+                    @if(_users.length === 0){
+                    <div class="text-bold font-mediium">{{ 'pages.dashboard.modal.noData' | translate }}</div>
+                    }
+                    @for(u of _users; track u){
+                    <div class="flex flex-row gap-3 align-content-center">
+                        <p-toggleButton (onChange)="_userSelected[u.id]=$event.checked" onLabel="On" offLabel="Off"
+                            [checked]="_userSelected[u.id]" />
+                        <div class="flex flex-column">
+                            <h6 class="my-1">{{ u.name }}</h6>
+                            <h6 class="my-1">{{ u.surname }}</h6>
+                        </div>
+                    </div>
+                    }
+                </p-card>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple icon="pi pi-times" class="p-button-text"
+            [label]="'shared.modal.actions.close' | translate" (click)="updateShow(false)"></button>
+    </ng-template>
+</p-dialog>

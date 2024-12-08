@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { AvatarModule } from 'primeng/avatar';
 import { BadgeModule } from 'primeng/badge';
+import { ButtonModule } from 'primeng/button';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessagesModule } from 'primeng/messages';
@@ -35,6 +36,7 @@ import { AppConfigModule } from './config/config.module';
     ],
     imports: [
         BrowserModule,
+        ButtonModule,
         FormsModule,
         HttpClientModule,
         BrowserAnimationsModule,

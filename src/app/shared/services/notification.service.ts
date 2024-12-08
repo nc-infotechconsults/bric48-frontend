@@ -1,9 +1,9 @@
 import { inject, Injectable } from "@angular/core";
 import { messageCallbackType } from "@stomp/stompjs";
-import { Message } from "primeng/api";
 import { BehaviorSubject } from "rxjs";
 import { LogicOperator } from "../model/api/logic-operator";
 import { QueryOperation } from "../model/api/query-operation";
+import { MachineryNotification } from "../model/domain/machinery-notification";
 import { MachineryNotificationService } from "./api/machinery-notification.service";
 
 export interface TopicTask {
@@ -16,7 +16,7 @@ export interface TopicTask {
 })
 export class NotificationService {
 
-    private notifications$ = new BehaviorSubject<Message[]>(null);
+    notifications$ = new BehaviorSubject<MachineryNotification[]>(null);
     private machineryNotificationServices = inject(MachineryNotificationService);
 
     loadNotifications(userId?: string) {
@@ -31,7 +31,7 @@ export class NotificationService {
             filters.criterias.push({ field: 'machinery.users.id', operation: QueryOperation.EQUAL, value: userId });
 
         this.machineryNotificationServices.search(filters, {}, true).subscribe(v => {
-            this.notifications$.next(v.content.map(x => ({ severity: 'error', summary: 'Alarm type: ' + x.type, detail: x.description})));
+            this.notifications$.next(v.content);
         });
     }
 

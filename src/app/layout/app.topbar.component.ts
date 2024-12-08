@@ -1,5 +1,6 @@
-import { Component, ElementRef, inject, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { MachineryNotification } from '../shared/model/domain/machinery-notification';
 import { AppConfigService } from '../shared/services/app-config.service';
 import { NotificationService } from '../shared/services/notification.service';
 import { LayoutService } from "./service/app.layout.service";
@@ -8,9 +9,10 @@ import { LayoutService } from "./service/app.layout.service";
     selector: 'app-topbar',
     templateUrl: './app.topbar.component.html'
 })
-export class AppTopBarComponent {
+export class AppTopBarComponent implements OnInit {
 
     items!: MenuItem[];
+    notifications?: MachineryNotification[];
 
     sidebarVisible: boolean;
 
@@ -24,6 +26,12 @@ export class AppTopBarComponent {
     notificationsService = inject(NotificationService);
 
     private appConfigService = inject(AppConfigService)
+
+    ngOnInit(): void {
+        this.notificationsService.notifications$.subscribe(x => {
+            this.notifications = x ?? [];
+        })
+    }
 
     logout() {
         this.appConfigService.cleanAccessToken();

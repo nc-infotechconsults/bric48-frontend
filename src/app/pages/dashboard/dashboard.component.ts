@@ -3,20 +3,32 @@ import { LayoutService } from 'src/app/layout/service/app.layout.service';
 import { LogicOperator } from 'src/app/shared/model/api/logic-operator';
 import { QueryOperation } from 'src/app/shared/model/api/query-operation';
 import { Machinery } from 'src/app/shared/model/domain/machinery';
+import { MachineryNotification } from 'src/app/shared/model/domain/machinery-notification';
 import { Roles } from 'src/app/shared/model/enums/role';
 import { MachineryService } from 'src/app/shared/services/api/machinery.service';
 import { AppConfigService } from 'src/app/shared/services/app-config.service';
+import { NotificationService } from 'src/app/shared/services/notification.service';
 
 @Component({
     templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent implements OnInit {
 
+    showDetail = false;
+    machineryId?: string;
+
     private machineryService = inject(MachineryService);
     private layoutService = inject(LayoutService);
     private appConfigService = inject(AppConfigService);
+    private notificationService = inject(NotificationService);
 
     machineries: Machinery[] = [];
+    notifications: MachineryNotification[] = [];
+
+    openDetailModal(machine: Machinery) {
+        this.showDetail = true;
+        this.machineryId = machine.id;
+    }
 
     ngOnInit(): void {
         this.appConfigService.loggedUser$.subscribe(loggedUser => {
@@ -41,5 +53,14 @@ export class DashboardComponent implements OnInit {
                 }
             }
         });
+
+        this.notificationService.notifications$.subscribe(notifications => {
+            this.notifications = notifications;
+        });
     }
+
+    getNotificationsCount(machineryId: string) {
+        return this.notifications?.filter(x => x.machinery.id === machineryId).length ?? 0;
+    }
+
 }

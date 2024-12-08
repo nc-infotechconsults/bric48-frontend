@@ -25,6 +25,12 @@
                 "notification": "Notification",
                 "profile": "Profile",
                 "logout": "Logout"
+            },
+            "sidebar": {
+                "alarm": {
+                    "type": "Type: ",
+                    "value": "Value: "
+                }
             }
         }
     },
@@ -69,6 +75,22 @@
             "table": {
                 "name": "Name",
                 "serial": "Serial"
+            }
+        },
+        "dashboard": {
+            "modal": {
+                "title": "Machinery detail",
+                "noData": "No data available",
+                "notifications": {
+                    "header": "Notifications",
+                    "actions": {
+                        "send": "Send",
+                        "solve": "Solve"
+                    }
+                },
+                "userNear": {
+                    "header": "User near machinery"
+                }
             }
         },
         "defaultMessage": {
