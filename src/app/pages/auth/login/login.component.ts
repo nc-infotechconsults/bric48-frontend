@@ -47,6 +47,7 @@ export class LoginComponent {
         this.authService.login(credentials).subscribe({
             next: (v) => {
                 this.appConfigService.setAccessToken(v);
+                this.appConfigService.updateSession$.next();
                 this.router.navigateByUrl('/app');
             },
             error: (err) => {

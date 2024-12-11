@@ -29,12 +29,8 @@
                             <div class="flex flex-row gap-2 w-full">
                                 <span class="pi pi-times-circle text-xl text-red-500"></span>
                                 <div class="flex flex-column gap-2 flex-grow-1">
-                                    <h5 class="m-0 text-bold font-small text-red-500"> {{
-                                        n.machinery.area.structure.name }} /
-                                        ({{n.machinery.area.name}})</h5>
-                                    <h5 class="m-0 text-bold text-red-500"> {{ n.machinery.name }} ({{
-                                        n.machinery.serial
-                                        }})</h5>
+                                    <h6 class="my-1">{{ 'layout.topbar.sidebar.alarm.timestamp' | translate }} {{ n.createdAt | date: 'dd/MM/yyyy HH:mm' }}
+                                    </h6>
                                     <h6 class="my-1">{{ 'layout.topbar.sidebar.alarm.type' | translate }} {{ n.type }}
                                     </h6>
                                     <h6 class="my-1">{{ 'layout.topbar.sidebar.alarm.value' | translate }} {{ n.value }}
@@ -60,13 +56,13 @@
                     }
                     @for(u of _users; track u){
                     <div class="flex flex-row gap-3 align-content-center">
-                        <p-toggleButton (onChange)="_userSelected[u.id]=$event.checked" onLabel="On" offLabel="Off"
-                            [checked]="_userSelected[u.id]" />
+                        <p-toggleButton [(ngModel)]="_userSelected[u.id]" onLabel="On" offLabel="Off" />
                         <div class="flex flex-column">
                             <h6 class="my-1">{{ u.name }}</h6>
                             <h6 class="my-1">{{ u.surname }}</h6>
                         </div>
                     </div>
+                    <p-divider></p-divider>
                     }
                 </p-card>
             </div>

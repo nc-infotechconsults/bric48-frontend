@@ -11,6 +11,7 @@ export class AppConfigService {
   
   loggedUser = signal<User>(null);
   loggedUser$ = new BehaviorSubject<User>(null);
+  updateSession$ = new BehaviorSubject<void>(null);
 
   private accessToken?: AccessTokenDTO;
   private router = inject(Router);

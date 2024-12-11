@@ -7,6 +7,7 @@
         <td>{{rowData.type}}</td>
         <td>{{rowData.value}}</td>
         <td>{{rowData.description}}</td>
-        <td>{{rowData.solved}}</td>
+        <td><span class="pi pi-circle-fill" [class.text-green-500]="rowData.solved"
+                [class.text-red-500]="!rowData.solved"></span></td>
     </ng-template>
 </div>

@@ -7,6 +7,7 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { DialogModule } from 'primeng/dialog';
+import { DividerModule } from 'primeng/divider';
 import { DropdownModule } from 'primeng/dropdown';
 import { FileUploadModule } from 'primeng/fileupload';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -24,7 +25,6 @@ import { DetailModalComponent } from './components/detail-modal/detail-modal.com
 import { NotificationModalComponent } from './components/notification-modal/notification-modal.component';
 import { TableComponent } from './components/table/table.component';
 
-
 @NgModule({
   declarations: [
     TableComponent,
@@ -35,6 +35,7 @@ import { TableComponent } from './components/table/table.component';
   imports: [
     CommonModule,
     TableModule,
+    DividerModule,
     CardModule,
     ToggleButtonModule,
     FileUploadModule,

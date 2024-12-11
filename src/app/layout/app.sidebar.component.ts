@@ -15,7 +15,7 @@ export class AppSidebarComponent implements OnInit {
     loggedUser: User;
 
     ngOnInit(): void {
-        this.loggedUser = this.appConfigService.loggedUser();
+        this.appConfigService.loggedUser$.subscribe(v => this.loggedUser = v);
     }
     
 }

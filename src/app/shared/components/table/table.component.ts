@@ -155,6 +155,8 @@ export class TableComponent<T> {
           break;
         }
         case 'boolean': {
+          criteria.operation = QueryOperation.EQUAL;
+          criteria.value = value.value;
           break;
         }
       }

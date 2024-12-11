@@ -57,6 +57,18 @@ export class DashboardComponent implements OnInit {
         this.notificationService.notifications$.subscribe(notifications => {
             this.notifications = notifications;
         });
+
+        this.notificationService.newNotification$.subscribe(x => {
+            if (x != null) {
+                this.notifications.unshift(x);
+            }
+        });
+
+        this.notificationService.solvedNotification$.subscribe(x => {
+            if (x != null) {
+                this.notifications = this.notifications.filter(v => v.id !== x.id);
+            }
+        });
     }
 
     getNotificationsCount(machineryId: string) {

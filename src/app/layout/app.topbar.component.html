@@ -1,8 +1,7 @@
 <div class="layout-topbar">
     <a class="layout-topbar-logo" routerLink="">
-        <img src="assets/layout/images/{{layoutService.config().colorScheme === 'light' ? 'logo-dark' : 'logo-white'}}.svg"
-            alt="logo">
-        <span>BRIC48</span>
+        <img src="assets/layout/images/idalab-logo.png" alt="logo">
+        <span>BRiC48</span>
     </a>
 
     <button #menubutton class="p-link layout-menu-button layout-topbar-button" (click)="layoutService.onMenuToggle()">
@@ -41,6 +40,8 @@
                 <span class="pi pi-times-circle text-xl text-red-500"></span>
                 <div class="flex flex-column gap-2">
                     <h5 class="m-0 text-bold text-red-500"> {{ n.machinery.name }} ({{ n.machinery.serial }})</h5>
+                    <h6 class="my-1">{{ 'layout.topbar.sidebar.alarm.timestamp' | translate }} {{ n.createdAt | date:
+                        'dd/MM/yyyy HH:mm' }}</h6>
                     <h6 class="my-1">{{ 'layout.topbar.sidebar.alarm.type' | translate }} {{ n.type }}</h6>
                     <h6 class="my-1">{{ 'layout.topbar.sidebar.alarm.value' | translate }} {{ n.value }}</h6>
                     <span>{{ n.description }}</span>

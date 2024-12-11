@@ -28,6 +28,7 @@
             },
             "sidebar": {
                 "alarm": {
+                    "timestamp": "Timestamp: ",
                     "type": "Type: ",
                     "value": "Value: "
                 }

@@ -3,6 +3,7 @@ import { messageCallbackType } from "@stomp/stompjs";
 import { BehaviorSubject } from "rxjs";
 import { LogicOperator } from "../model/api/logic-operator";
 import { QueryOperation } from "../model/api/query-operation";
+import { Sort } from "../model/api/sort ";
 import { MachineryNotification } from "../model/domain/machinery-notification";
 import { MachineryNotificationService } from "./api/machinery-notification.service";
 
@@ -17,6 +18,8 @@ export interface TopicTask {
 export class NotificationService {
 
     notifications$ = new BehaviorSubject<MachineryNotification[]>(null);
+    newNotification$ = new BehaviorSubject<MachineryNotification>(null);
+    solvedNotification$ = new BehaviorSubject<MachineryNotification>(null);
     private machineryNotificationServices = inject(MachineryNotificationService);
 
     loadNotifications(userId?: string) {
@@ -30,9 +33,18 @@ export class NotificationService {
         if(userId)
             filters.criterias.push({ field: 'machinery.users.id', operation: QueryOperation.EQUAL, value: userId });
 
-        this.machineryNotificationServices.search(filters, {}, true).subscribe(v => {
+        this.machineryNotificationServices.search(filters, {sort: new Sort(['createdAt,desc'])}, true).subscribe(v => {
             this.notifications$.next(v.content);
         });
     }
+
+    pushNewNotification(newNotification: MachineryNotification) {
+        this.newNotification$.next(newNotification);
+    }
+
+    removeNotification(notification: MachineryNotification) {
+        this.solvedNotification$.next(notification);
+    }
+
 
 }
