@@ -14,6 +14,9 @@ export class AppTopBarComponent implements OnInit {
     items!: MenuItem[];
     notifications?: MachineryNotification[];
 
+    showDetail = false;
+    machineryId = false;
+
     sidebarVisible: boolean;
 
     @ViewChild('menubutton') menuButton!: ElementRef;

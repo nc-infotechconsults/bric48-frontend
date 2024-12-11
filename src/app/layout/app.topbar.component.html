@@ -37,7 +37,7 @@
     @for(n of notifications; track n){
     <p-messages [severity]="'error'">
         <ng-template pTemplate>
-            <div class="flex flex-row gap-2">
+            <div class="flex flex-row gap-2" (click)="machineryId = n.machinery.id; showDetail = true">
                 <span class="pi pi-times-circle text-xl text-red-500"></span>
                 <div class="flex flex-column gap-2">
                     <h5 class="m-0 text-bold text-red-500"> {{ n.machinery.name }} ({{ n.machinery.serial }})</h5>
@@ -50,3 +50,6 @@
     </p-messages>
     }
 </p-sidebar>
+
+<div notification-dialog [show]="showDetail" (showChange)="machineryId=undefined; showDetail=$event"
+    [machineryId]="machineryId"></div>

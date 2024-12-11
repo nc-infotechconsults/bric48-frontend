@@ -6,4 +6,8 @@ import { BaseService } from './base.service';
 })
 export class MachineryNotificationService<MachineryNotification, MachineryNotificationDTO> extends BaseService<MachineryNotification, MachineryNotificationDTO> {
   override resource = '/machineryNotifications';
+
+  resolve(id: string){
+    return this.makePatchRequest(`/${id}/solve`);
+  }
 }

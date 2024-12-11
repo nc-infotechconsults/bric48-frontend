@@ -12,9 +12,11 @@
                         manage</div>
                     }
                 </div>
-                <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
+                <div class="flex align-items-center justify-content-center border-round"
+                    [class.bg-red-500]="getNotificationsCount(machine.id) > 0"
+                    [class.bg-green-500]="getNotificationsCount(machine.id) === 0"
                     [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
-                    <i class="pi pi-car text-blue-500 text-xl"></i>
+                    <i class="pi pi-car text-xl"></i>
                 </div>
             </div>
         </div>
@@ -22,7 +24,8 @@
     }
 </div>
 
-<div notification-dialog [show]="showDetail" (showChange)="machineryId=undefined; showDetail=$event" [machineryId]="machineryId"></div>
+<div notification-dialog [show]="showDetail" (showChange)="machineryId=undefined; showDetail=$event"
+    [machineryId]="machineryId"></div>
 
 <!-- 
 <p-dialog [(visible)]="showDetail" [style]="{width: '75vw'}" [header]="'pages.dashboard.modal.title' | translate"

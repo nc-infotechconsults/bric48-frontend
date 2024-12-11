@@ -10,6 +10,7 @@ import { MachineryNotification } from '../../model/domain/machinery-notification
 import { User } from '../../model/domain/user';
 import { MachineryNotificationService } from '../../services/api/machinery-notification.service';
 import { MachineryService } from '../../services/api/machinery.service';
+import { MessageService as MqttMessageService } from '../../services/api/message.service';
 import { UserService } from '../../services/api/user.service';
 import { WebSocketService } from '../../services/websocket.service';
 
@@ -21,6 +22,7 @@ import { WebSocketService } from '../../services/websocket.service';
 export class NotificationModalComponent {
 
   private machineryNotificationService = inject(MachineryNotificationService);
+  private mqttMessageService = inject(MqttMessageService);
   private machineryService = inject(MachineryService);
   private messageService = inject(MessageService);
   private translateService = inject(TranslateService);
@@ -55,7 +57,7 @@ export class NotificationModalComponent {
   _machineryNotifications?: MachineryNotification[] = [];
   _machinery?: Machinery;
   _users: User[] = [];
-  _userSelected: {[x:string]: string} = {};
+  _userSelected: { [x: string]: string } = {};
 
   @Input()
   show: boolean = false;
@@ -64,7 +66,7 @@ export class NotificationModalComponent {
 
   updateShow(value: boolean) {
     this.show = value;
-    if(!this.show){
+    if (!this.show) {
       this._users = [];
       this._machineryNotifications = [];
       this._machinery = undefined;
@@ -73,7 +75,7 @@ export class NotificationModalComponent {
   }
 
   solveNotification(notification: MachineryNotification) {
-    this.machineryNotificationService.patch(notification.id, { solved: true }).subscribe((x) => {
+    this.machineryNotificationService.resolve(notification.id).subscribe((x) => {
       this.messageService.add({
         severity: 'success',
         summary: this.translateService.instant('shared.messages.updateSuccess.summary'),
@@ -82,7 +84,20 @@ export class NotificationModalComponent {
     });
   }
 
-  thereAreUserSelected(){
+  sendMessage(notification: MachineryNotification) {
+    const requests = {};
+    Object.entries(this._userSelected).filter(x => x[1]).forEach(x => requests[x[0]] = this.mqttMessageService.save({ message: notification.description, receiverId: x[0], notificationId: notification.id }));
+
+    forkJoin(requests).subscribe((x) => {
+      this.messageService.add({
+        severity: 'success',
+        summary: this.translateService.instant('shared.messages.sendSuccess.summary'),
+        detail: this.translateService.instant('shared.messages.sendSuccess.detail'),
+      });
+    });
+  }
+
+  thereAreUserSelected() {
     return Object.entries(this._userSelected).filter(x => x[1]).length > 0;
   }
 

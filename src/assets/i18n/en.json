@@ -220,6 +220,10 @@
             "updateSuccess": {
                 "summary": "Operation completed",
                 "detail": "Item updated correctly"
+            },
+            "sendSuccess": {
+                "summary": "Operation completed",
+                "detail": "Message sent correctly"
             }
         },
         "validators": {

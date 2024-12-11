@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <p-dialog [visible]="show" (visibleChange)="updateShow($event)" [style]="{width: '75vw'}"
     [header]="'pages.dashboard.modal.title' | translate" [modal]="true" class="p-fluid">
 
@@ -42,7 +43,7 @@
                                 </div>
                                 <div class="flex flex-column gap-2">
                                     <p-button [label]="'pages.dashboard.modal.notifications.actions.send' | translate"
-                                        [raised]="true" severity="warning" [disabled]="!thereAreUserSelected()" />
+                                        [raised]="true" severity="warning" [disabled]="!thereAreUserSelected()" (click)="sendMessage(n)" />
                                     <p-button [label]="'pages.dashboard.modal.notifications.actions.solve' | translate"
                                         [raised]="true" severity="success" (click)="solveNotification(n)" />
                                 </div>

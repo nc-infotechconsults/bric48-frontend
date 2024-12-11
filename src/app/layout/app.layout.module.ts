@@ -16,6 +16,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { RippleModule } from 'primeng/ripple';
 import { SidebarModule } from 'primeng/sidebar';
 import { ToastModule } from 'primeng/toast';
+import { SharedModule } from '../shared/shared.module';
 import { AppFooterComponent } from './app.footer.component';
 import { AppLayoutComponent } from "./app.layout.component";
 import { AppMenuComponent } from './app.menu.component';
@@ -52,6 +53,7 @@ import { AppConfigModule } from './config/config.module';
         ProgressSpinnerModule,
         AvatarModule,
         MessagesModule,
+        SharedModule,
         TranslateModule
     ],
     exports: [AppLayoutComponent]
