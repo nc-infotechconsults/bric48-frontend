@@ -7,6 +7,7 @@ export class User extends Audit {
     name?: string;
     surname?: string;
     email?: string;
+    language?: string;
     regNumber?: string;
     phoneNumber?: string;
     role?: Role;

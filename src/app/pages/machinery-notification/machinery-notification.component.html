@@ -1,5 +1,5 @@
 <div table [headers]="headers" [values]="values" [globalFieldFilters]="globalFieldFilters" [totalRecords]="totalRecords"
-    [menuItems]="menuItems" [selectedItem]="selectedItem" [highlightRow]="highlightRow" (onNew)="handleNew()"
+    [menuItems]="menuItems" [selectedItem]="selectedItem" [highlightRow]="highlightRow" [showToolbar]="false"
     (onLazyLoad)="loadData($event)" (onContextMenuSelection)="updateSelectedItem($event)">
     <ng-template #tableBody let-rowData let-i="rowIndex">
         <td>{{rowData.createdAt | date: 'dd/MM/yyyy HH:mm:ss'}}</td>

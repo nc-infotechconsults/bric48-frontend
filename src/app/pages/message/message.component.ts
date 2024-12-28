@@ -1,7 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MessageService as ToastService } from 'primeng/api';
-import { DropdownChangeEvent } from 'primeng/dropdown';
 import { forkJoin } from 'rxjs';
 import { TableComponent } from 'src/app/shared/components/table/table.component';
 import { LogicOperator } from 'src/app/shared/model/api/logic-operator';
@@ -35,7 +34,7 @@ export class MessageComponent extends TableComponent<Message> implements OnInit 
   private messageService = inject(ToastService);
 
   fg = this.fb.group({
-    message: [null, Validators.required],
+    defaultMessageId: [null, Validators.required],
     receiversId: [null, Validators.required]
   });
 
@@ -119,10 +118,16 @@ export class MessageComponent extends TableComponent<Message> implements OnInit 
     this.layout.isLoading.set(true);
 
     const receiversId = this.fg.value.receiversId as string[];
-
+    const defaultMessage = this.defaultMessages.find(x => x.id === this.fg.value.defaultMessageId);
     const requests = {};
+
     receiversId.forEach(id => {
-      const dto = { message: this.fg.value.message, receiverId: id };
+      const user = this.receivers.find(x => x.id === id);
+      let transMsg = defaultMessage.translations.find(x => x.language === user.language);
+      if(!transMsg){
+        transMsg = defaultMessage.translations.find(x => x.isDefault);
+      }
+      const dto = { language: transMsg.language, message: transMsg.message, receiverId: id };
       requests[id] = this.service.save(dto);
     });
 
@@ -138,10 +143,6 @@ export class MessageComponent extends TableComponent<Message> implements OnInit 
         this.loadData(this.lastLazyLoadEmitterEvent);
       }
     });
-  }
-
-  updateMessage(event: DropdownChangeEvent) {
-    this.fg.get('message').setValue(event.value.message);
   }
 
 }

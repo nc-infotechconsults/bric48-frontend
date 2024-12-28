@@ -24,16 +24,103 @@
             </small>
             }
         </div>
+
         <div class="field p-fluid">
-            <label htmlFor="message">{{ 'pages.defaultMessage.modal.message' | translate }}</label>
-            <textarea rows="5" cols="30" formControlName="message" id="message" pInputTextarea
-                [class.ng-invalid]="fg.controls['message'].invalid"
-                [class.ng-dirty]="fg.controls['message'].invalid"></textarea>
-            @if(fg.controls['message'].errors?.['required']){
-            <small class="text-red-600">
-                {{ 'shared.validators.required' | translate }}
-            </small>
-            }
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                </ng-template>
+                <ng-template pTemplate="right">
+                    <button pButton pRipple icon="pi pi-plus-circle" iconPos="right" class="p-button-primary"
+                        [label]="'pages.defaultMessage.modal.addTranslation' | translate"
+                        (click)="openTranslationDialog()"></button>
+                </ng-template>
+            </p-toolbar>
+            <p-table [value]="translations" responsiveLayout="scroll" [paginator]="true"
+                [rowsPerPageOptions]="[5, 10, 20]" [rows]="5"
+                [currentPageReportTemplate]="'shared.table.currentPageReport' | translate">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0">{{ 'pages.defaultMessage.modal.translations' | translate }}</h5>
+                        @if(fg.controls['translations'].errors?.['required']){
+                        <small class="text-red-600">
+                            {{ 'shared.validators.required' | translate }}
+                        </small>
+                        }
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td class="text-center" [colSpan]="3">{{'shared.table.emptyMessage' | translate}}</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>{{ 'pages.defaultMessage.modal.subModal.language' | translate }}</th>
+                        <th>{{ 'pages.defaultMessage.modal.subModal.isDefault' | translate }}</th>
+                        <th>{{ 'pages.defaultMessage.modal.subModal.message' | translate }}</th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+                    <tr>
+                        <td>{{getLanguage(rowData.language) | translate}}</td>
+                        <td><span class="pi" [class.pi-check]="rowData.isDefault" [class.pi-times]="!rowData.isDefault"></span></td>
+                        <td>{{rowData.message}}</td>
+                        <td>
+                            <p-button icon="pi pi-times" severity="danger" (click)="removeItem(rowData.language)" />
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
         </div>
+
+        <p-dialog [header]="'pages.defaultMessage.modal.addTranslation' | translate" [modal]="true"
+            [(visible)]="visible" class="p-fluid" appendTo="body">
+            <ng-template pTemplate="content">
+                <form [formGroup]="fgTranslation">
+                    <div class="field p-fluid">
+                        <label htmlFor="language">{{ 'pages.defaultMessage.modal.subModal.language' | translate
+                            }}</label>
+                        <p-dropdown id="language" [options]="languages" [showClear]="true" appendTo="body"
+                            optionValue="id" formControlName="language"
+                            [class.ng-invalid]="fgTranslation.controls['language'].invalid"
+                            [class.ng-dirty]="fgTranslation.controls['language'].invalid">
+                            <ng-template let-selectedItem pTemplate="selectedItem">
+                                <div>{{ selectedItem ? (selectedItem.label | translate) : '' }}</div>
+                            </ng-template>
+                            <ng-template let-item pTemplate="item">
+                                <div>{{ item.label | translate }}</div>
+                            </ng-template>
+                        </p-dropdown>
+                        @if(fgTranslation.controls['language'].errors?.['required']){
+                        <small class="text-red-600">
+                            {{ 'shared.validators.required' | translate }}
+                        </small>
+                        }
+                    </div>
+                    <div class="flex flex-column gap-2">
+                        <label htmlFor="isDefault">{{ 'pages.defaultMessage.modal.subModal.isDefault' | translate}}</label>
+                        <p-inputSwitch formControlName="isDefault" />
+                    </div>
+                    <div class="field p-fluid">
+                        <label htmlFor="message">{{ 'pages.defaultMessage.modal.subModal.message' | translate }}</label>
+                        <textarea rows="5" cols="30" formControlName="message" id="message" pInputTextarea
+                            [class.ng-invalid]="fgTranslation.controls['message'].invalid"
+                            [class.ng-dirty]="fgTranslation.controls['message'].invalid"></textarea>
+                        @if(fgTranslation.controls['message'].errors?.['required']){
+                        <small class="text-red-600">
+                            {{ 'shared.validators.required' | translate }}
+                        </small>
+                        }
+                    </div>
+                </form>
+            </ng-template>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text"
+                    [label]="'shared.modal.actions.close' | translate" (click)="visible = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-success" [disabled]="fgTranslation.invalid"
+                    [label]="'shared.modal.actions.save' | translate" (click)="addTranslation()"></button>
+            </ng-template>
+        </p-dialog>
     </form>
 </div>

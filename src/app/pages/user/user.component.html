@@ -59,7 +59,8 @@
         <div class="field p-fluid">
             <label htmlFor="phoneNumber">{{ 'pages.user.modal.phoneNumber' | translate }}</label>
             <input pInputText formControlName="phoneNumber" id="phoneNumber" type="tel" pattern="[0-9]{10}"
-                [class.ng-invalid]="fg.controls['phoneNumber'].invalid" [class.ng-dirty]="fg.controls['phoneNumber'].invalid" />
+                [class.ng-invalid]="fg.controls['phoneNumber'].invalid"
+                [class.ng-dirty]="fg.controls['phoneNumber'].invalid" />
             @if(fg.controls['phoneNumber'].errors){
             <div class="flex flex-column">
                 @if(fg.controls['phoneNumber'].errors?.['required']){
@@ -145,6 +146,24 @@
                 [class.ng-dirty]="fg.controls['headphoneId'].invalid">
             </p-dropdown>
             @if(fg.controls['headphoneId'].errors?.['required']){
+            <small class="text-red-600">
+                {{ 'shared.validators.required' | translate }}
+            </small>
+            }
+        </div>
+        <div class="field p-fluid">
+            <label htmlFor="language">{{ 'pages.user.modal.language' | translate }}</label>
+            <p-dropdown id="language" [options]="languages" [showClear]="true" appendTo="body" optionValue="id"
+                formControlName="language" [class.ng-invalid]="fg.controls['language'].invalid"
+                [class.ng-dirty]="fg.controls['language'].invalid">
+                <ng-template let-selectedItem pTemplate="selectedItem">
+                    <div>{{ selectedItem ? (selectedItem.label | translate) : '' }}</div>
+                </ng-template>
+                <ng-template let-item pTemplate="item">
+                    <div>{{ item.label | translate }}</div>
+                </ng-template>
+            </p-dropdown>
+            @if(fg.controls['language'].errors?.['required']){
             <small class="text-red-600">
                 {{ 'shared.validators.required' | translate }}
             </small>

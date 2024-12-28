@@ -1,9 +1,9 @@
 {
     "layout": {
-        "sidebar":{
+        "sidebar": {
             "roles": {
                 "ADMINISTRATOR": "Administrator",
-                "SECURITY_MANAGER": "Security Manager",
+                "SECURITY_MANAGER": "Safety Manager",
                 "WORKER": "Worker"
             },
             "menu": {
@@ -97,7 +97,13 @@
         "defaultMessage": {
             "modal": {
                 "title": "Title",
-                "message": "Message"
+                "addTranslation": "Add translation",
+                "translations": "Translations",
+                "subModal": {
+                    "language": "Language",
+                    "isDefault": "Is default",
+                    "message": "Message"
+                }
             },
             "table": {
                 "title": "Title",
@@ -173,6 +179,7 @@
                 "regNumber": "Registration number",
                 "phoneNumber": "Phone number",
                 "password": "Password",
+                "language": "Language",
                 "confirmPassword": "Confirm password",
                 "role": "Role",
                 "headphone": "Headphone",
@@ -203,6 +210,75 @@
         }
     },
     "shared": {
+        "languages": {
+            "en": "English",
+            "es": "Spanish",
+            "fr": "French",
+            "de": "German",
+            "zh": "Chinese",
+            "ja": "Japanese",
+            "ru": "Russian",
+            "pt": "Portuguese",
+            "ar": "Arabic",
+            "hi": "Hindi",
+            "it": "Italian",
+            "ko": "Korean",
+            "nl": "Dutch",
+            "el": "Greek",
+            "tr": "Turkish",
+            "th": "Thai",
+            "sv": "Swedish",
+            "no": "Norwegian",
+            "da": "Danish",
+            "fi": "Finnish",
+            "cs": "Czech",
+            "pl": "Polish",
+            "hu": "Hungarian",
+            "vi": "Vietnamese",
+            "ms": "Malay",
+            "sw": "Swahili",
+            "af": "Afrikaans",
+            "ta": "Tamil",
+            "te": "Telugu",
+            "bn": "Bengali",
+            "pa": "Punjabi",
+            "ur": "Urdu",
+            "fil": "Filipino",
+            "id": "Indonesian",
+            "he": "Hebrew",
+            "fa": "Persian",
+            "uk": "Ukrainian",
+            "ro": "Romanian",
+            "bg": "Bulgarian",
+            "sk": "Slovak",
+            "hr": "Croatian",
+            "sr": "Serbian",
+            "bs": "Bosnian",
+            "sl": "Slovenian",
+            "is": "Icelandic",
+            "et": "Estonian",
+            "lv": "Latvian",
+            "lt": "Lithuanian",
+            "sq": "Albanian",
+            "mk": "Macedonian",
+            "ka": "Georgian",
+            "hy": "Armenian",
+            "km": "Khmer",
+            "lo": "Lao",
+            "my": "Burmese",
+            "si": "Sinhala",
+            "ne": "Nepali",
+            "mn": "Mongolian",
+            "bo": "Tibetan",
+            "mi": "Maori",
+            "sm": "Samoan",
+            "to": "Tongan",
+            "haw": "Hawaiian",
+            "zu": "Zulu",
+            "xh": "Xhosa",
+            "yo": "Yoruba",
+            "ig": "Igbo"
+        },
         "errors": {
             "genericError": {
                 "summary": "Error happen",

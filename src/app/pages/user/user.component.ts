@@ -9,6 +9,7 @@ import { Headphone } from 'src/app/shared/model/domain/headphone';
 import { Machinery } from 'src/app/shared/model/domain/machinery';
 import { Role } from 'src/app/shared/model/domain/role';
 import { User } from 'src/app/shared/model/domain/user';
+import Languages from 'src/app/shared/model/enums/language';
 import { Roles } from 'src/app/shared/model/enums/role';
 import { DropdownFilter } from 'src/app/shared/model/ui/header-item';
 import { LazyLoadEmitterEvent } from 'src/app/shared/model/ui/lazy-load-emitter-event';
@@ -50,6 +51,7 @@ export function passwordConfirmationValidator(
 export class UserComponent extends TableComponent<User> implements OnInit {
 
   readonly Roles = Roles;
+  readonly languages = Languages;
 
   showDelete = false;
   showDetail = false;
@@ -74,6 +76,7 @@ export class UserComponent extends TableComponent<User> implements OnInit {
     surname: [null, Validators.required],
     email: [null, [Validators.required, Validators.email]],
     regNumber: [null],
+    language: [null],
     phoneNumber: [null],
     password: [null],
     confirmPassword: [null],
@@ -166,6 +169,15 @@ export class UserComponent extends TableComponent<User> implements OnInit {
         }
       ];
       this.layout.isLoading.set(false);
+    });
+
+    this.fg.get('roleId').valueChanges.subscribe(v => {
+      if(v === Roles.WORKER){
+        this.fg.get('language').addValidators(Validators.required);
+      }else{
+        this.fg.get('language').clearValidators();
+      }
+      this.fg.get('language').updateValueAndValidity();
     });
   }
 

@@ -28,22 +28,14 @@
 
         <div class="field p-fluid">
             <label htmlFor="defaultMessage">{{ 'pages.message.modal.defaultMessage' | translate }}</label>
-            <p-dropdown id="defaultMessage" [options]="defaultMessages" appendTo="body" optionLabel="title" (onChange)="updateMessage($event)"></p-dropdown>
-            <small>
-                {{ 'pages.message.modal.defaultMessageHint' | translate }}
-            </small>
-        </div>
-
-        <div class="field p-fluid">
-            <label htmlFor="message">{{ 'pages.defaultMessage.modal.message' | translate }}</label>
-            <textarea rows="5" cols="30" formControlName="message" id="message" pInputTextarea
-                [class.ng-invalid]="fg.controls['message'].invalid"
-                [class.ng-dirty]="fg.controls['message'].invalid"></textarea>
-            @if(fg.controls['message'].errors?.['required']){
+            <p-dropdown id="defaultMessageId" formControlName="defaultMessageId" [options]="defaultMessages"
+                appendTo="body" optionValue="id" optionLabel="title"></p-dropdown>
+            @if(fg.controls['defaultMessageId'].errors?.['required']){
             <small class="text-red-600">
                 {{ 'shared.validators.required' | translate }}
             </small>
             }
         </div>
+
     </form>
 </div>

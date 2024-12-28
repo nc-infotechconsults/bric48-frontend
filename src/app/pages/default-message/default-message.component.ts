@@ -3,6 +3,8 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { MenuItem, MessageService } from 'primeng/api';
 import { TableComponent } from 'src/app/shared/components/table/table.component';
 import { DefaultMessage } from 'src/app/shared/model/domain/default-message';
+import { DefaultTranslationMessage } from 'src/app/shared/model/domain/default-translation-message';
+import Languages from 'src/app/shared/model/enums/language';
 import { HeaderItem } from 'src/app/shared/model/ui/header-item';
 import { LazyLoadEmitterEvent } from 'src/app/shared/model/ui/lazy-load-emitter-event';
 import { DefaultMessageService } from 'src/app/shared/services/api/default-message.service';
@@ -17,6 +19,11 @@ export class DefaultMessageComponent extends TableComponent<DefaultMessage> {
   showDelete = false;
   showDetail = false;
 
+  languages = Languages;
+
+  visible = false;
+
+
   private service = inject(DefaultMessageService);
   private fb = inject(FormBuilder);
   private messageService = inject(MessageService);
@@ -24,6 +31,12 @@ export class DefaultMessageComponent extends TableComponent<DefaultMessage> {
   fg = this.fb.group({
     id: [null],
     title: [null, Validators.required],
+    translations: [[] as DefaultTranslationMessage[], Validators.required],
+  });
+
+  fgTranslation = this.fb.group({
+    language: [null, Validators.required],
+    isDefault: [false],
     message: [null, Validators.required],
   });
 
@@ -98,7 +111,7 @@ export class DefaultMessageComponent extends TableComponent<DefaultMessage> {
           this.loadData(this.lastLazyLoadEmitterEvent);
         }
       });
-    }else{
+    } else {
       this.service.save(dto).subscribe({
         next: (v) => {
           this.layout.isLoading.set(false);
@@ -112,7 +125,7 @@ export class DefaultMessageComponent extends TableComponent<DefaultMessage> {
         }
       });
     }
-    
+
   }
 
   handleDelete(): void {
@@ -129,6 +142,44 @@ export class DefaultMessageComponent extends TableComponent<DefaultMessage> {
         this.loadData(this.lastLazyLoadEmitterEvent);
       }
     });
+  }
+
+  get translations() {
+    const v = this.fg.get('translations').value;
+    return v ? v : [];
+  }
+
+  getLanguage(lang: string) {
+    return Languages.find(x => x.id === lang)?.label ?? '';
+  }
+
+  removeItem(lang: string) {
+    let translations = this.translations.filter(x => x.language !== lang);
+    this.fg.get('translations').setValue(translations);
+  }
+
+  openTranslationDialog() {
+    this.fgTranslation.reset();
+    const translationsIds = this.translations.map(x => x.language);
+    this.languages = Languages.filter(x => !translationsIds.includes(x.id));
+
+    if(this.translations.find(x => x.isDefault)){
+      this.fgTranslation.get('isDefault').disable();
+    }else{
+      this.fgTranslation.get('isDefault').enable();
+    }
+
+    this.visible = true;
+  }
+
+  addTranslation() {
+    let translations = this.translations;
+    translations.push(this.fgTranslation.value as DefaultTranslationMessage);
+    this.fg.get('translations').setValue(translations);
+
+    this.fgTranslation.reset();
+
+    this.visible = false;
   }
 
 }
