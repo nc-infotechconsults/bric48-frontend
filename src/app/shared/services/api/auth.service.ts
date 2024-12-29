@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CredentialsDTO } from 'src/app/shared/model/dto/credentials-dto';
+import { CredentialsDTO } from 'src/app/shared/model/dto/credentials.dto';
 import { User } from '../../model/domain/user';
-import { AccessTokenDTO } from '../../model/dto/access-token-dto';
+import { AccessTokenDTO } from '../../model/dto/access-token.dto';
 import { AbstractBaseService } from './abstract.base.service';
 
 @Injectable({

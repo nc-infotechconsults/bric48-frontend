@@ -2,19 +2,19 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MenuItem, MessageService } from 'primeng/api';
 import { TableComponent } from 'src/app/shared/components/table/table.component';
-import { DefaultMessage } from 'src/app/shared/model/domain/default-message';
 import { DefaultTranslationMessage } from 'src/app/shared/model/domain/default-translation-message';
+import { NotificationCode } from 'src/app/shared/model/domain/notification-code';
 import Languages from 'src/app/shared/model/enums/language';
 import { DropdownFilter, HeaderItem } from 'src/app/shared/model/ui/header-item';
 import { LazyLoadEmitterEvent } from 'src/app/shared/model/ui/lazy-load-emitter-event';
-import { DefaultMessageService } from 'src/app/shared/services/api/default-message.service';
+import { NotificationCodeService } from 'src/app/shared/services/api/notification-code.service';
 
 @Component({
-  selector: 'app-default-message',
-  templateUrl: './default-message.component.html',
-  styleUrl: './default-message.component.scss'
+  selector: 'app-notification-code',
+  templateUrl: './notification-code.component.html',
+  styleUrl: './notification-code.component.scss'
 })
-export class DefaultMessageComponent extends TableComponent<DefaultMessage> {
+export class NotificationCodeComponent extends TableComponent<NotificationCode> {
 
   showDelete = false;
   showDetail = false;
@@ -23,14 +23,14 @@ export class DefaultMessageComponent extends TableComponent<DefaultMessage> {
 
   visible = false;
 
-
-  private service = inject(DefaultMessageService);
+  private service = inject(NotificationCodeService);
   private fb = inject(FormBuilder);
   private messageService = inject(MessageService);
 
   fg = this.fb.group({
     id: [null],
     title: ['', Validators.required],
+    code: ['', Validators.required],
     translations: [[] as DefaultTranslationMessage[], Validators.required],
   });
 
@@ -43,12 +43,17 @@ export class DefaultMessageComponent extends TableComponent<DefaultMessage> {
   override globalFieldFilters: string[] = ['message'];
   override headers: HeaderItem[] = [
     {
-      title: 'pages.defaultMessage.table.title', field: 'title', sortable: true, filter: {
+      title: 'pages.notificationCode.table.title', field: 'title', sortable: true, filter: {
         type: 'text', showMenu: false, matchMode: 'contains'
       }
     },
     {
-      title: 'pages.defaultMessage.table.translations', field: 'translations.language', sortable: false, filter: {
+      title: 'pages.notificationCode.table.code', field: 'title', sortable: true, filter: {
+        type: 'text', showMenu: false, matchMode: 'contains'
+      }
+    },
+    {
+      title: 'pages.notificationCode.table.translations', field: 'translations.language', sortable: false, filter: {
         type: 'dropdown', showMenu: false, matchMode: 'equals', values: Languages.map(x => ({ value: x.id, label: this.translate.instant(x.label) }))
       } as DropdownFilter
     }
@@ -149,7 +154,7 @@ export class DefaultMessageComponent extends TableComponent<DefaultMessage> {
     return v ? v : [];
   }
 
-  getTranslations(rowData: DefaultMessage) {
+  getTranslations(rowData: NotificationCode) {
     return rowData.translations.map(x => {
       const t = this.translate.instant(this.getLanguage(x.language));
       return x.isDefault ? t + "*" : t;

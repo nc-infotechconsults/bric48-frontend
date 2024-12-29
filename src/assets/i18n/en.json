@@ -17,6 +17,7 @@
                 "area": "Areas",
                 "machinery": "Machineries",
                 "defaultMessage": "Default Messages",
+                "notificationCode": "Notification Code",
                 "user": "Users"
             }
         },
@@ -48,6 +49,10 @@
                     "detail": "Email and/or password are invalid"
                 }
             }
+        },
+        "notfound": {
+            "resourceUnavailable": "Requested resource is not available",
+            "goToDashboard": "Go to dashboard"
         },
         "area": {
             "modal": {
@@ -107,7 +112,7 @@
             },
             "table": {
                 "title": "Title",
-                "message": "Message"
+                "translations": "Translations"
             }
         },
         "headphone": {
@@ -169,6 +174,24 @@
                 "receiver": "Receiver user",
                 "sender": "Sender user",
                 "message": "Message"
+            }
+        },
+        "notificationCode": {
+            "modal": {
+                "title": "Title",
+                "code": "Code",
+                "addTranslation": "Add translation",
+                "translations": "Translations",
+                "subModal": {
+                    "language": "Language",
+                    "isDefault": "Is default",
+                    "message": "Message"
+                }
+            },
+            "table": {
+                "title": "Title",
+                "code": "Code",
+                "translations": "Translations"
             }
         },
         "user": {

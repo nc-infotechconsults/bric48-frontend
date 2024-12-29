@@ -34,8 +34,8 @@ export class MessageComponent extends TableComponent<Message> implements OnInit 
   private messageService = inject(ToastService);
 
   fg = this.fb.group({
-    defaultMessageId: [null, Validators.required],
-    receiversId: [null, Validators.required]
+    defaultMessageId: ['', Validators.required],
+    receiversId: [[] as string[], Validators.required]
   });
 
   override globalFieldFilters: string[] = ['receiver.name', 'receiver.surname', 'sender.name', 'sender.surname', 'message'];

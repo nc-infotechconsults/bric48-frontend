@@ -23,8 +23,8 @@ export class HeadphoneComponent extends TableComponent<Headphone> {
 
   fg = this.fb.group({
     id: [null],
-    name: [null, Validators.required],
-    serial: [null, Validators.required]
+    name: ['', Validators.required],
+    serial: ['', Validators.required]
   });
 
   override globalFieldFilters: string[] = ['name', 'serial'];

@@ -40,9 +40,9 @@ export class MachineryComponent extends TableComponent<Machinery> implements OnI
 
   fg = this.fb.group({
     id: [null],
-    name: [null, Validators.required],
-    serial: [null, Validators.required],
-    areaId: [null, Validators.required],
+    name: ['', Validators.required],
+    serial: ['', Validators.required],
+    areaId: ['', Validators.required],
     beaconsId: [],
     description: ['']
   });

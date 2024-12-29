@@ -8,14 +8,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AppLayoutModule } from './layout/app.layout.module';
 import { AppConfigModule } from './layout/config/config.module';
-import { NotfoundComponent } from './pages/notfound/notfound.component';
 import { authInterceptor } from './shared/interceptors/auth.interceptor';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
     new TranslateHttpLoader(http, './assets/i18n/', '.json');
 
 @NgModule({
-    declarations: [AppComponent, NotfoundComponent],
+    declarations: [AppComponent],
     imports: [
         AppConfigModule,
         AppRoutingModule,

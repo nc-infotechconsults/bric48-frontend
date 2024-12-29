@@ -23,9 +23,9 @@ export class BeaconComponent extends TableComponent<Beacon> {
 
   fg = this.fb.group({
     id: [null],
-    name: [null, Validators.required],
-    serial: [null, Validators.required],
-    threshold: [null, Validators.required]
+    name: ['', Validators.required],
+    serial: ['', Validators.required],
+    threshold: [0, Validators.required]
   });
 
   override globalFieldFilters: string[] = ['name', 'serial'];

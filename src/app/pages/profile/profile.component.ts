@@ -56,15 +56,15 @@ export class ProfileComponent implements OnInit {
   private translate = inject(TranslateService);
 
   fg = this.fb.group({
-    id: [{ value: null, disabled: true }],
-    name: [{ value: null, disabled: true }],
-    surname: [{ value: null, disabled: true }],
-    email: [{ value: null, disabled: true }],
-    regNumber: [{ value: null, disabled: true }],
-    phoneNumber: [{ value: null, disabled: true }],
-    password: [null],
-    confirmPassword: [null],
-    roleId: [{ value: null, disabled: true }]
+    id: [{ value: '', disabled: true }],
+    name: [{ value: '', disabled: true }],
+    surname: [{ value: '', disabled: true }],
+    email: [{ value: '', disabled: true }],
+    regNumber: [{ value: '', disabled: true }],
+    phoneNumber: [{ value: '', disabled: true }],
+    password: [''],
+    confirmPassword: [''],
+    roleId: [{ value: '', disabled: true }]
   }, {
     validators: passwordConfirmationValidator("password", "confirmPassword")
   });

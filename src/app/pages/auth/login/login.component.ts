@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { MessageService } from 'primeng/api';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
-import { CredentialsDTO } from 'src/app/shared/model/dto/credentials-dto';
+import { CredentialsDTO } from 'src/app/shared/model/dto/credentials.dto';
 import { AuthService } from 'src/app/shared/services/api/auth.service';
 import { AppConfigService } from 'src/app/shared/services/app-config.service';
 

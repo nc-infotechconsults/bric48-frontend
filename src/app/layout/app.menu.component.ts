@@ -45,6 +45,7 @@ export class AppMenuComponent implements OnInit {
                                 { label: this.translateService.instant('layout.sidebar.menu.area'), icon: 'pi pi-fw pi-microsoft', routerLink: ['/app/area'] },
                                 { label: this.translateService.instant('layout.sidebar.menu.machinery'), icon: 'pi pi-fw pi-car', routerLink: ['/app/machinery'] },
                                 { label: this.translateService.instant('layout.sidebar.menu.defaultMessage'), icon: 'pi pi-fw pi-book', routerLink: ['/app/default-message'] },
+                                { label: this.translateService.instant('layout.sidebar.menu.notificationCode'), icon: 'pi pi-fw pi-list', routerLink: ['/app/notification-code'] },
                                 { label: this.translateService.instant('layout.sidebar.menu.user'), icon: 'pi pi-fw pi-users', routerLink: ['/app/user'] }
                             ]
                         }

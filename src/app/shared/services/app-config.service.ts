@@ -2,7 +2,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { User } from '../model/domain/user';
-import { AccessTokenDTO } from '../model/dto/access-token-dto';
+import { AccessTokenDTO } from '../model/dto/access-token.dto';
 
 @Injectable({
   providedIn: 'root'

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AppLayoutComponent } from "./layout/app.layout.component";
-import { NotfoundComponent } from './pages/notfound/notfound.component';
 
 @NgModule({
     imports: [
@@ -19,6 +18,7 @@ import { NotfoundComponent } from './pages/notfound/notfound.component';
                     { path: 'machinery', loadChildren: () => import('./pages/machinery/machinery.module').then(m => m.MachineryModule) },
                     { path: 'headphone', loadChildren: () => import('./pages/headphone/headphone.module').then(m => m.HeadphoneModule) },
                     { path: 'default-message', loadChildren: () => import('./pages/default-message/default-message.module').then(m => m.DefaultMessageModule) },
+                    { path: 'notification-code', loadChildren: () => import('./pages/notification-code/notification-code.module').then(m => m.NotificationCodeModule) },
                     { path: 'message', loadChildren: () => import('./pages/message/message.module').then(m => m.MessageModule) },
                     { path: 'machinery-notification', loadChildren: () => import('./pages/machinery-notification/machinery-notification.module').then(m => m.MachineryNotificationModule) },
                     { path: 'user', loadChildren: () => import('./pages/user/user.module').then(m => m.UserModule) },
@@ -26,7 +26,7 @@ import { NotfoundComponent } from './pages/notfound/notfound.component';
                 ]
             },
             { path: 'auth', loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule) },
-            { path: 'notfound', component: NotfoundComponent },
+            { path: 'notfound', loadChildren: () => import('./pages/notfound/notfound.module').then(m => m.NotfoundModule) },
             { path: '**', redirectTo: '/notfound' },
         ], { scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled', onSameUrlNavigation: 'reload' })
     ],

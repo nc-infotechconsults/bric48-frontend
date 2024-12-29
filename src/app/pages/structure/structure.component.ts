@@ -23,7 +23,7 @@ export class StructureComponent extends TableComponent<Structure> {
 
   fg = this.fb.group({
     id: [null],
-    name: [null, Validators.required],
+    name: ['', Validators.required],
     description: ['']
   });
 

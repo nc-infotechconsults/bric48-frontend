@@ -90,7 +90,7 @@ export class NotificationModalComponent implements OnInit {
 
   sendMessage(notification: MachineryNotification) {
     const requests = {};
-    Object.entries(this._userSelected).filter(x => x[1]).forEach(x => requests[x[0]] = this.mqttMessageService.save({ message: notification.description, receiverId: x[0], notificationId: notification.id }));
+    Object.entries(this._userSelected).filter(x => x[1]).forEach(x => requests[x[0]] = this.mqttMessageService.save({ message: '', receiverId: x[0], notificationId: notification.id }));
 
     forkJoin(requests).subscribe((x) => {
       this.messageService.add({
@@ -107,7 +107,7 @@ export class NotificationModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.notificationService.newNotification$.subscribe(x => {
-      if (x != null) {
+      if (x != null && !this._machineryNotifications.find(v => v.id === x.id)) {
         this._machineryNotifications.unshift(x);
       }
     });

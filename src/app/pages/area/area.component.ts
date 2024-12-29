@@ -29,9 +29,9 @@ export class AreaComponent extends TableComponent<Area> implements OnInit {
 
   fg = this.fb.group({
     id: [null],
-    name: [null, Validators.required],
-    description: [null],
-    structureId: [null, Validators.required]
+    name: ['', Validators.required],
+    description: [''],
+    structureId: ['', Validators.required]
   });
 
   override globalFieldFilters: string[] = ['name', 'structure.name'];

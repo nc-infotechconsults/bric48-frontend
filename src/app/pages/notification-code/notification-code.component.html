@@ -3,6 +3,7 @@
     (onLazyLoad)="loadData($event)" (onContextMenuSelection)="updateSelectedItem($event)">
     <ng-template #tableBody let-rowData let-i="rowIndex">
         <td>{{rowData.title}}</td>
+        <td>{{rowData.code}}</td>
         <td>{{getTranslations(rowData)}}</td>
     </ng-template>
 </div>
@@ -15,10 +16,21 @@
     (onConfirm)="handleSave()">
     <form [formGroup]="fg">
         <div class="field p-fluid">
-            <label htmlFor="title">{{ 'pages.defaultMessage.modal.title' | translate }}</label>
+            <label htmlFor="title">{{ 'pages.notificationCode.modal.title' | translate }}</label>
             <input pInputText formControlName="title" id="title" type="text"
                 [class.ng-invalid]="fg.controls['title'].invalid" [class.ng-dirty]="fg.controls['title'].invalid" />
             @if(fg.controls['title'].errors?.['required']){
+            <small class="text-red-600">
+                {{ 'shared.validators.required' | translate }}
+            </small>
+            }
+        </div>
+
+        <div class="field p-fluid">
+            <label htmlFor="code">{{ 'pages.notificationCode.modal.code' | translate }}</label>
+            <input pInputText formControlName="code" id="code" type="text"
+                [class.ng-invalid]="fg.controls['code'].invalid" [class.ng-dirty]="fg.controls['code'].invalid" />
+            @if(fg.controls['code'].errors?.['required']){
             <small class="text-red-600">
                 {{ 'shared.validators.required' | translate }}
             </small>
@@ -31,7 +43,7 @@
                 </ng-template>
                 <ng-template pTemplate="right">
                     <button pButton pRipple icon="pi pi-plus-circle" iconPos="right" class="p-button-primary"
-                        [label]="'pages.defaultMessage.modal.addTranslation' | translate"
+                        [label]="'pages.notificationCode.modal.addTranslation' | translate"
                         (click)="openTranslationDialog()"></button>
                 </ng-template>
             </p-toolbar>
@@ -40,7 +52,7 @@
                 [currentPageReportTemplate]="'shared.table.currentPageReport' | translate">
                 <ng-template pTemplate="caption">
                     <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-                        <h5 class="m-0">{{ 'pages.defaultMessage.modal.translations' | translate }}</h5>
+                        <h5 class="m-0">{{ 'pages.notificationCode.modal.translations' | translate }}</h5>
                         @if(fg.controls['translations'].errors?.['required']){
                         <small class="text-red-600">
                             {{ 'shared.validators.required' | translate }}
@@ -55,9 +67,9 @@
                 </ng-template>
                 <ng-template pTemplate="header">
                     <tr>
-                        <th>{{ 'pages.defaultMessage.modal.subModal.language' | translate }}</th>
-                        <th>{{ 'pages.defaultMessage.modal.subModal.isDefault' | translate }}</th>
-                        <th>{{ 'pages.defaultMessage.modal.subModal.message' | translate }}</th>
+                        <th>{{ 'pages.notificationCode.modal.subModal.language' | translate }}</th>
+                        <th>{{ 'pages.notificationCode.modal.subModal.isDefault' | translate }}</th>
+                        <th>{{ 'pages.notificationCode.modal.subModal.message' | translate }}</th>
                         <th></th>
                     </tr>
                 </ng-template>
@@ -74,12 +86,12 @@
             </p-table>
         </div>
 
-        <p-dialog [header]="'pages.defaultMessage.modal.addTranslation' | translate" [modal]="true"
+        <p-dialog [header]="'pages.notificationCode.modal.addTranslation' | translate" [modal]="true"
             [(visible)]="visible" class="p-fluid" appendTo="body">
             <ng-template pTemplate="content">
                 <form [formGroup]="fgTranslation">
                     <div class="field p-fluid">
-                        <label htmlFor="language">{{ 'pages.defaultMessage.modal.subModal.language' | translate
+                        <label htmlFor="language">{{ 'pages.notificationCode.modal.subModal.language' | translate
                             }}</label>
                         <p-dropdown id="language" [options]="languages" [showClear]="true" appendTo="body"
                             optionValue="id" formControlName="language"
@@ -99,11 +111,11 @@
                         }
                     </div>
                     <div class="flex flex-column gap-2">
-                        <label htmlFor="isDefault">{{ 'pages.defaultMessage.modal.subModal.isDefault' | translate}}</label>
+                        <label htmlFor="isDefault">{{ 'pages.notificationCode.modal.subModal.isDefault' | translate}}</label>
                         <p-inputSwitch formControlName="isDefault" />
                     </div>
                     <div class="field p-fluid">
-                        <label htmlFor="message">{{ 'pages.defaultMessage.modal.subModal.message' | translate }}</label>
+                        <label htmlFor="message">{{ 'pages.notificationCode.modal.subModal.message' | translate }}</label>
                         <textarea rows="5" cols="30" formControlName="message" id="message" pInputTextarea
                             [class.ng-invalid]="fgTranslation.controls['message'].invalid"
                             [class.ng-dirty]="fgTranslation.controls['message'].invalid"></textarea>

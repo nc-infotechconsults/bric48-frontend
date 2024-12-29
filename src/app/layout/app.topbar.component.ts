@@ -38,7 +38,7 @@ export class AppTopBarComponent implements OnInit {
         })
 
         this.notificationsService.newNotification$.subscribe(x => {
-            if (x != null) {
+            if (x != null && !this.notifications.find(v => v.id === x.id)) {
                 this.notifications.unshift(x);
                 this.sidebarVisible = true;
             }

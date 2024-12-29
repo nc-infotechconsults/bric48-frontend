@@ -72,17 +72,17 @@ export class UserComponent extends TableComponent<User> implements OnInit {
 
   fg = this.fb.group({
     id: [null],
-    name: [null, Validators.required],
-    surname: [null, Validators.required],
-    email: [null, [Validators.required, Validators.email]],
-    regNumber: [null],
-    language: [null],
-    phoneNumber: [null],
-    password: [null],
-    confirmPassword: [null],
-    roleId: [null, Validators.required],
+    name: ['', Validators.required],
+    surname: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
+    regNumber: [''],
+    language: [''],
+    phoneNumber: [''],
+    password: [''],
+    confirmPassword: [''],
+    roleId: ['', Validators.required],
     headphoneId: [''],
-    machineriesId: [[]]
+    machineriesId: [[] as string[]]
   }, {
     validators: passwordConfirmationValidator("password", "confirmPassword")
   });

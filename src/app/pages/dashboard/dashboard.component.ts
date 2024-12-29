@@ -59,7 +59,7 @@ export class DashboardComponent implements OnInit {
         });
 
         this.notificationService.newNotification$.subscribe(x => {
-            if (x != null) {
+            if (x != null && !this.notifications.find(v => v.id === x.id)) {
                 this.notifications.unshift(x);
             }
         });
