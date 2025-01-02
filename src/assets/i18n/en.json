@@ -179,7 +179,8 @@
         "notificationCode": {
             "modal": {
                 "title": "Title",
-                "code": "Code",
+                "type": "Type",
+                "value": "Value",
                 "addTranslation": "Add translation",
                 "translations": "Translations",
                 "subModal": {
@@ -190,7 +191,8 @@
             },
             "table": {
                 "title": "Title",
-                "code": "Code",
+                "type": "Type",
+                "value": "Value",
                 "translations": "Translations"
             }
         },

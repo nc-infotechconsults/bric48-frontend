@@ -3,7 +3,8 @@
     (onLazyLoad)="loadData($event)" (onContextMenuSelection)="updateSelectedItem($event)">
     <ng-template #tableBody let-rowData let-i="rowIndex">
         <td>{{rowData.title}}</td>
-        <td>{{rowData.code}}</td>
+        <td>{{rowData.type}}</td>
+        <td>{{rowData.value}}</td>
         <td>{{getTranslations(rowData)}}</td>
     </ng-template>
 </div>
@@ -27,10 +28,21 @@
         </div>
 
         <div class="field p-fluid">
-            <label htmlFor="code">{{ 'pages.notificationCode.modal.code' | translate }}</label>
-            <input pInputText formControlName="code" id="code" type="text"
-                [class.ng-invalid]="fg.controls['code'].invalid" [class.ng-dirty]="fg.controls['code'].invalid" />
-            @if(fg.controls['code'].errors?.['required']){
+            <label htmlFor="type">{{ 'pages.notificationCode.modal.type' | translate }}</label>
+            <input pInputText formControlName="type" id="type" type="text"
+                [class.ng-invalid]="fg.controls['type'].invalid" [class.ng-dirty]="fg.controls['type'].invalid" />
+            @if(fg.controls['type'].errors?.['required']){
+            <small class="text-red-600">
+                {{ 'shared.validators.required' | translate }}
+            </small>
+            }
+        </div>
+
+        <div class="field p-fluid">
+            <label htmlFor="value">{{ 'pages.notificationCode.modal.value' | translate }}</label>
+            <input pInputText formControlName="value" id="value" type="text"
+                [class.ng-invalid]="fg.controls['value'].invalid" [class.ng-dirty]="fg.controls['value'].invalid" />
+            @if(fg.controls['value'].errors?.['required']){
             <small class="text-red-600">
                 {{ 'shared.validators.required' | translate }}
             </small>

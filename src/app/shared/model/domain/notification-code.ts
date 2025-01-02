@@ -3,7 +3,8 @@ import { NotificationTranslation } from "./notification-translation";
 
 export class NotificationCode extends Audit {
     title?: string;
-    code?: string;
+    type?: string;
+    value?: string;
     translations?: NotificationTranslation[];
 }
 

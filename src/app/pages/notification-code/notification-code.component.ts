@@ -30,7 +30,8 @@ export class NotificationCodeComponent extends TableComponent<NotificationCode> 
   fg = this.fb.group({
     id: [null],
     title: ['', Validators.required],
-    code: ['', Validators.required],
+    type: ['', Validators.required],
+    value: ['', Validators.required],
     translations: [[] as DefaultTranslationMessage[], Validators.required],
   });
 
@@ -48,7 +49,12 @@ export class NotificationCodeComponent extends TableComponent<NotificationCode> 
       }
     },
     {
-      title: 'pages.notificationCode.table.code', field: 'title', sortable: true, filter: {
+      title: 'pages.notificationCode.table.type', field: 'type', sortable: true, filter: {
+        type: 'text', showMenu: false, matchMode: 'contains'
+      }
+    },
+    {
+      title: 'pages.notificationCode.table.value', field: 'value', sortable: true, filter: {
         type: 'text', showMenu: false, matchMode: 'contains'
       }
     },
