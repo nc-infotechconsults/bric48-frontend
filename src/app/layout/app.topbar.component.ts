@@ -34,11 +34,11 @@ export class AppTopBarComponent implements OnInit {
 
     ngOnInit(): void {
         this.notificationsService.notifications$.subscribe(x => {
-            this.notifications = x ?? [];
+            this.notifications = x.filter(x => x.type === 'alarm' || x.type === 'maintenance' || x.type === 'service') ?? [];
         })
 
         this.notificationsService.newNotification$.subscribe(x => {
-            if (x != null && !this.notifications.find(v => v.id === x.id)) {
+            if (x != null && !this.notifications.find(v => v.id === x.id) && (x.type === 'alarm' || x.type === 'maintenance' || x.type === 'service')) {
                 this.notifications.unshift(x);
                 this.sidebarVisible = true;
             }

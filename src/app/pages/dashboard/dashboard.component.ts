@@ -20,7 +20,8 @@ export class DashboardComponent implements OnInit {
     private machineryService = inject(MachineryService);
     private layoutService = inject(LayoutService);
     private appConfigService = inject(AppConfigService);
-    private notificationService = inject(NotificationService);
+    
+    notificationService = inject(NotificationService);
 
     machineries: Machinery[] = [];
     notifications: MachineryNotification[] = [];
@@ -69,10 +70,6 @@ export class DashboardComponent implements OnInit {
                 this.notifications = this.notifications.filter(v => v.id !== x.id);
             }
         });
-    }
-
-    getNotificationsCount(machineryId: string) {
-        return this.notifications?.filter(x => x.machinery.id === machineryId).length ?? 0;
     }
 
 }

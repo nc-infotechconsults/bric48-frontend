@@ -31,7 +31,8 @@
                 "alarm": {
                     "timestamp": "Timestamp: ",
                     "type": "Type: ",
-                    "value": "Value: "
+                    "value": "Value: ",
+                    "description": "Description: "
                 }
             }
         }
@@ -84,6 +85,25 @@
             }
         },
         "dashboard": {
+            "alarmToManage": "alarm notifications to manage",
+            "serviceToManage": "serivce notifications to manage",
+            "maintenanceToManage": "maintenance notifications to manage",
+            "lastState": "Last operative mode \"{{mode}}\" at {{timestamp}}.",
+            "lastStateNoAvailable": "Last operative mode not available.",
+            "machineryState": "General state",
+            "doorState": "Door repair",
+            "spindleState": "Spindle repair",
+            "status": {
+                "50": "Edit",
+                "100": "Emergenza",
+                "150": "Reset",
+                "200": "Stop",
+                "250": "Hold",
+                "1": "Auto",
+                "4": "Jog",
+                "7": "Ricerca di 0",
+                "10": "Semiauto"
+            },
             "modal": {
                 "title": "Machinery detail",
                 "noData": "No data available",

@@ -24,13 +24,15 @@ import { DeleteDialogComponent } from './components/delete-dialog/delete-dialog.
 import { DetailModalComponent } from './components/detail-modal/detail-modal.component';
 import { NotificationModalComponent } from './components/notification-modal/notification-modal.component';
 import { TableComponent } from './components/table/table.component';
+import { FunctionWrapperPipe } from './pipe/wrap-fn.pipe';
 
 @NgModule({
   declarations: [
     TableComponent,
     DetailModalComponent,
     DeleteDialogComponent,
-    NotificationModalComponent
+    NotificationModalComponent,
+    FunctionWrapperPipe
   ],
   imports: [
     CommonModule,
@@ -55,13 +57,15 @@ import { TableComponent } from './components/table/table.component';
     ContextMenuModule
   ],
   providers: [
-    MessageService
+    MessageService,
+    FunctionWrapperPipe
   ],
   exports: [
     TableComponent,
     DeleteDialogComponent,
     DetailModalComponent,
-    NotificationModalComponent
+    NotificationModalComponent,
+    FunctionWrapperPipe
   ]
 })
 export class SharedModule { }

@@ -44,7 +44,6 @@ export class NotificationModalComponent implements OnInit {
         notifications: this.machineryNotificationService.search({
           criterias: [
             { field: 'solved', operation: QueryOperation.EQUAL, value: false },
-            { field: 'type', operation: QueryOperation.EQUAL, value: 'alarm' },
             { field: 'machinery.id', operation: QueryOperation.EQUAL, value: id },
           ], operator: LogicOperator.AND
         }, { sort: new Sort(['createdAt,desc']) }, true),
@@ -103,6 +102,10 @@ export class NotificationModalComponent implements OnInit {
 
   thereAreUserSelected() {
     return Object.entries(this._userSelected).filter(x => x[1]).length > 0;
+  }
+
+  getNotificationToSolve() {
+    return this._machineryNotifications.filter(x => x.type === 'alarm' || x.type === 'maintenance' || x.type === 'service');
   }
 
   ngOnInit(): void {

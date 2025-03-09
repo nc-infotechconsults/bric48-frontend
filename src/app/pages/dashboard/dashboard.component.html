@@ -1,20 +1,56 @@
 <div class="grid">
     @for(machine of machineries; track machine){
-    <div class="col-12 lg:col-6 xl:col-4">
-        <div class="card mb-0" (click)="openDetailModal(machine)">
-            <div class="flex justify-content-between mb-3">
-                <div>
-                    <span class="block text-500 font-medium mb-3">{{machine.area.structure.name}} /
-                        {{machine.area.name}}</span>
-                    <div class="text-900 font-medium text-xl">{{ machine.name }} ({{machine.serial}})</div>
-                    <div [class.text-red-500]="getNotificationsCount(machine.id)>0" class="text-900 font-bold text-xl mt-2">{{getNotificationsCount(machine.id)}} notification to
-                        manage</div>
+    <div class="col-12 xl:col-6">
+        <div class="card mb-0 grid" (click)="openDetailModal(machine)">
+            <div class="col-10 flex flex-column">
+                <span class="block text-500 font-medium mb-3">{{machine.area.structure.name}} /
+                    {{machine.area.name}}</span>
+                <div class="text-900 font-medium text-xl flex align-items-center justify-content-between gap-2">
+                    {{ machine.name }} ({{machine.serial}})
                 </div>
-                <div class="flex align-items-center justify-content-center border-round"
-                    [class.bg-red-500]="getNotificationsCount(machine.id) > 0"
-                    [class.bg-green-500]="getNotificationsCount(machine.id) === 0"
-                    [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
-                    <i class="pi pi-car text-xl"></i>
+                @if (notificationService.existsLastMode(notifications, machine.id)) {
+                <div class="text-medium mt-2">{{ 'pages.dashboard.lastState' | translate:
+                    {'mode': 'pages.dashboard.status.' + notificationService.getLastMode(notifications, machine.id) | translate, 'timestamp':
+                    notificationService.getLastModeTimestamp(notifications, machine.id) | date: 'dd/MM/yyyy HH:mm'} }}</div>
+                }@else{
+                <div class="text-medium mt-2">{{ 'pages.dashboard.lastStateNoAvailable' | translate }}</div>
+                }
+                <div class="text-900 font-bold text-xl mt-2 flex align-items-center gap-2 mt-4">
+                    <img src="/assets/imgs/red_square_error_warning_icon.svg" class="w-2rem" />
+                    {{ notificationService.getNotificationsCount(notifications, machine.id, 'alarm')}}
+                    {{'pages.dashboard.alarmToManage' | translate}}
+                </div>
+                <div class="text-900 font-bold text-xl mt-2 flex align-items-center gap-2">
+                    <img src="/assets/imgs/ISO_7010_M002.svg.png" class="w-2rem" />
+                    {{ notificationService.getNotificationsCount(notifications, machine.id, 'maintenance')}}
+                    {{'pages.dashboard.maintenanceToManage' | translate}}
+                </div>
+                <div class="text-900 font-bold text-xl mt-2 flex align-items-center gap-2">
+                    <img src="/assets/imgs/ISO_7010_W001.svg.png" class="w-2rem" />
+                    {{ notificationService.getNotificationsCount(notifications, machine.id, 'service')}} {{'pages.dashboard.serviceToManage' | translate}}
+                </div>
+            </div>
+            <div class="col-2 flex flex-column align-items-center justify-content-around gap-2">
+                <div class="flex flex-column justify-content-center align-items-center gap-2">
+                    {{ 'pages.dashboard.machineryState' | translate }}
+                    <img [src]="notificationService.getNotificationsCount(notifications, machine.id) === 0 ? '/assets/imgs/led-green-black.svg' : '/assets/imgs/led-red-black.svg'"
+                    class="w-3rem" />
+                </div>
+                <div class="flex flex-column justify-content-center align-items-center gap-2">
+                    {{ 'pages.dashboard.doorState' | translate }}
+                    @if(notificationService.existsGuards(notifications, machine.id, 'door_g')) {
+                        <img [src]="notificationService.lastGuard(notifications, machine.id, 'door_g') === '1' ? '/assets/imgs/led-green-black.svg' : '/assets/imgs/led-red-black.svg'" class="w-3rem" />
+                    }@else {
+                        <img src="/assets/imgs/generic.svg" class="w-3rem" />
+                    }
+                </div>
+                <div class="flex flex-column justify-content-center align-items-center gap-2">
+                    {{ 'pages.dashboard.spindleState' | translate }}
+                    @if(notificationService.existsGuards(notifications, machine.id, 'spnd_g')) {
+                        <img [src]="notificationService.lastGuard(notifications, machine.id, 'spnd_g') === '1' ? '/assets/imgs/led-green-black.svg' : '/assets/imgs/led-red-black.svg'" class="w-3rem" />
+                    }@else {
+                        <img src="/assets/imgs/generic.svg" class="w-3rem" />
+                    }
                 </div>
             </div>
         </div>
@@ -24,102 +60,3 @@
 
 <div notification-dialog [show]="showDetail" (showChange)="machineryId=undefined; showDetail=$event"
     [machineryId]="machineryId"></div>
-
-<!-- 
-<p-dialog [(visible)]="showDetail" [style]="{width: '75vw'}" [header]="'pages.dashboard.modal.title' | translate"
-    [modal]="true" class="p-fluid">
-
-    <ng-template pTemplate="content">
-        <div class="card m-1">
-            <div class="flex justify-content-between mb-3">
-                <div>
-                    <span class="block text-500 font-medium mb-3">{{selectedItem?.area.structure.name}} /
-                        {{selectedItem?.area.name}}</span>
-                    <div class="text-900 font-medium text-xl">{{ selectedItem?.name }} ({{selectedItem?.serial}})</div>
-                </div>
-                <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
-                    [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
-                    <i class="pi pi-car text-blue-500 text-xl"></i>
-                </div>
-            </div>
-        </div>
-
-        <div class="grid m-2">
-            <div class="col-6">
-                <p-card [header]="'pages.dashboard.modal.notifications.header' | translate">
-                    @if(selectedItemNotifications.length === 0){
-                    <div class="text-bold font-mediium">{{ 'pages.dashboard.modal.noData' | translate }}</div>
-                    }
-                    @for(n of selectedItemNotifications; track n){
-                    <p-messages>
-                        <ng-template pTemplate>
-                            <div class="flex flex-row gap-2 w-full">
-                                <span class="pi pi-times-circle text-xl text-red-500"></span>
-                                <div class="flex flex-column gap-2 flex-grow-1">
-                                    <h5 class="m-0 text-bold font-small text-red-500"> {{
-                                        n.machinery.area.structure.name }} /
-                                        ({{n.machinery.area.name}})</h5>
-                                    <h5 class="m-0 text-bold text-red-500"> {{ n.machinery.name }} ({{
-                                        n.machinery.serial
-                                        }})</h5>
-                                    <h6 class="my-1">{{ 'layout.topbar.sidebar.alarm.type' | translate }} {{ n.type }}
-                                    </h6>
-                                    <h6 class="my-1">{{ 'layout.topbar.sidebar.alarm.value' | translate }} {{ n.value }}
-                                    </h6>
-                                    <span>{{ n.description }}</span>
-                                </div>
-                                <div class="flex flex-column gap-2">
-                                    <p-button [label]="'pages.dashboard.modal.notifications.actions.send' | translate"
-                                        [raised]="true" severity="warning" />
-                                    <p-button [label]="'pages.dashboard.modal.notifications.actions.solve' | translate"
-                                        [raised]="true" severity="success" (click)="solveNotification(n)" />
-                                </div>
-                            </div>
-                        </ng-template>
-                    </p-messages>
-                    }
-                </p-card>
-            </div>
-            <div class="col-6">
-                <p-card [header]="'pages.dashboard.modal.userNear.header' | translate">
-                    @if(selectedItemNotifications.length === 0){
-                    <div class="text-bold font-mediium">{{ 'pages.dashboard.modal.noData' | translate }}</div>
-                    }
-                    @for(n of selectedItemNotifications; track n){
-                    <p-messages>
-                        <ng-template pTemplate>
-                            <div class="flex flex-row gap-2 w-full">
-                                <span class="pi pi-times-circle text-xl text-red-500"></span>
-                                <div class="flex flex-column gap-2 flex-grow-1">
-                                    <h5 class="m-0 text-bold font-small text-red-500"> {{
-                                        n.machinery.area.structure.name }} /
-                                        ({{n.machinery.area.name}})</h5>
-                                    <h5 class="m-0 text-bold text-red-500"> {{ n.machinery.name }} ({{
-                                        n.machinery.serial
-                                        }})</h5>
-                                    <h6 class="my-1">{{ 'layout.topbar.sidebar.alarm.type' | translate }} {{ n.type }}
-                                    </h6>
-                                    <h6 class="my-1">{{ 'layout.topbar.sidebar.alarm.value' | translate }} {{ n.value }}
-                                    </h6>
-                                    <span>{{ n.description }}</span>
-                                </div>
-                                <div class="flex flex-column gap-2">
-                                    <p-button [label]="'pages.dashboard.modal.notifications.actions.send' | translate"
-                                        [raised]="true" severity="warning" />
-                                    <p-button [label]="'pages.dashboard.modal.notifications.actions.solve' | translate"
-                                        [raised]="true" severity="success" (click)="solveNotification(n)" />
-                                </div>
-                            </div>
-                        </ng-template>
-                    </p-messages>
-                    }
-                </p-card>
-            </div>
-        </div>
-    </ng-template>
-
-    <ng-template pTemplate="footer">
-        <button pButton pRipple icon="pi pi-times" class="p-button-text"
-            [label]="'shared.modal.actions.close' | translate" (click)="showDetail = false"></button>
-    </ng-template>
-</p-dialog> -->
