@@ -86,7 +86,7 @@
         },
         "dashboard": {
             "alarmToManage": "alarm notifications to manage",
-            "serviceToManage": "serivce notifications to manage",
+            "serviceToManage": "service notifications to manage",
             "maintenanceToManage": "maintenance notifications to manage",
             "lastState": "Last operative mode \"{{mode}}\" at {{timestamp}}.",
             "lastStateNoAvailable": "Last operative mode not available.",

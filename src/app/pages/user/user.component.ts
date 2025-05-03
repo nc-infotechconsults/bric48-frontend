@@ -145,7 +145,7 @@ export class UserComponent extends TableComponent<User> implements OnInit {
   ngOnInit(): void {
     this.layout.isLoading.set(true);
     this.roleService.search({ operator: LogicOperator.AND }, {}, true).subscribe((v) => {
-      this.roles = v.content;
+      this.roles = v.content.map(x => ({id: x.id, name: this.translate.instant(`layout.sidebar.roles.${x.id}`)} as Role));
       this.headers = [
         {
           title: 'pages.user.table.name', field: 'name', sortable: true, filter: {

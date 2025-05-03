@@ -68,4 +68,12 @@ const Languages = [
     { id: "ig", label: "shared.languages.ig" }
 ];
 
-export default Languages;
+export default Languages.sort((a, b) => {
+    if (a.id < b.id) {
+        return -1;
+    }
+    if (a.id > b.id) {
+        return 1;
+    }
+    return 0;
+});

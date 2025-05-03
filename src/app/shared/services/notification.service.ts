@@ -61,19 +61,26 @@ export class NotificationService {
     }
 
     existsGuards(notifications: MachineryNotification[], machineId?: string, guardType?: string) {
+        // console.log('existsGuards', notifications, machineId, guardType);
+        let result;
         if (machineId) {
-            return notifications?.find(x => x.machinery.id === machineId && x.type === 'guards' && x.description === guardType) !== undefined;
+            result = notifications?.find(x => x.machinery.id === machineId && x.type === 'guards' && x.description.toLowerCase() === guardType.toLowerCase()) !== undefined;
         } else {
-            return notifications?.find(x => x.type === 'guards' && x.description === guardType) !== undefined;
+            result = notifications?.find(x => x.type === 'guards' && x.description.toLowerCase() === guardType.toLowerCase()) !== undefined;
         }
+        console.log('existsGuards result', result);
+        return result;
     }
 
     lastGuard(notifications: MachineryNotification[], machineId?: string, guardType?: string) {
+        let result;
         if (machineId) {
-            return notifications?.filter(x => x.machinery.id === machineId && x.type === 'guards' && x.description === guardType).sort((a, b) => a.createdAt > b.createdAt ? -1 : 1)[0]?.value ?? '';
+            result = notifications?.filter(x => x.machinery.id === machineId && x.type === 'guards' && x.description.toLowerCase() === guardType.toLowerCase()).sort((a, b) => a.createdAt > b.createdAt ? -1 : 1)[0]?.value ?? '';
         } else {
-            return notifications?.filter(x => x.type === 'guards' && x.description === guardType).sort((a, b) => a.createdAt > b.createdAt ? -1 : 1)[0]?.value ?? '';
+            result = notifications?.filter(x => x.type === 'guards' && x.description.toLowerCase() === guardType.toLowerCase()).sort((a, b) => a.createdAt > b.createdAt ? -1 : 1)[0]?.value ?? '';
         }
+        console.log('lastGuard result', result);
+        return result;
     }
 
     existsLastMode(notifications: MachineryNotification[], machineId?: string) {

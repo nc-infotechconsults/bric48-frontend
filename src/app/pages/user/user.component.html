@@ -5,7 +5,7 @@
         <td>{{rowData.name}}</td>
         <td>{{rowData.surname}}</td>
         <td>{{rowData.email}}</td>
-        <td>{{rowData.role?.name ?? ''}}</td>
+        <td>{{ 'layout.sidebar.roles.' + rowData.role?.id | translate}}</td>
     </ng-template>
 </div>
 
