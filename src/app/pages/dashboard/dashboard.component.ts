@@ -1,4 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { last } from 'rxjs';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
 import { LogicOperator } from 'src/app/shared/model/api/logic-operator';
 import { QueryOperation } from 'src/app/shared/model/api/query-operation';

@@ -34,7 +34,9 @@ export class AppTopBarComponent implements OnInit {
 
     ngOnInit(): void {
         this.notificationsService.notifications$.subscribe(x => {
-            this.notifications = x.filter(x => x.type === 'alarm' || x.type === 'maintenance' || x.type === 'service') ?? [];
+            if(x != null){
+                this.notifications = x.filter(x => x.type === 'alarm' || x.type === 'maintenance' || x.type === 'service') ?? [];
+            }
         })
 
         this.notificationsService.newNotification$.subscribe(x => {

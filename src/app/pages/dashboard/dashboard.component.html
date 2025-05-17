@@ -10,8 +10,10 @@
                 </div>
                 @if (notificationService.existsLastMode(notifications, machine.id)) {
                 <div class="text-medium mt-2">{{ 'pages.dashboard.lastState' | translate:
-                    {'mode': 'pages.dashboard.status.' + notificationService.getLastMode(notifications, machine.id) | translate, 'timestamp':
-                    notificationService.getLastModeTimestamp(notifications, machine.id) | date: 'dd/MM/yyyy HH:mm'} }}</div>
+                    {'mode': 'pages.dashboard.status.' + notificationService.getLastMode(notifications, machine.id) |
+                    translate, 'timestamp':
+                    notificationService.getLastModeTimestamp(notifications, machine.id) | date: 'dd/MM/yyyy HH:mm'} }}
+                </div>
                 }@else{
                 <div class="text-medium mt-2">{{ 'pages.dashboard.lastStateNoAvailable' | translate }}</div>
                 }
@@ -27,29 +29,41 @@
                 </div>
                 <div class="text-900 font-bold text-xl mt-2 flex align-items-center gap-2">
                     <img src="/assets/imgs/ISO_7010_W001.svg.png" class="w-2rem" />
-                    {{ notificationService.getNotificationsCount(notifications, machine.id, 'service')}} {{'pages.dashboard.serviceToManage' | translate}}
+                    {{ notificationService.getNotificationsCount(notifications, machine.id, 'service')}}
+                    {{'pages.dashboard.serviceToManage' | translate}}
                 </div>
             </div>
             <div class="col-2 flex flex-column align-items-center justify-content-around gap-2">
                 <div class="flex flex-column justify-content-center align-items-center gap-2">
                     {{ 'pages.dashboard.machineryState' | translate }}
-                    <img [src]="notificationService.getNotificationsCount(notifications, machine.id) === 0 ? '/assets/imgs/led-green-black.svg' : '/assets/imgs/led-red-black.svg'"
-                    class="w-3rem" />
+                    @switch (notificationService.getLedStatus(notifications, machine.id)) {
+                    @case ('health') {
+                    <img src="/assets/imgs/led-green-black.svg" class="w-3rem" />
+                    }
+                    @case ('warn') {
+                    <img src="/assets/imgs/led-amber-black.svg" class="w-3rem" />
+                    }
+                    @case ('danger') {
+                    <img src="/assets/imgs/led-red-black.svg" class="w-3rem" />
+                    }
+                    }
                 </div>
                 <div class="flex flex-column justify-content-center align-items-center gap-2">
                     {{ 'pages.dashboard.doorState' | translate }}
                     @if(notificationService.existsGuards(notifications, machine.id, 'door_g')) {
-                        <img [src]="notificationService.lastGuard(notifications, machine.id, 'door_g') === '1' ? '/assets/imgs/led-green-black.svg' : '/assets/imgs/led-red-black.svg'" class="w-3rem" />
+                    <img [src]="notificationService.lastGuard(notifications, machine.id, 'door_g') === '1' ? '/assets/imgs/led-green-black.svg' : '/assets/imgs/led-red-black.svg'"
+                        class="w-3rem" />
                     }@else {
-                        <img src="/assets/imgs/generic.svg" class="w-3rem" />
+                    <img src="/assets/imgs/generic.svg" class="w-3rem" />
                     }
                 </div>
                 <div class="flex flex-column justify-content-center align-items-center gap-2">
                     {{ 'pages.dashboard.spindleState' | translate }}
                     @if(notificationService.existsGuards(notifications, machine.id, 'spnd_g')) {
-                        <img [src]="notificationService.lastGuard(notifications, machine.id, 'spnd_g') === '1' ? '/assets/imgs/led-green-black.svg' : '/assets/imgs/led-red-black.svg'" class="w-3rem" />
+                    <img [src]="notificationService.lastGuard(notifications, machine.id, 'spnd_g') === '1' ? '/assets/imgs/led-green-black.svg' : '/assets/imgs/led-red-black.svg'"
+                        class="w-3rem" />
                     }@else {
-                        <img src="/assets/imgs/generic.svg" class="w-3rem" />
+                    <img src="/assets/imgs/generic.svg" class="w-3rem" />
                     }
                 </div>
             </div>

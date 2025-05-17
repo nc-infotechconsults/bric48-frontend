@@ -2,6 +2,7 @@ import { inject, Injectable } from "@angular/core";
 import { Client, messageCallbackType } from "@stomp/stompjs";
 import SockJS from 'sockjs-client';
 import { AppConfigService } from "./app-config.service";
+import { v4 as uuidv4 } from 'uuid';
 
 export interface TopicTask {
     topic: string;
@@ -35,9 +36,10 @@ export class WebSocketService {
             this.stompClient.onConnect = (frame) => {
                 console.log('Connected: ', frame);
                 this.isConnecting = false;
+                const randomid = uuidv4();
                 tasks.forEach((x,i) => {
                     // Subscribe to a topic
-                    this.stompClient.subscribe(x.topic, x.callback, { id: id+"_"+i});
+                    this.stompClient.subscribe(x.topic, x.callback, { id: `${id}_${randomid}_${i}`});
                 })
             };
 

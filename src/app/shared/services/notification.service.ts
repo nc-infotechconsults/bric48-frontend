@@ -107,4 +107,16 @@ export class NotificationService {
         }
     }
 
+    getLedStatus(notifications: MachineryNotification[], machineId?: string) {
+        const lastMode = this.getLastMode(notifications, machineId);
+        const count = this.getNotificationsCount(notifications, machineId);
+        if((lastMode && lastMode === '100') || count > 0){
+            return 'danger';
+        }else if(lastMode && lastMode === '50'){
+            return 'warn';
+        }else{
+            return 'health';
+        }
+    }
+
 }

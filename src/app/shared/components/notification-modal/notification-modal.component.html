@@ -38,8 +38,17 @@
             <div class="col-2 flex flex-column align-items-center justify-content-around gap-2">
                 <div class="flex flex-column justify-content-center align-items-center gap-2">
                     {{ 'pages.dashboard.machineryState' | translate }}
-                    <img [src]="notificationService.getNotificationsCount(_machineryNotifications, undefined) === 0 ? '/assets/imgs/led-green-black.svg' : '/assets/imgs/led-red-black.svg'"
-                        class="w-3rem" />
+                    @switch (notificationService.getLedStatus(_machineryNotifications, undefined)) {
+                    @case ('health') {
+                    <img src="/assets/imgs/led-green-black.svg" class="w-3rem" />
+                    }
+                    @case ('warn') {
+                    <img src="/assets/imgs/led-amber-black.svg" class="w-3rem" />
+                    }
+                    @case ('danger') {
+                    <img src="/assets/imgs/led-red-black.svg" class="w-3rem" />
+                    }
+                    }
                 </div>
                 <div class="flex flex-column justify-content-center align-items-center gap-2">
                     {{ 'pages.dashboard.doorState' | translate }}
