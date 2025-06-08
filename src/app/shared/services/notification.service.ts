@@ -25,7 +25,8 @@ export class NotificationService {
     loadNotifications(userId?: string) {
         const filters = {
             criterias: [
-                { field: 'solved', operation: QueryOperation.EQUAL, value: false }
+                { field: 'solved', operation: QueryOperation.EQUAL, value: false },
+                { field: 'machinery.deletedAt', operation: QueryOperation.IS_NULL, value: '' },
             ], operator: LogicOperator.AND
         };
 
@@ -64,9 +65,9 @@ export class NotificationService {
         // console.log('existsGuards', notifications, machineId, guardType);
         let result;
         if (machineId) {
-            result = notifications?.find(x => x.machinery.id === machineId && x.type === 'guards' && x.description.toLowerCase() === guardType.toLowerCase()) !== undefined;
+            result = notifications?.find(x => x.machinery.id === machineId && x.type === 'guards' && x.description && x.description !== null && x.description.toLowerCase() === guardType.toLowerCase()) !== undefined;
         } else {
-            result = notifications?.find(x => x.type === 'guards' && x.description.toLowerCase() === guardType.toLowerCase()) !== undefined;
+            result = notifications?.find(x => x.type === 'guards' && x.description && x.description !== null && x.description.toLowerCase() === guardType.toLowerCase()) !== undefined;
         }
         console.log('existsGuards result', result);
         return result;
@@ -75,9 +76,9 @@ export class NotificationService {
     lastGuard(notifications: MachineryNotification[], machineId?: string, guardType?: string) {
         let result;
         if (machineId) {
-            result = notifications?.filter(x => x.machinery.id === machineId && x.type === 'guards' && x.description.toLowerCase() === guardType.toLowerCase()).sort((a, b) => a.createdAt > b.createdAt ? -1 : 1)[0]?.value ?? '';
+            result = notifications?.filter(x => x.machinery.id === machineId && x.type === 'guards' && x.description && x.description !== null && x.description.toLowerCase() === guardType.toLowerCase()).sort((a, b) => a.createdAt > b.createdAt ? -1 : 1)[0]?.value ?? '';
         } else {
-            result = notifications?.filter(x => x.type === 'guards' && x.description.toLowerCase() === guardType.toLowerCase()).sort((a, b) => a.createdAt > b.createdAt ? -1 : 1)[0]?.value ?? '';
+            result = notifications?.filter(x => x.type === 'guards' && x.description && x.description !== null && x.description.toLowerCase() === guardType.toLowerCase()).sort((a, b) => a.createdAt > b.createdAt ? -1 : 1)[0]?.value ?? '';
         }
         console.log('lastGuard result', result);
         return result;
